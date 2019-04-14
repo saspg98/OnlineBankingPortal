@@ -34,7 +34,7 @@ public class AccountSummaryViewModel {
         return mSelectedAccount;
     }
 
-   
+
 
     public Observable<String> getName(){
         return mDataModel.fetchUserDetails()
