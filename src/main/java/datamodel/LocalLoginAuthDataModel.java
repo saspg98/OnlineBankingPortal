@@ -4,7 +4,7 @@ import io.reactivex.Observable;
 import io.reactivex.subjects.BehaviorSubject;
 import model.LoginCredentials;
 
-public class LocalAuthDataModel implements AuthDataModel {
+public class LocalLoginAuthDataModel implements LoginAuthDataModel {
 
     BehaviorSubject<Boolean> mAuthorization = BehaviorSubject.create();
 

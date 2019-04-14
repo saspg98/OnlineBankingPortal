@@ -1,6 +1,6 @@
 package viewmodel;
 
-import datamodel.AuthDataModel;
+import datamodel.LoginAuthDataModel;
 import io.reactivex.Observable;
 import misc.InputValidator;
 import model.LoginCredentials;
@@ -13,11 +13,11 @@ public class LoginViewModel {
 
     private LoginCredentials mCurrLoginCredentials;
 
-    private AuthDataModel mDataModel;
+    private LoginAuthDataModel mDataModel;
     private Observable<Boolean> validationStream;
 
 
-    public LoginViewModel(AuthDataModel mDataModel) {
+    public LoginViewModel(LoginAuthDataModel mDataModel) {
         this.mDataModel = mDataModel;
         mCurrLoginCredentials = new LoginCredentials(DEFAULT_EMAIL, DEFAULT_PASSWORD);
         validationStream = RxChangeableBase.observe(mCurrLoginCredentials)

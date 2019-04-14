@@ -4,12 +4,12 @@ import datamodel.UserDataModel;
 import io.reactivex.Observable;
 import model.User;
 
-public class UserAccountDetailsViewModel {
+public class SettingsViewModel {
 
     UserDataModel mDataModel;
 
 
-    public UserAccountDetailsViewModel(UserDataModel mDataModel) {
+    public SettingsViewModel(UserDataModel mDataModel) {
         this.mDataModel = mDataModel;
     }
 
