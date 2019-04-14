@@ -2,7 +2,7 @@ package model;
 
 import model.changeapi.ChangeableBase;
 
-//Simple POJO, only the setters call notify listeners after changing values
+//Simple POJO, only the setters call notifyListeners() after changing values
 public class LoginCredentials extends ChangeableBase {
 
     private String email;
