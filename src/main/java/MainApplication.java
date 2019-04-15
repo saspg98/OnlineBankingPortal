@@ -7,6 +7,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+import static java.lang.System.err;
 import static java.lang.System.out;
 
 public class MainApplication extends Application {

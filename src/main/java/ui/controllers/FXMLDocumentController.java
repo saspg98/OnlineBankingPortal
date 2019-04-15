@@ -24,6 +24,7 @@ public class FXMLDocumentController implements Initializable {
     private void handleButtonAction(ActionEvent event) {
 
         System.err.println("Sign Up button clicked");
+        return;
     }
     
     @Override
