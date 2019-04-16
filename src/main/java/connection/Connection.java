@@ -1,8 +1,6 @@
-package connection;
-
-import database.Database;
-
-public interface Connection {
-
-    public Database getDatabaseInstance();
-}
+//package connection;
+//
+//public interface Connection {
+//
+//    public Database getDatabaseInstance();
+//}
