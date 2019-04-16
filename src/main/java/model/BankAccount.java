@@ -2,9 +2,18 @@ package model;
 
 public class BankAccount {
     //TODO: Add attributes
-    String branch;
-    String accountType;
-    Long accountNumber;
+    private String branch;
+    private String accountType;
+    private Long accountNumber;
+    private double balance;
+
+    public double getBalance() {
+        return balance;
+    }
+
+    public void setBalance(double balance) {
+        this.balance = balance;
+    }
 
     public String getAccountType() {
         return accountType;

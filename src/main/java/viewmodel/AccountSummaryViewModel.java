@@ -9,7 +9,7 @@ import java.util.List;
 
 public class AccountSummaryViewModel {
     private UserDataModel mDataModel;
-    private BehaviorSubject<BankAccount> mSelectedAccount;
+    private BehaviorSubject<BankAccount> mSelectedAccount = BehaviorSubject.create();
 
     public AccountSummaryViewModel(UserDataModel mDataModel) {
         this.mDataModel = mDataModel;
