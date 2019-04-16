@@ -10,7 +10,7 @@ public abstract class LoginScreen {
     LoginViewModel mViewModel;
 
     //Call during initialization
-    void init(){
+    void init() {
         //TODO: initialize ViewModel
 //        mViewModel = new LoginViewModel(Some data model);
         mObservables.add(mViewModel.getAuthorizationStream()
@@ -22,7 +22,7 @@ public abstract class LoginScreen {
     abstract void onError(Throwable error);
 
     //Call when no longer needed
-    void onClose(){
+    void onClose() {
         mObservables.clear();
     }
 }

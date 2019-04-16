@@ -9,7 +9,7 @@ public class MainScreenViewModel {
     private String mCurrState = Constant.Path.HOME_SCREEN_VIEW;
     private UserDataModel mUserDataModel;
 
-    public MainScreenViewModel(UserDataModel userdm){
+    public MainScreenViewModel(UserDataModel userdm) {
         mUserDataModel = userdm;
     }
 
@@ -18,7 +18,6 @@ public class MainScreenViewModel {
         this.mCurrState = state;
         ViewManager.getInstance().setScene(mCurrState);
     }
-
 
 
 }

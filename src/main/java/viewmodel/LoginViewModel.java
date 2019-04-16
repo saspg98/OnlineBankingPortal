@@ -8,8 +8,8 @@ import model.changeapi.RxChangeableBase;
 
 public class LoginViewModel {
 
-    private static final String DEFAULT_EMAIL= "DEFAULT";
-    private static final String DEFAULT_PASSWORD= "DEFAULT";
+    private static final String DEFAULT_EMAIL = "DEFAULT";
+    private static final String DEFAULT_PASSWORD = "DEFAULT";
 
     private LoginCredentials mCurrLoginCredentials;
 
@@ -21,38 +21,38 @@ public class LoginViewModel {
         this.mDataModel = mDataModel;
         mCurrLoginCredentials = new LoginCredentials(DEFAULT_EMAIL, DEFAULT_PASSWORD);
         validationStream = RxChangeableBase.observe(mCurrLoginCredentials)
-                .map((loginCredentials)-> validateFields(loginCredentials));
+                .map((loginCredentials) -> validateFields(loginCredentials));
     }
 
-    public void setEmail(String mEmail) {
-        mCurrLoginCredentials.setEmail(mEmail);
+    public void setUsername(String mEmail) {
+        mCurrLoginCredentials.setUsername(mEmail);
     }
 
     public void setPassword(String mPassword) {
-        mCurrLoginCredentials.setEmail(mPassword);
+        mCurrLoginCredentials.setUsername(mPassword);
     }
 
-    public boolean validateFields(LoginCredentials loginCredentials){
-        return InputValidator.validateEmail(loginCredentials.getEmail()) &&
+    public boolean validateFields(LoginCredentials loginCredentials) {
+        return InputValidator.validateEmail(loginCredentials.getUsername()) &&
                 InputValidator.validatePassword(loginCredentials.getPassword());
     }
 
-    public Observable<Boolean> getValidationStream(){
+    public Observable<Boolean> getValidationStream() {
         return validationStream;
     }
 
-    public Observable<Boolean> getAuthorizationStream(){
+    public Observable<Boolean> getAuthorizationStream() {
         return mDataModel.getAuthorizationStream();
     }
 
-    public void onLogin(){
+    public void onLogin() {
         //Check the last value in the validation stream, proceed if true
-        if(validationStream.blockingLast()){
+        if (validationStream.blockingLast()) {
             mDataModel.checkAuthorization(mCurrLoginCredentials);
         }
     }
 
-    public void onSuccessfullLogin(){
+    public void onSuccessfullLogin() {
         //Handle bg tasks
     }
 }

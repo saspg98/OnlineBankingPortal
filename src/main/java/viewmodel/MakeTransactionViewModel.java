@@ -18,17 +18,16 @@ public class MakeTransactionViewModel {
     private double mAmount;
 
 
-
     public MakeTransactionViewModel(UserDataModel userDataModel, BankAccount mAccountToUse) {
         this.mDataModel = userDataModel;
         this.mAccountToUse = mAccountToUse;
     }
 
-    public Observable<List<Beneficiary>> getBenefactors(){
+    public Observable<List<Beneficiary>> getBenefactors() {
         return mDataModel.getUserBenefactors();
     }
 
-    public Observable<Beneficiary> getSelectedBenefactor(){
+    public Observable<Beneficiary> getSelectedBenefactor() {
         return mSelectedBenefactor;
     }
 
@@ -37,14 +36,14 @@ public class MakeTransactionViewModel {
     }
 
     public void setAmount(String amount) {
-        double d =0;
-        try{
+        double d = 0;
+        try {
             d = Double.parseDouble(amount);
-        } catch (NumberFormatException e){
+        } catch (NumberFormatException e) {
             mAmountValidityStream.onNext(false);
             return;
         }
-        if(mAccountToUse.balance() > d){
+        if (mAccountToUse.balance() > d) {
             mAmountValidityStream.onNext(false);
             return;
         }
@@ -61,7 +60,7 @@ public class MakeTransactionViewModel {
                 mDataModel.getBenefactorFromString(name));
     }
 
-    public boolean makeTransaction(){
+    public boolean makeTransaction() {
         return mDataModel.makeTransaction(mAccountToUse, mAmount, mSelectedBenefactor.blockingLast());
     }
 

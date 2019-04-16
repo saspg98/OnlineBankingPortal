@@ -15,11 +15,12 @@ public interface UserDataModel {
 
     Observable<List<BankAccount>> getUserAccounts();
 
-    default  String getFormattedAccountDetails(BankAccount account){
-        return account.accNo() + " " + account.bcode() ;
+    default String getFormattedAccountDetails(BankAccount account) {
+        return account.accNo() + " " + account.bcode();
     }
 
     Observable<List<Transaction>> getUserTransactions();
+
     BankAccount getAccountFromString(String formattedString);
 
 

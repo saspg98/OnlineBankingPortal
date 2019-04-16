@@ -1,52 +1,41 @@
-
 //import connection.Connection;
 //import connection.LocalConnection;
 //import database.Database;
+
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.stage.Stage;
 import org.davidmoten.rx.jdbc.ConnectionProvider;
 import org.davidmoten.rx.jdbc.Database;
+import ui.ViewManager;
+import viewmodel.constant.Constant;
 
 import javax.annotation.Nonnull;
-import javax.xml.crypto.Data;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class MainApplication extends Application {
 
-    private Database db;
-
     //Download javaFx scene builder 2.0 from oracle website and add path of exe to
     // File/Settings/Language&Framework/JavaFX in intellij
     @Override
     public void start(Stage stage) throws Exception {
+
         setupDatabase();
-        Parent root = FXMLLoader.load(getClass().getResource("FXMLDocument.fxml"));
-
-        Scene scene = new Scene(root);
-
-        stage.setScene(scene);
-        stage.show();
+        ViewManager viewManager = ViewManager.getInstance();
+        viewManager.setMainStage(stage);
+        viewManager.setScene(Constant.Path.LOGIN_VIEW);
     }
-    public static void main(String ... args ){
+
+    public static void main(String... args) {
         launch(args);
-
-//        out.println("Welcome to the commandline interface of our client application!");
-//        out.println("Initializing Database instance");
-//        Connection con = new LocalConnection();
-//        Database database = con.getDatabaseInstance();
-//        out.println("Initialized database instance!");
-
     }
 
-    private void setupDatabase(){
+    private void setupDatabase() {
 
-        ConnectionProvider  connectionProvider = new ConnectionProvider() {
+        ConnectionProvider connectionProvider = new ConnectionProvider() {
             Connection conn;
+
             @Nonnull
             @Override
             public Connection get() {
@@ -55,13 +44,14 @@ public class MainApplication extends Application {
                     return conn;
                 } catch (SQLException e) {
                     e.printStackTrace();
+                    System.out.println("Error");
                 }
                 return null;
             }
 
             @Override
             public void close() {
-                if(conn!=null) {
+                if (conn != null) {
                     try {
                         conn.close();
                     } catch (SQLException e) {
@@ -72,11 +62,13 @@ public class MainApplication extends Application {
             }
         };
 
-        db = Database.fromBlocking(connectionProvider);
+        Database db = Database.fromBlocking(connectionProvider);
+        ViewManager.getInstance().setDatabase(db);
         //Sample query to test connection with database
+        System.out.println("Database working fine");
         db.select("SELECT * FROM test")
-                .getAs(String.class,Integer.class)
-                .blockingForEach(System.err::println);
+                .getAs(String.class, Integer.class)
+                .blockingForEach(System.out::println);
 
     }
 }

@@ -13,7 +13,7 @@ public class BenefactorListViewModel {
         this.userDataModel = userDataModel;
     }
 
-    public Observable<List<Beneficiary>> getBenefactors(){
+    public Observable<List<Beneficiary>> getBenefactors() {
         return userDataModel.getUserBenefactors();
     }
 }

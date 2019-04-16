@@ -35,8 +35,7 @@ public class AccountSummaryViewModel {
     }
 
 
-
-    public Observable<String> getName(){
+    public Observable<String> getName() {
         return mDataModel.fetchUserDetails()
                 .map(user -> user.getName());
     }

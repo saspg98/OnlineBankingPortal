@@ -13,7 +13,7 @@ public class TransactionHistoryViewModel {
         this.userDataModel = userDataModel;
     }
 
-    public Observable<List<Transaction>> getTransactions(){
+    public Observable<List<Transaction>> getTransactions() {
         return userDataModel.getUserTransactions();
     }
 }

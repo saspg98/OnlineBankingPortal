@@ -6,6 +6,7 @@ import io.reactivex.subjects.BehaviorSubject;
 import model.BankAccount;
 import ui.ViewManager;
 import viewmodel.constant.Constant;
+
 //Used for opening the MakeTransaction Screen
 public class AccountChooserViewModel {
     private UserDataModel mDataModel;

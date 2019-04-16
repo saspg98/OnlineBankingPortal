@@ -15,7 +15,7 @@ public class SignupViewModel {
     public SignupViewModel(SignupAuthDataModel mDataModel) {
         this.mDataModel = mDataModel;
         validationStream = RxChangeableBase.observe(mCurrCredentials)
-                .map((signupCredentials)-> validateFields(signupCredentials));
+                .map((signupCredentials) -> validateFields(signupCredentials));
     }
 
     private boolean validateFields(SignupCredentials signupCredentials) {
@@ -52,17 +52,17 @@ public class SignupViewModel {
         mCurrCredentials.setAccountNumber(accountNumber);
     }
 
-    public Observable<Boolean> getValidationStream(){
+    public Observable<Boolean> getValidationStream() {
         return validationStream;
     }
 
-    public Observable<Boolean> getAuthorizationStream(){
+    public Observable<Boolean> getAuthorizationStream() {
         return mDataModel.getAuthorizationStream();
     }
 
-    public void onLogin(){
+    public void onLogin() {
         //Check the last value in the validation stream, proceed if true
-        if(validationStream.blockingLast()){
+        if (validationStream.blockingLast()) {
             mDataModel.checkAuthorization(mCurrCredentials);
         }
     }

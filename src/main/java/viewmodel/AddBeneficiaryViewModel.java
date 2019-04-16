@@ -9,7 +9,7 @@ public class AddBeneficiaryViewModel {
         this.mUserDataModel = mUserDataModel;
     }
 
-    public boolean addBeneficiary(String beneficiary){
+    public boolean addBeneficiary(String beneficiary) {
         return mUserDataModel.addBeneficiary(beneficiary);
     }
 }
