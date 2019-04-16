@@ -1,15 +1,12 @@
 package model;
-//POJO representing the user
-public class User {
-    //TODO: Add attributes
-    String name;
+
+import org.davidmoten.rx.jdbc.annotations.Column;
+
+//Interface for Rx2-java
+public interface User {
+    //TODO: Convert to interface
+    @Column("Name")
+    String getName();
 
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
 }

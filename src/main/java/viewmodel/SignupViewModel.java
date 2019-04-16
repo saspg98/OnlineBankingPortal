@@ -12,8 +12,8 @@ public class SignupViewModel {
     private SignupAuthDataModel mDataModel;
     private Observable<Boolean> validationStream;
 
-    public SignupViewModel(SignupCredentials mCurrCredentials) {
-        this.mCurrCredentials = mCurrCredentials;
+    public SignupViewModel(SignupAuthDataModel mDataModel) {
+        this.mDataModel = mDataModel;
         validationStream = RxChangeableBase.observe(mCurrCredentials)
                 .map((signupCredentials)-> validateFields(signupCredentials));
     }

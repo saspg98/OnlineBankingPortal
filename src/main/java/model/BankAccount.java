@@ -1,32 +1,15 @@
 package model;
 
-public class BankAccount {
-    //TODO: Add attributes
-    String branch;
-    String accountType;
-    Long accountNumber;
+import org.davidmoten.rx.jdbc.annotations.Column;
 
-    public String getAccountType() {
-        return accountType;
-    }
+public interface BankAccount {
+    @Column
+    public double balance();
+    @Column
+    public Long accNo();
+    @Column
+    public String bcode() ;
+    @Column
+    public Long uid();
 
-    public void setAccountType(String accountType) {
-        this.accountType = accountType;
-    }
-
-    public Long getAccountNumber() {
-        return accountNumber;
-    }
-
-    public void setAccountNumber(Long accountNumber) {
-        this.accountNumber = accountNumber;
-    }
-
-    public String getBranch() {
-        return branch;
-    }
-
-    public void setBranch(String branch) {
-        this.branch = branch;
-    }
 }
