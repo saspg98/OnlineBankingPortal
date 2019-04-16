@@ -2,8 +2,7 @@ package viewmodel;
 
 import datamodel.UserDataModel;
 import io.reactivex.Observable;
-import model.Benefactor;
-import model.Transaction;
+import model.Beneficiary;
 
 import java.util.List;
 
@@ -14,7 +13,7 @@ public class BenefactorListViewModel {
         this.userDataModel = userDataModel;
     }
 
-    public Observable<List<Benefactor>> getBenefactors(){
+    public Observable<List<Beneficiary>> getBenefactors(){
         return userDataModel.getUserBenefactors();
     }
 }

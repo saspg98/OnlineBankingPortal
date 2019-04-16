@@ -2,7 +2,7 @@ package datamodel;
 
 import io.reactivex.Observable;
 import model.BankAccount;
-import model.Benefactor;
+import model.Beneficiary;
 import model.Transaction;
 import model.User;
 
@@ -16,19 +16,19 @@ public interface UserDataModel {
     Observable<List<BankAccount>> getUserAccounts();
 
     default  String getFormattedAccountDetails(BankAccount account){
-        return account.getAccountNumber() + " " + account.getBranch() + " " + account.getAccountType();
+        return account.accNo() + " " + account.bcode() ;
     }
 
     Observable<List<Transaction>> getUserTransactions();
     BankAccount getAccountFromString(String formattedString);
 
 
-    Observable<List<Benefactor>> getUserBenefactors();
+    Observable<List<Beneficiary>> getUserBenefactors();
 
-    Benefactor getBenefactorFromString(String name);
+    Beneficiary getBenefactorFromString(String name);
 
 
-    boolean makeTransaction(BankAccount accountToUse, double amount, Benefactor benefactor);
+    boolean makeTransaction(BankAccount accountToUse, double amount, Beneficiary benefactor);
 
     boolean addBeneficiary(String beneficiary);
 }

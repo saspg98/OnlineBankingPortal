@@ -4,7 +4,7 @@ import datamodel.UserDataModel;
 import io.reactivex.Observable;
 import io.reactivex.subjects.BehaviorSubject;
 import model.BankAccount;
-import model.Benefactor;
+import model.Beneficiary;
 import ui.ViewManager;
 import viewmodel.constant.Constant;
 
@@ -12,7 +12,7 @@ import java.util.List;
 
 public class MakeTransactionViewModel {
     private UserDataModel mDataModel;
-    private BehaviorSubject<Benefactor> mSelectedBenefactor;
+    private BehaviorSubject<Beneficiary> mSelectedBenefactor;
     private final BankAccount mAccountToUse;
     private BehaviorSubject<Boolean> mAmountValidityStream = BehaviorSubject.create();
     private double mAmount;
@@ -24,11 +24,11 @@ public class MakeTransactionViewModel {
         this.mAccountToUse = mAccountToUse;
     }
 
-    public Observable<List<Benefactor>> getBenefactors(){
+    public Observable<List<Beneficiary>> getBenefactors(){
         return mDataModel.getUserBenefactors();
     }
 
-    public Observable<Benefactor> getSelectedBenefactor(){
+    public Observable<Beneficiary> getSelectedBenefactor(){
         return mSelectedBenefactor;
     }
 
@@ -44,7 +44,7 @@ public class MakeTransactionViewModel {
             mAmountValidityStream.onNext(false);
             return;
         }
-        if(mAccountToUse.getBalance() > d){
+        if(mAccountToUse.balance() > d){
             mAmountValidityStream.onNext(false);
             return;
         }
