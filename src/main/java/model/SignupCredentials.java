@@ -3,7 +3,7 @@ package model;
 import model.changeapi.ChangeableBase;
 
 public class SignupCredentials extends ChangeableBase {
-
+    String username;
     String name;
     String email;
     String password;
@@ -11,12 +11,22 @@ public class SignupCredentials extends ChangeableBase {
     String IFSC;
     Long accountNumber;
 
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+        notifyListeners();
+    }
+
     public String getName() {
         return name;
     }
 
     public void setName(String name) {
         this.name = name;
+        notifyListeners();
     }
 
     public String getEmail() {
@@ -25,6 +35,7 @@ public class SignupCredentials extends ChangeableBase {
 
     public void setEmail(String email) {
         this.email = email;
+        notifyListeners();
     }
 
     public String getPassword() {
@@ -33,6 +44,7 @@ public class SignupCredentials extends ChangeableBase {
 
     public void setPassword(String password) {
         this.password = password;
+        notifyListeners();
     }
 
     public String getAdhaar() {
@@ -41,6 +53,7 @@ public class SignupCredentials extends ChangeableBase {
 
     public void setAdhaar(String adhaar) {
         this.adhaar = adhaar;
+        notifyListeners();
     }
 
     public String getIFSC() {
@@ -49,6 +62,7 @@ public class SignupCredentials extends ChangeableBase {
 
     public void setIFSC(String IFSC) {
         this.IFSC = IFSC;
+        notifyListeners();
     }
 
     public Long getAccountNumber() {
@@ -57,6 +71,7 @@ public class SignupCredentials extends ChangeableBase {
 
     public void setAccountNumber(Long accountNumber) {
         this.accountNumber = accountNumber;
+        notifyListeners();
     }
 
 

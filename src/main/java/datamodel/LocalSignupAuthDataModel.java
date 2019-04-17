@@ -1,48 +1,49 @@
 package datamodel;
 
 import io.reactivex.Observable;
-import io.reactivex.Scheduler;
-import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 import io.reactivex.subjects.BehaviorSubject;
 import misc.debug.Debug;
-import model.LoginCredentials;
+import model.SignupCredentials;
 import org.davidmoten.rx.jdbc.Database;
 import ui.ViewManager;
 
-public class LocalLoginAuthDataModel implements LoginAuthDataModel {
+import java.util.Iterator;
 
+public class LocalSignupAuthDataModel implements SignupAuthDataModel {
     private BehaviorSubject<Boolean> mAuthorization = BehaviorSubject.create();
-    private static final String TAG = "LoginDataModel";
 
-    public LocalLoginAuthDataModel(){
+    private static final String TAG = "SignupDataModel";
 
-
+    public LocalSignupAuthDataModel(){
     }
+
+
     @Override
-    public void checkAuthorization(LoginCredentials credentials) {
+    public void checkAuthorization(SignupCredentials credentials) {
         Debug.printThread(TAG);
         Debug.log(TAG, "Inside checkAuth");
         //Validate Credentials
         Database db = ViewManager.getInstance().getDb();
-        db.select("select uid from Users where Username = ? and Password = ?")
-                .parameters(credentials.getUsername(), credentials.getPassword())
+        db.select("select uid from Users where Username = ?")
+                .parameter(credentials.getUsername())
                 .getAs(Long.class)
                 .doOnNext((value)->
                 {
+                    //Somehow never called :(
                     Debug.printThread(TAG);
                     System.out.println("Printing "+value+" on thread "+ Thread.currentThread().getName());
                 })
                 .isEmpty()
                 .observeOn(Schedulers.computation())
-                .subscribe(aBoolean -> {
+                .subscribe(isNotPresent -> {
                     Debug.printThread(TAG);
-                    System.out.println("Surprise mofos! \nBoolean is "+ aBoolean);
+                    System.out.println("Surprise mofos! \nBoolean is "+ isNotPresent);
                     Debug.log(TAG, mAuthorization);
-                    if (aBoolean) {
-                        mAuthorization.onNext(false);
-                    } else {
+                    if (isNotPresent) {
                         mAuthorization.onNext(true);
+                    } else {
+                        mAuthorization.onNext(false);
                     }
                 });
     }

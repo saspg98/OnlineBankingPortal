@@ -2,20 +2,27 @@ package viewmodel;
 
 import datamodel.SignupAuthDataModel;
 import io.reactivex.Observable;
+import io.reactivex.Scheduler;
+import io.reactivex.schedulers.Schedulers;
 import misc.InputValidator;
 import model.SignupCredentials;
 import model.changeapi.RxChangeableBase;
+
+import java.util.Iterator;
 
 public class SignupViewModel {
 
     private SignupCredentials mCurrCredentials = new SignupCredentials();
     private SignupAuthDataModel mDataModel;
     private Observable<Boolean> validationStream;
+    private Iterator<Boolean> latestValidation;
 
     public SignupViewModel(SignupAuthDataModel mDataModel) {
         this.mDataModel = mDataModel;
         validationStream = RxChangeableBase.observe(mCurrCredentials)
-                .map((signupCredentials) -> validateFields(signupCredentials));
+                .observeOn(Schedulers.computation())
+                .map(this::validateFields);
+        latestValidation = validationStream.blockingMostRecent(false).iterator();
     }
 
     private boolean validateFields(SignupCredentials signupCredentials) {
@@ -62,7 +69,7 @@ public class SignupViewModel {
 
     public void onLogin() {
         //Check the last value in the validation stream, proceed if true
-        if (validationStream.blockingLast()) {
+        if (latestValidation.next()) {
             mDataModel.checkAuthorization(mCurrCredentials);
         }
     }
