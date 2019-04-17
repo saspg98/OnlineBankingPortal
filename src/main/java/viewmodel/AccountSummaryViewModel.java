@@ -6,28 +6,33 @@ import io.reactivex.subjects.BehaviorSubject;
 import model.BankAccount;
 
 import java.util.List;
+import java.util.Map;
 
 public class AccountSummaryViewModel {
     private UserDataModel mDataModel;
     private BehaviorSubject<BankAccount> mSelectedAccount = BehaviorSubject.create();
+    private Map<String, BankAccount> mAccountData;
+
+    public void setAccountData(Map<String, BankAccount> mAccountData) {
+        this.mAccountData = mAccountData;
+    }
 
     public AccountSummaryViewModel(UserDataModel mDataModel) {
         this.mDataModel = mDataModel;
     }
 
-    public Observable<List<String>> getRegisteredBranches() {
+    public Observable<Map<String, BankAccount>> getRegisteredBranches() {
         return mDataModel.getUserAccounts()
                 .flatMap(list ->
                         Observable.fromIterable(list)
-                                .map(mDataModel::getFormattedAccountDetails)
-                                .toList()
+                                .toMap(mDataModel::getFormattedAccountDetails)
                                 .toObservable()
                 );
     }
 
 
     public void accountSelected(String account) {
-        mSelectedAccount.onNext(mDataModel.getAccountFromString(account));
+        mSelectedAccount.onNext(mAccountData.get(account));
     }
 
     public Observable<BankAccount> getSelectedAccount() {

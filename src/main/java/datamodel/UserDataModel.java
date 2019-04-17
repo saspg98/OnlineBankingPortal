@@ -21,15 +21,14 @@ public interface UserDataModel {
 
     Observable<List<Transaction>> getUserTransactions();
 
-    BankAccount getAccountFromString(String formattedString);
+    Observable<List<Beneficiary>> getUserBeneficiaries();
 
 
-    Observable<List<Beneficiary>> getUserBenefactors();
+    void makeTransaction(BankAccount accountToUse, double amount, Beneficiary benefactor);
 
-    Beneficiary getBenefactorFromString(String name);
+    void addBeneficiary(long beneficiaryAccount, long userAccount);
 
+    Observable<Boolean> getAddBeneficiarySuccessStream();
 
-    boolean makeTransaction(BankAccount accountToUse, double amount, Beneficiary benefactor);
-
-    boolean addBeneficiary(String beneficiary);
+    Observable<Boolean> getTransactionSuccessStream();
 }

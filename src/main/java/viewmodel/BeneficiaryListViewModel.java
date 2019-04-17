@@ -6,14 +6,14 @@ import model.Beneficiary;
 
 import java.util.List;
 
-public class BenefactorListViewModel {
+public class BeneficiaryListViewModel {
     private UserDataModel userDataModel;
 
-    public BenefactorListViewModel(UserDataModel userDataModel) {
+    public BeneficiaryListViewModel(UserDataModel userDataModel) {
         this.userDataModel = userDataModel;
     }
 
-    public Observable<List<Beneficiary>> getBenefactors() {
-        return userDataModel.getUserBenefactors();
+    public Observable<List<Beneficiary>> getBeneficiaries() {
+        return userDataModel.getUserBeneficiaries();
     }
 }

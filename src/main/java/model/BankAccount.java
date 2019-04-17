@@ -7,12 +7,14 @@ public interface BankAccount {
     double balance();
 
     @Column
-    Long accNo();
+    long accNo();
 
     @Column
-    String bcode();
+    long bcode();
 
     @Column
-    Long uid();
+    long uid();
 
+    @Column
+    char Acctype();
 }

@@ -3,32 +3,50 @@ package viewmodel;
 import datamodel.UserDataModel;
 import io.reactivex.Observable;
 import io.reactivex.subjects.BehaviorSubject;
+import misc.debug.Debug;
 import model.BankAccount;
 import model.Beneficiary;
 import ui.ViewManager;
 import viewmodel.constant.Constant;
 
-import java.util.List;
+import java.util.Iterator;
+import java.util.Map;
 
 public class MakeTransactionViewModel {
     private UserDataModel mDataModel;
-    private BehaviorSubject<Beneficiary> mSelectedBenefactor;
+    private BehaviorSubject<Beneficiary> mSelectedBeneficiary = BehaviorSubject.create();
     private final BankAccount mAccountToUse;
     private BehaviorSubject<Boolean> mAmountValidityStream = BehaviorSubject.create();
     private double mAmount;
+    private Map<String, Beneficiary> mBeneficiaryData;
+    private Iterator<Beneficiary> latestBeneficiary;
+    private static final String TAG = "MakeTransactionVM";
 
+
+    public void setBeneficiaryData(Map<String, Beneficiary> mBeneficiaryData) {
+        this.mBeneficiaryData = mBeneficiaryData;
+    }
 
     public MakeTransactionViewModel(UserDataModel userDataModel, BankAccount mAccountToUse) {
         this.mDataModel = userDataModel;
         this.mAccountToUse = mAccountToUse;
+        latestBeneficiary = mSelectedBeneficiary.blockingMostRecent(null).iterator();
     }
 
-    public Observable<List<Beneficiary>> getBenefactors() {
-        return mDataModel.getUserBenefactors();
+    public Observable<Map<String, Beneficiary>> getBenefactors() {
+        return mDataModel.getUserBeneficiaries()
+                .flatMap((oldList)-> Observable.fromIterable(oldList)
+                         .toMap(this::getFormattedString)
+                         .toObservable());
+
+    }
+
+    private String getFormattedString(Beneficiary beneficiary) {
+        return beneficiary.toString();
     }
 
     public Observable<Beneficiary> getSelectedBenefactor() {
-        return mSelectedBenefactor;
+        return mSelectedBeneficiary;
     }
 
     public Observable<Boolean> getAmountValidityStream() {
@@ -51,17 +69,24 @@ public class MakeTransactionViewModel {
         mAmount = d;
     }
 
-    public void benefactorSelected(String name) {
-        mSelectedBenefactor.onNext(mDataModel.getBenefactorFromString(name));
+    public void benefactorSelected(String formattedString) {
+        mSelectedBeneficiary.onNext(mBeneficiaryData.get(formattedString));
     }
 
-    public void requestBenefactorDetails(String name) throws Exception {
+    public void requestBenefactorDetails(String formattedString) throws Exception {
         ViewManager.getInstance().setScene(Constant.Path.BENEFACTOR_DETAIL_VIEW,
-                mDataModel.getBenefactorFromString(name));
+                mBeneficiaryData.get(formattedString));
     }
 
-    public boolean makeTransaction() {
-        return mDataModel.makeTransaction(mAccountToUse, mAmount, mSelectedBenefactor.blockingLast());
+    public Observable<Boolean> getTransacationSuccessStream(){
+        return mDataModel.getTransactionSuccessStream();
+    }
+
+    public void makeTransaction() {
+        if(latestBeneficiary.next() != null)
+            mDataModel.makeTransaction(mAccountToUse, mAmount, latestBeneficiary.next());
+        else
+            Debug.err(TAG, "This should not have happened");
     }
 
 }

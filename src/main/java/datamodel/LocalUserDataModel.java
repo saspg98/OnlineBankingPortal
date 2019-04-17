@@ -3,6 +3,8 @@ package datamodel;
 import io.reactivex.Observable;
 import io.reactivex.Scheduler;
 import io.reactivex.schedulers.Schedulers;
+import io.reactivex.subjects.BehaviorSubject;
+import misc.debug.Debug;
 import model.BankAccount;
 import model.Beneficiary;
 import model.Transaction;
@@ -10,12 +12,15 @@ import model.User;
 import ui.ViewManager;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
+import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.List;
 
 public final class LocalUserDataModel implements UserDataModel{
+    private static final String TAG = "UserDataModel";
     private long UID;
+    private BehaviorSubject<Boolean> mAddBeneficiarySuccessStream = BehaviorSubject.create();
+    private BehaviorSubject<Boolean> mTransactionSuccessStream = BehaviorSubject.create();
 
     public LocalUserDataModel(long uid) {
         UID = uid;
@@ -78,14 +83,9 @@ public final class LocalUserDataModel implements UserDataModel{
         return null;
     }
 
-    @Override
-    public BankAccount getAccountFromString(String formattedString) {
-        //TODO: Implementation
-        return null;
-    }
 
     @Override
-    public Observable<List<Beneficiary>> getUserBenefactors() {
+    public Observable<List<Beneficiary>> getUserBeneficiaries() {
         return ViewManager.getInstance().getDb()
                 .select("select AccNo, Balance, AccType, BCode from Accounts " +
                         "where AccNo = ? ")
@@ -108,37 +108,61 @@ public final class LocalUserDataModel implements UserDataModel{
 
     }
 
-    @Override
-    public Beneficiary getBenefactorFromString(String name) {
-        //TODO: Implementation ->Define "name"
-        return null;
-    }
 
     @Override
-    public boolean makeTransaction(BankAccount accountToUse, double amount, Beneficiary beneficiary) {
+    public void makeTransaction(BankAccount accountToUse, double amount, Beneficiary beneficiary) {
         //TODO: Either change to a transactionStream or call method async with call backs
-//        ViewManager.getInstance().getDb()
-//                .update("insert into Transactions(Sender, Receiver, Time, Amount) " +
-//                        "values( ?, ?, ?, ?)")
-//                .parameters(accountToUse.accNo(), beneficiary.accNo, LocalDate.now(), amount)
-//                .transaction()
-//                .doOnNext((obj)->{
-//                    obj.update("update Accounts set balance = ? " +
-//                            "where AccNo = ? ")
-//                            .parameters(accountToUse.balance()-amount, accountToUse.accNo())
-//                            .transactedValuesOnly(); })
-//                .observeOn(Schedulers.computation())
-//                .subscribe();
-        //NOTE: The SQL Logic is probably alright, but probably should make this return a stream
+        ViewManager.getInstance().getDb()
+                .update("insert into Transactions(Sender, Receiver, Time, Amount) " +
+                        "values( ?, ?, ?, ?)")
+                .parameters(accountToUse.accNo(), beneficiary.accNo(), LocalDate.now(), amount)
+                .transaction()
+                .doOnNext((obj)->{
+                    obj.update("update Accounts set balance = ? " +
+                            "where AccNo = ? ")
+                            .parameters(accountToUse.balance()-amount, accountToUse.accNo())
+                            .transactedValuesOnly(); })
+                .observeOn(Schedulers.computation())
+                .subscribe((val) ->
+                        {
+                            Debug.log(TAG, "Inside On Next for Transaction", "Tx value",
+                                    val.value());
+                        }
+                        , (err)->{Debug.err(TAG,"Got Error in Transaction!", err);
+                            mTransactionSuccessStream.onNext(false);}
+                        , ()->{Debug.log(TAG, "Completed Transaction! Possibly successfully!");
+                            mTransactionSuccessStream.onNext(true);});
+//        NOTE: The SQL Logic is probably alright, but probably should make this return a stream
 
-        return false;
     }
 
     @Override
-    public boolean addBeneficiary(String beneficiary) {
-        //TODO: Either change to additionOfBeneficiaryStream or call method async with callbacks
-        //TODO: Define beneficiary
-        return false;
+    public void addBeneficiary(long beneficiaryAccNo, long userAccount) {
+        ViewManager.getInstance().getDb()
+                .update("insert into Beneficiaries values( " +
+                        "?, ?")
+                .parameters(userAccount, beneficiaryAccNo)
+                .transaction()
+                .observeOn(Schedulers.computation())
+                .subscribe((val) ->
+                        {
+                            Debug.log(TAG, "Inside On Next for beneficiary", "Tx value",
+                                    val.value());
+                        }
+                , (err)->{Debug.err(TAG,"Got Error in Beneficiary!", err);
+                        mAddBeneficiarySuccessStream.onNext(false);}
+                , ()->{Debug.log(TAG, "Completed Addition! Possibly successfully!");
+                        mAddBeneficiarySuccessStream.onNext(true);});
+    }
+
+    @Override
+    public Observable<Boolean> getAddBeneficiarySuccessStream() {
+        return mAddBeneficiarySuccessStream;
+    }
+
+    @Override
+    public Observable<Boolean> getTransactionSuccessStream() {
+        return mTransactionSuccessStream;
     }
 
     public void onLogout(){
