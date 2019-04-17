@@ -4,10 +4,15 @@ package ui.controllers;/*
  * and open the template in the editor.
  */
 
+import io.reactivex.Scheduler;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.schedulers.Schedulers;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TextField;
+import misc.debug.Debug;
+import sun.security.krb5.internal.ccache.Tag;
 import ui.ViewManager;
 import viewmodel.LoginViewModel;
 
@@ -20,6 +25,9 @@ import java.util.ResourceBundle;
 public class LoginScreenController implements Initializable {
 
     LoginViewModel viewModel = null;
+    CompositeDisposable mObservables = new CompositeDisposable();
+
+    private static final String TAG = "LoginScreenController";
 
     @FXML
     private TextField TfUsername;
@@ -40,10 +48,17 @@ public class LoginScreenController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
 
         viewModel = new LoginViewModel(ViewManager.getInstance().getLoginAuthDataModelInstance());
-        viewModel.getValidationStream()
-                .subscribe((answer)-> {showErrorLable(!answer);});
-        viewModel.getAuthorizationStream()
-                .subscribe(this::loginAuth);
+        mObservables.add(viewModel.getValidationStream()
+                .observeOn(Schedulers.trampoline())
+                .subscribe((answer)-> {showErrorLable(!answer);}, this::onError));
+        mObservables.add(viewModel.getAuthorizationStream()
+                .observeOn(Schedulers.trampoline())
+                .subscribe(this::loginAuth , this::onError));
+    }
+
+    private void onError(Throwable throwable){
+        Debug.printThread(TAG);
+        Debug.log(TAG, "Onerror!! printing throwable", throwable);
     }
 
     private void loginAuth(Boolean b) {
@@ -52,15 +67,22 @@ public class LoginScreenController implements Initializable {
             viewModel.onSuccessfullLogin();
         }else{
             // Invalid username and password
+            System.err.println("Wrong Username or Password");
         }
 
     }
 
     private void showErrorLable(boolean b) {
-
+        Debug.err(TAG, Thread.currentThread().getName());
+        Debug.log(TAG, "Should I show error Label?", b);
         if(b){
+            System.err.println("Invalid Username or Password");
             //show SQL injection error
         }
+    }
+
+    private void onDispose(){
+        mObservables.clear();
     }
 
 }

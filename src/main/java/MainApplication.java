@@ -4,6 +4,7 @@
 
 import javafx.application.Application;
 import javafx.stage.Stage;
+import misc.debug.Debug;
 import org.davidmoten.rx.jdbc.ConnectionProvider;
 import org.davidmoten.rx.jdbc.Database;
 import ui.ViewManager;
@@ -40,11 +41,14 @@ public class MainApplication extends Application {
             @Override
             public Connection get() {
                 try {
-                    conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/sample", "root", "saurav@17");
+                    conn = DriverManager.getConnection(Constant.Connection.DBMS_URL, Constant.Connection.DBMS_USER,
+                            Constant.Connection.DBMS_PASS);
+                    System.out.println("I have the shizz!! connection created");
+                    Debug.printThread("Main");
                     return conn;
                 } catch (SQLException e) {
                     e.printStackTrace();
-                    System.out.println("Error");
+                    System.out.println("Error in connecting to the database!");
                 }
                 return null;
             }
@@ -54,6 +58,7 @@ public class MainApplication extends Application {
                 if (conn != null) {
                     try {
                         conn.close();
+                        System.out.println("Connection Closed!");
                     } catch (SQLException e) {
                         e.printStackTrace();
                     }
@@ -62,11 +67,11 @@ public class MainApplication extends Application {
             }
         };
 
-        Database db = Database.fromBlocking(connectionProvider);
+        Database db = Database.from(Constant.Connection.DBMS_FULL_URL,15);
         ViewManager.getInstance().setDatabase(db);
         //Sample query to test connection with database
         System.out.println("Database working fine");
-        db.select("SELECT * FROM test")
+        db.select("SELECT * FROM users")
                 .getAs(String.class, Integer.class)
                 .blockingForEach(System.out::println);
 
