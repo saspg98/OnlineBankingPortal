@@ -11,7 +11,9 @@ import model.Transaction;
 import model.User;
 import ui.ViewManager;
 
+import java.sql.Timestamp;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.List;
@@ -115,7 +117,7 @@ public final class LocalUserDataModel implements UserDataModel{
         ViewManager.getInstance().getDb()
                 .update("insert into Transactions(Sender, Receiver, Time, Amount) " +
                         "values( ?, ?, ?, ?)")
-                .parameters(accountToUse.accNo(), beneficiary.accNo(), LocalDate.now(), amount)
+                .parameters(accountToUse.accNo(), beneficiary.accNo(), Timestamp.valueOf(LocalDateTime.now()), amount)
                 .transaction()
                 .doOnNext((obj)->{
                     obj.update("update Accounts set balance = ? " +

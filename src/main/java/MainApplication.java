@@ -15,6 +15,10 @@ import javax.annotation.Nonnull;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class MainApplication extends Application {
 
@@ -75,6 +79,7 @@ public class MainApplication extends Application {
         db.select("SELECT * FROM users")
                 .autoMap(User.class)
                 .blockingForEach(System.out::println);
+
 
     }
 }
