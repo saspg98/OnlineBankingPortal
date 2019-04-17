@@ -5,7 +5,6 @@ import io.reactivex.Observable;
 import io.reactivex.subjects.BehaviorSubject;
 import model.BankAccount;
 
-import java.util.List;
 import java.util.Map;
 
 public class AccountSummaryViewModel {
@@ -42,6 +41,6 @@ public class AccountSummaryViewModel {
 
     public Observable<String> getName() {
         return mDataModel.fetchUserDetails()
-                .map(user -> user.getName());
+                .map(user -> user.name());
     }
 }

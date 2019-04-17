@@ -5,6 +5,7 @@
 import javafx.application.Application;
 import javafx.stage.Stage;
 import misc.debug.Debug;
+import model.User;
 import org.davidmoten.rx.jdbc.ConnectionProvider;
 import org.davidmoten.rx.jdbc.Database;
 import ui.ViewManager;
@@ -72,7 +73,7 @@ public class MainApplication extends Application {
         //Sample query to test connection with database
         System.out.println("Database working fine");
         db.select("SELECT * FROM users")
-                .getAs(String.class, Integer.class)
+                .autoMap(User.class)
                 .blockingForEach(System.out::println);
 
     }

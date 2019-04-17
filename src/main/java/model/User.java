@@ -10,8 +10,8 @@ public interface User {
     @Column
     Long uid();
     
-    @Column("Name")
-    String getName();
+    @Column
+    String name();
     
     @Column
     String Address();
