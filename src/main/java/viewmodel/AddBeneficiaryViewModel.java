@@ -3,7 +3,7 @@ package viewmodel;
 import datamodel.UserDataModel;
 import io.reactivex.Observable;
 import io.reactivex.subjects.BehaviorSubject;
-import misc.InputValidator;
+import misc.validator.InputValidator;
 
 import java.util.Iterator;
 

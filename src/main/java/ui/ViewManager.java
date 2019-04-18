@@ -1,13 +1,25 @@
 package ui;
 
+import com.sun.deploy.util.FXLoader;
+import com.sun.xml.internal.bind.v2.runtime.unmarshaller.Loader;
 import datamodel.LocalLoginAuthDataModel;
+import datamodel.LocalSignUpAuthDataModel;
 import datamodel.LoginAuthDataModel;
+import datamodel.SignupAuthDataModel;
+import javafx.application.Platform;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
+import misc.debug.Debug;
 import org.davidmoten.rx.jdbc.Database;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
+import ui.controllers.LoginScreenController;
+import ui.controllers.SignUpScreenController;
+import viewmodel.constant.Constant;
 
 import java.io.IOException;
 
@@ -16,14 +28,24 @@ public class ViewManager {
 
     private Stage mainStage;
     private LoginAuthDataModel loginAuthDataModel;
+    private SignupAuthDataModel signupAuthDataModel;
 
     private Database db;
+
+    private FXMLLoader fxmlLoader = null;
 
     public LoginAuthDataModel getLoginAuthDataModelInstance() {
         if (loginAuthDataModel == null) {
             loginAuthDataModel = new LocalLoginAuthDataModel();
         }
         return loginAuthDataModel;
+    }
+
+    public SignupAuthDataModel getSignUpAuthDataModelInstance() {
+        if (signupAuthDataModel == null) {
+            signupAuthDataModel = new LocalSignUpAuthDataModel();
+        }
+        return signupAuthDataModel;
     }
 
     private ViewManager() {
@@ -45,7 +67,8 @@ public class ViewManager {
 
         Parent root = null;
         try {
-            root = FXMLLoader.load(getClass().getClassLoader().getResource(FXMLPATH));
+            fxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource(FXMLPATH));
+            root = fxmlLoader.load();
         } catch (IOException e) {
             System.out.println("Could not load scene!");
             e.printStackTrace();
@@ -53,13 +76,48 @@ public class ViewManager {
 
         Scene scene = new Scene(root);
         mainStage.setScene(scene);
+        mainStage.centerOnScreen();
         mainStage.show();
+
+        mainStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+            @Override
+            public void handle(WindowEvent event) {
+                ((LoginScreenController)fxmlLoader.getController()).disposeObservables();
+                Debug.err("CLOSING", FXMLPATH);
+                System.exit(0);
+            }
+        });
     }
 
     public <T> void setScene(String FXMLPATH, T... data) throws Exception {
         //TODO: Handle Passing of data here
         throw new Exception("Data Passing not implemented", new NotImplementedException());
 
+    }
+
+    public void createSignUp(String FXMLPATH) {
+
+        Stage window = new Stage();
+        Parent signUpForm = null;
+        try {
+            signUpForm = FXMLLoader.load(getClass().getClassLoader().getResource(Constant.Path.SIGNUP_VIEW));
+        } catch (IOException e) {
+            e.printStackTrace();
+            Debug.err("Unable to create alert box for sign up");
+        }
+
+        Scene scene = new Scene(signUpForm);
+        window.initModality(Modality.APPLICATION_MODAL);
+        window.setScene(scene);
+        window.centerOnScreen();
+        window.show();
+        window.setOnCloseRequest(new EventHandler<WindowEvent>() {
+            @Override
+            public void handle(WindowEvent event) {
+                ((SignUpScreenController)fxmlLoader.getController()).disposeObservables();
+                Debug.err("CLOSING",FXMLPATH);
+            }
+        });
     }
 
     public void setDatabase(Database db) {

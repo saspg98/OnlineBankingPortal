@@ -14,6 +14,7 @@ import javafx.scene.control.TextField;
 import misc.debug.Debug;
 import ui.ViewManager;
 import viewmodel.LoginViewModel;
+import viewmodel.constant.Constant;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -23,49 +24,60 @@ import java.util.ResourceBundle;
  */
 public class LoginScreenController implements Initializable {
 
+    private static final String TAG = "LoginScreenController";
     LoginViewModel viewModel = null;
     CompositeDisposable mObservables = new CompositeDisposable();
-
-    private static final String TAG = "LoginScreenController";
 
     @FXML
     private TextField TfUsername;
     @FXML
     private TextField TfPassword;
     @FXML
-    private Label ErrorLable;
+    private Label errorLabel;
 
     @FXML
     private void onSignUp(ActionEvent actionEvent) {
+
+        disposeObservables();
+        viewModel.onSignUp(Constant.Path.SIGNUP_VIEW);
     }
 
     @FXML
-    private void onLoginIn(ActionEvent actionEvent) {
+    private void onLoginClicked(ActionEvent actionEvent) {
 
-        System.err.println("Sign Up button clicked");
+        Debug.err("LOGIN","Sign Up button clicked");
 
-        viewModel.setUsername(TfUsername.getText());
-        viewModel.setPassword(TfPassword.getText());
+        viewModel.setUsername(TfUsername.getText().trim());
+        viewModel.setPassword(TfPassword.getText().trim());
         viewModel.onLogin();
     }
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 
+        errorLabel.setVisible(false);
         viewModel = new LoginViewModel(ViewManager.getInstance().getLoginAuthDataModelInstance());
+        createObservables();
+
+    }
+
+    private void createObservables(){
+
         mObservables.add(viewModel.getValidationStream()
                 .observeOn(Schedulers.trampoline())
                 .subscribe((answer) -> {
-                    showErrorLable(!answer);
-                }, this::onError));
+                    showErrorLabel(!answer);
+                }, this::onLoginError));
         mObservables.add(viewModel.getAuthorizationStream()
                 .observeOn(Schedulers.trampoline())
-                .subscribe(this::loginAuth, this::onError));
+                .subscribe(this::loginAuth, this::onLoginError));
     }
 
-    private void onError(Throwable throwable) {
-        Debug.printThread(TAG);
-        Debug.log(TAG, "Onerror!! printing throwable", throwable);
+    private void onLoginError(Throwable throwable) {
+        //Debug.printThread(TAG);
+        Debug.log(TAG, "onLoginError!! printing throwable", throwable);
+        errorLabel.setText("Error in Logging!");
+        errorLabel.setVisible(true);
     }
 
     private void loginAuth(Boolean b) {
@@ -73,22 +85,22 @@ public class LoginScreenController implements Initializable {
         if (b) {
             viewModel.onSuccessfullLogin();
         } else {
-            // Invalid username and password
             System.err.println("Wrong Username or Password");
+            errorLabel.setText("Invalid Username or Password!");
+            errorLabel.setVisible(true);
         }
-
     }
 
-    private void showErrorLable(boolean b) {
-        Debug.err(TAG, Thread.currentThread().getName());
-        Debug.log(TAG, "Should I show error Label?", b);
+    private void showErrorLabel(boolean b) {
+
         if (b) {
             System.err.println("Invalid Username or Password");
-            //show SQL injection error
+            errorLabel.setText("Invalid Username or Password!");
+            errorLabel.setVisible(true);
         }
     }
 
-    private void onDispose() {
+    public void disposeObservables() {
         mObservables.clear();
     }
 }

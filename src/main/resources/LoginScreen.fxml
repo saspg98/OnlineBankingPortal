@@ -26,7 +26,7 @@
     <RowConstraints maxHeight="99.0" minHeight="10.0" prefHeight="67.0" vgrow="SOMETIMES" />
   </rowConstraints>
    <children>
-      <Button fx:id="LoginButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onLoginIn" prefHeight="0.0" prefWidth="170.0" style="-fx-background-color: #6495ed;" text="Login" textAlignment="JUSTIFY" translateX="4.0" GridPane.columnIndex="1" GridPane.rowIndex="7">
+      <Button fx:id="LoginButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onLoginClicked" prefHeight="0.0" prefWidth="170.0" style="-fx-background-color: #6495ed;" text="Login" textAlignment="JUSTIFY" translateX="4.0" GridPane.columnIndex="1" GridPane.rowIndex="7">
          <GridPane.margin>
             <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
          </GridPane.margin>
@@ -39,7 +39,7 @@
             <Font size="24.0" />
          </font>
       </Label>
-      <TextField id="TfUsername" prefHeight="40.0" prefWidth="383.0" GridPane.columnSpan="2" GridPane.rowIndex="3">
+      <TextField fx:id="TfUsername" prefHeight="40.0" prefWidth="383.0" GridPane.columnSpan="2" GridPane.rowIndex="3">
          <font>
             <Font size="24.0" />
          </font>
@@ -62,12 +62,12 @@
             <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
          </GridPane.margin>
       </Button>
-      <PasswordField id="TfPassword" prefHeight="40.0" prefWidth="383.0" GridPane.columnSpan="2" GridPane.rowIndex="5">
+      <PasswordField fx:id="TfPassword" prefHeight="40.0" prefWidth="383.0" GridPane.columnSpan="2" GridPane.rowIndex="5">
          <font>
             <Font size="24.0" />
          </font>
       </PasswordField>
-      <Label id="LError" fx:id="ErrorLable" disable="true" minHeight="-Infinity" minWidth="-Infinity" prefHeight="42.0" prefWidth="385.0" text="*Please enter a valid Username/Password" textFill="RED" GridPane.rowIndex="1">
+      <Label fx:id="errorLabel" disable="true" minHeight="-Infinity" minWidth="-Infinity" prefHeight="42.0" prefWidth="385.0" text="*Please enter a valid Username/Password" textFill="RED" GridPane.rowIndex="1">
          <font>
             <Font name="Arial Italic" size="20.0" />
          </font>

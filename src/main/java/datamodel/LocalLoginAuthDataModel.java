@@ -20,7 +20,7 @@ public class LocalLoginAuthDataModel implements LoginAuthDataModel {
 
     @Override
     public void checkAuthorization(LoginCredentials credentials) {
-        Debug.printThread(TAG);
+        //Debug.printThread(TAG);
         Debug.log(TAG, "Inside checkAuth");
         //Validate Credentials
         Database db = ViewManager.getInstance().getDb();
@@ -29,13 +29,13 @@ public class LocalLoginAuthDataModel implements LoginAuthDataModel {
                 .getAs(Long.class)
                 .doOnNext((value) ->
                 {
-                    Debug.printThread(TAG);
+                    //Debug.printThread(TAG);
                     System.out.println("Printing " + value + " on thread " + Thread.currentThread().getName());
                 })
                 .isEmpty()
                 .observeOn(Schedulers.computation())
                 .subscribe(aBoolean -> {
-                    Debug.printThread(TAG);
+                    //Debug.printThread(TAG);
                     System.out.println("Surprise mofos! \nBoolean is " + aBoolean);
                     Debug.log(TAG, mAuthorization);
                     if (aBoolean) {

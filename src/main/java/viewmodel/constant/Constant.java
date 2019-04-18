@@ -8,7 +8,7 @@ public class Constant {
         public static final String HOME_SCREEN_VIEW = "";
         public static final String LOGIN_VIEW = "LoginScreen.fxml";
         public static final String SETTINGS_VIEW = "";
-        public static final String SIGNUP_VIEW = "";
+        public static final String SIGNUP_VIEW = "SignUpScreen.fxml";
         public static final String ACCOUNT_VIEW = "";
         public static final String BENEFACTOR_DETAIL_VIEW = "";
     }

@@ -8,18 +8,18 @@ import model.SignupCredentials;
 import org.davidmoten.rx.jdbc.Database;
 import ui.ViewManager;
 
-public class LocalSignupAuthDataModel implements SignupAuthDataModel {
+public class LocalSignUpAuthDataModel implements SignupAuthDataModel {
     private BehaviorSubject<Boolean> mAuthorization = BehaviorSubject.create();
 
     private static final String TAG = "SignupDataModel";
 
-    public LocalSignupAuthDataModel() {
+    public LocalSignUpAuthDataModel() {
     }
 
 
     @Override
     public void checkAuthorization(SignupCredentials credentials) {
-        Debug.printThread(TAG);
+        //Debug.printThread(TAG);
         Debug.log(TAG, "Inside checkAuth");
         //Validate Credentials
         Database db = ViewManager.getInstance().getDb();
@@ -29,13 +29,13 @@ public class LocalSignupAuthDataModel implements SignupAuthDataModel {
                 .doOnNext((value) ->
                 {
                     //Somehow never called :(
-                    Debug.printThread(TAG);
+                    //Debug.printThread(TAG);
                     System.out.println("Printing " + value + " on thread " + Thread.currentThread().getName());
                 })
                 .isEmpty()
                 .observeOn(Schedulers.computation())
                 .subscribe(isNotPresent -> {
-                    Debug.printThread(TAG);
+                    //Debug.printThread(TAG);
                     System.out.println("Surprise mofos! \nBoolean is " + isNotPresent);
                     Debug.log(TAG, mAuthorization);
                     if (isNotPresent) {

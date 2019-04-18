@@ -3,7 +3,8 @@ package viewmodel;
 import datamodel.SignupAuthDataModel;
 import io.reactivex.Observable;
 import io.reactivex.schedulers.Schedulers;
-import misc.InputValidator;
+import misc.debug.Debug;
+import misc.validator.InputValidator;
 import model.SignupCredentials;
 import model.changeapi.RxChangeableBase;
 
@@ -25,7 +26,7 @@ public class SignupViewModel {
     }
 
     private boolean validateFields(SignupCredentials signupCredentials) {
-        return InputValidator.validateEmail(signupCredentials.getEmail()) &&
+        return InputValidator.validateUsername(signupCredentials.getEmail()) &&
                 InputValidator.validatePassword(signupCredentials.getPassword()) &&
                 InputValidator.validateAccountNumber(signupCredentials.getAccountNumber()) &&
                 InputValidator.validateAdhaar(signupCredentials.getAdhaar()) &&
@@ -44,8 +45,7 @@ public class SignupViewModel {
         mCurrCredentials.setPassword(password);
     }
 
-
-    public void setAdhaar(String adhaar) {
+    public void setAadhaar(String adhaar) {
         mCurrCredentials.setAdhaar(adhaar);
     }
 
@@ -53,24 +53,48 @@ public class SignupViewModel {
         mCurrCredentials.setIFSC(IFSC);
     }
 
-
     public void setAccountNumber(Long accountNumber) {
         mCurrCredentials.setAccountNumber(accountNumber);
+    }
+
+    public void setAddress(String trim) {
+    }
+
+    public void setCity(String trim) {
+    }
+
+    public void setDOB(String trim) {
+    }
+
+    public void setCPassword(String trim) {
+    }
+
+    public void setPhoneNumber(long parseLong) {
+    }
+
+    public void setPinCode(int parseInt) {
+    }
+
+    public void setUsername(String trim) {
     }
 
     public Observable<Boolean> getValidationStream() {
         return validationStream;
     }
 
-    public Observable<Boolean> getAuthorizationStream() {
+    public Observable<Boolean> getConfirmSignUpStream() {
         return mDataModel.getAuthorizationStream();
     }
 
-    public void onLogin() {
-        //Check the last value in the validation stream, proceed if true
+    public void onSuccessfullSignUp() {
+    }
+
+    public void onSignUp() {
+
+        System.out.println("onSignUp Called!!");
         if (latestValidation.next()) {
+            Debug.log("SignUpView", "Sign up was true!!");
             mDataModel.checkAuthorization(mCurrCredentials);
         }
     }
-
 }
