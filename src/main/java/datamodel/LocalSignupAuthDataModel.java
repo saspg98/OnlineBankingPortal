@@ -8,14 +8,12 @@ import model.SignupCredentials;
 import org.davidmoten.rx.jdbc.Database;
 import ui.ViewManager;
 
-import java.util.Iterator;
-
 public class LocalSignupAuthDataModel implements SignupAuthDataModel {
     private BehaviorSubject<Boolean> mAuthorization = BehaviorSubject.create();
 
     private static final String TAG = "SignupDataModel";
 
-    public LocalSignupAuthDataModel(){
+    public LocalSignupAuthDataModel() {
     }
 
 
@@ -28,17 +26,17 @@ public class LocalSignupAuthDataModel implements SignupAuthDataModel {
         db.select("select uid from Users where Username = ?")
                 .parameter(credentials.getUsername())
                 .getAs(Long.class)
-                .doOnNext((value)->
+                .doOnNext((value) ->
                 {
                     //Somehow never called :(
                     Debug.printThread(TAG);
-                    System.out.println("Printing "+value+" on thread "+ Thread.currentThread().getName());
+                    System.out.println("Printing " + value + " on thread " + Thread.currentThread().getName());
                 })
                 .isEmpty()
                 .observeOn(Schedulers.computation())
                 .subscribe(isNotPresent -> {
                     Debug.printThread(TAG);
-                    System.out.println("Surprise mofos! \nBoolean is "+ isNotPresent);
+                    System.out.println("Surprise mofos! \nBoolean is " + isNotPresent);
                     Debug.log(TAG, mAuthorization);
                     if (isNotPresent) {
                         mAuthorization.onNext(true);

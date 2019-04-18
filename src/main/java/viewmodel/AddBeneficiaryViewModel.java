@@ -27,26 +27,25 @@ public class AddBeneficiaryViewModel {
         return mUserDataModel.getAddBeneficiarySuccessStream();
     }
 
-    public void setBeneficiaryAccNo(String accNo){
+    public void setBeneficiaryAccNo(String accNo) {
         long acc;
         try {
             acc = Long.parseLong(accNo);
-            if (validateAccNo(acc)){
+            if (validateAccNo(acc)) {
                 validationStream.onNext(true);
                 mBeneficiaryAccountNumber = acc;
             }
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             validationStream.onNext(false);
         }
     }
 
-    private boolean validateAccNo(long accNo){
+    private boolean validateAccNo(long accNo) {
         return InputValidator.validateAccountNumber(accNo);
     }
 
     public void addBeneficiary() {
-        if(latestValidation.next())
+        if (latestValidation.next())
             mUserDataModel.addBeneficiary(mBeneficiaryAccountNumber, mUserAccount);
     }
 }

@@ -13,11 +13,11 @@ public class Constant {
         public static final String BENEFACTOR_DETAIL_VIEW = "";
     }
 
-    public static class Connection{
+    public static class Connection {
         public static final String DBMS_URL = "jdbc:mysql://localhost:3306/bank";
         public static final String DBMS_PASS = "root";
         public static final String DBMS_USER = "root";
-        public static final String DBMS_FULL_URL = "jdbc:mysql://root:root@localhost:3306/bank";
+        public static final String DBMS_FULL_URL = "jdbc:mysql://root:saurav%4017@localhost:3306/bank";
     }
 
 

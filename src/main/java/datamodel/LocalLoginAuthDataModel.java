@@ -1,8 +1,6 @@
 package datamodel;
 
 import io.reactivex.Observable;
-import io.reactivex.Scheduler;
-import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 import io.reactivex.subjects.BehaviorSubject;
 import misc.debug.Debug;
@@ -15,10 +13,11 @@ public class LocalLoginAuthDataModel implements LoginAuthDataModel {
     private BehaviorSubject<Boolean> mAuthorization = BehaviorSubject.create();
     private static final String TAG = "LoginDataModel";
 
-    public LocalLoginAuthDataModel(){
+    public LocalLoginAuthDataModel() {
 
 
     }
+
     @Override
     public void checkAuthorization(LoginCredentials credentials) {
         Debug.printThread(TAG);
@@ -28,16 +27,16 @@ public class LocalLoginAuthDataModel implements LoginAuthDataModel {
         db.select("select uid from Users where Username = ? and Password = ?")
                 .parameters(credentials.getUsername(), credentials.getPassword())
                 .getAs(Long.class)
-                .doOnNext((value)->
+                .doOnNext((value) ->
                 {
                     Debug.printThread(TAG);
-                    System.out.println("Printing "+value+" on thread "+ Thread.currentThread().getName());
+                    System.out.println("Printing " + value + " on thread " + Thread.currentThread().getName());
                 })
                 .isEmpty()
                 .observeOn(Schedulers.computation())
                 .subscribe(aBoolean -> {
                     Debug.printThread(TAG);
-                    System.out.println("Surprise mofos! \nBoolean is "+ aBoolean);
+                    System.out.println("Surprise mofos! \nBoolean is " + aBoolean);
                     Debug.log(TAG, mAuthorization);
                     if (aBoolean) {
                         mAuthorization.onNext(false);

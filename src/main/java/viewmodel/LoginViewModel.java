@@ -2,7 +2,6 @@ package viewmodel;
 
 import datamodel.LoginAuthDataModel;
 import io.reactivex.Observable;
-import io.reactivex.Scheduler;
 import io.reactivex.schedulers.Schedulers;
 import misc.InputValidator;
 import misc.debug.Debug;
@@ -16,7 +15,7 @@ public class LoginViewModel {
     private static final String DEFAULT_EMAIL = "DEFAULT";
     private static final String DEFAULT_PASSWORD = "DEFAULT";
 
-    private static final String TAG= "LoginViewModel";
+    private static final String TAG = "LoginViewModel";
     private LoginCredentials mCurrLoginCredentials;
 
     private LoginAuthDataModel mDataModel;
@@ -34,8 +33,9 @@ public class LoginViewModel {
                     Debug.log(TAG, "New Login creds are ", loginCredentials.getUsername(), " , "
                             , loginCredentials.getPassword());
                     boolean validity = validateFields(loginCredentials);
-                    Debug.log(TAG,"Returning validity of login creds ", validity);
-                    return validity;});
+                    Debug.log(TAG, "Returning validity of login creds ", validity);
+                    return validity;
+                });
         latestValidation = validationStream.blockingMostRecent(false).iterator();
     }
 

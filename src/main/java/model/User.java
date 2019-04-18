@@ -9,26 +9,26 @@ public interface User {
     //TODO: Convert to interface
     @Column
     Long uid();
-    
+
     @Column
     String name();
-    
+
     @Column
     String Address();
-    
+
     @Column
     Date DOB();
-    
+
     @Column
     char Sex();
-    
+
     @Column
     String Username();
-    
+
     @Column
     String Password();
-    
+
     @Column
     String Email();
-    
-    }
+
+}

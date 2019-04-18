@@ -1,7 +1,6 @@
 package datamodel;
 
 import io.reactivex.Observable;
-import io.reactivex.Scheduler;
 import io.reactivex.schedulers.Schedulers;
 import io.reactivex.subjects.BehaviorSubject;
 import misc.debug.Debug;
@@ -12,13 +11,11 @@ import model.User;
 import ui.ViewManager;
 
 import java.sql.Timestamp;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.List;
 
-public final class LocalUserDataModel implements UserDataModel{
+public final class LocalUserDataModel implements UserDataModel {
     private static final String TAG = "UserDataModel";
     private long UID;
     private BehaviorSubject<Boolean> mAddBeneficiarySuccessStream = BehaviorSubject.create();
@@ -68,11 +65,11 @@ public final class LocalUserDataModel implements UserDataModel{
                         "where sender = ? or receiver = ?")
                 .parameterListStream(
                         ViewManager.getInstance().getDb()
-                        .select("select AccNo from Accounts " +
-                                "where UID = ? ")
-                        .parameter(UID)
-                        .getAs(Long.class)
-                        .map(val -> Arrays.asList(val, val))
+                                .select("select AccNo from Accounts " +
+                                        "where UID = ? ")
+                                .parameter(UID)
+                                .getAs(Long.class)
+                                .map(val -> Arrays.asList(val, val))
                 )
                 .autoMap(Transaction.class)
                 .toList()
@@ -93,16 +90,16 @@ public final class LocalUserDataModel implements UserDataModel{
                         "where AccNo = ? ")
                 .parameterStream(
                         ViewManager.getInstance().getDb()
-                        .select("select Beneficiary from Beneficiaries " +
-                                "where AccNo = ?")
-                        .parameterStream(
-                                ViewManager.getInstance().getDb()
-                                .select("select AccNo from Accounts " +
-                                        "where UID = ? ")
-                                .parameter(UID)
+                                .select("select Beneficiary from Beneficiaries " +
+                                        "where AccNo = ?")
+                                .parameterStream(
+                                        ViewManager.getInstance().getDb()
+                                                .select("select AccNo from Accounts " +
+                                                        "where UID = ? ")
+                                                .parameter(UID)
+                                                .getAs(Long.class)
+                                )
                                 .getAs(Long.class)
-                        )
-                        .getAs(Long.class)
                 )
                 .autoMap(Beneficiary.class)
                 .toList()
@@ -119,21 +116,26 @@ public final class LocalUserDataModel implements UserDataModel{
                         "values( ?, ?, ?, ?)")
                 .parameters(accountToUse.accNo(), beneficiary.accNo(), Timestamp.valueOf(LocalDateTime.now()), amount)
                 .transaction()
-                .doOnNext((obj)->{
+                .doOnNext((obj) -> {
                     obj.update("update Accounts set balance = ? " +
                             "where AccNo = ? ")
-                            .parameters(accountToUse.balance()-amount, accountToUse.accNo())
-                            .transactedValuesOnly(); })
+                            .parameters(accountToUse.balance() - amount, accountToUse.accNo())
+                            .transactedValuesOnly();
+                })
                 .observeOn(Schedulers.computation())
                 .subscribe((val) ->
                         {
                             Debug.log(TAG, "Inside On Next for Transaction", "Tx value",
                                     val.value());
                         }
-                        , (err)->{Debug.err(TAG,"Got Error in Transaction!", err);
-                            mTransactionSuccessStream.onNext(false);}
-                        , ()->{Debug.log(TAG, "Completed Transaction! Possibly successfully!");
-                            mTransactionSuccessStream.onNext(true);});
+                        , (err) -> {
+                            Debug.err(TAG, "Got Error in Transaction!", err);
+                            mTransactionSuccessStream.onNext(false);
+                        }
+                        , () -> {
+                            Debug.log(TAG, "Completed Transaction! Possibly successfully!");
+                            mTransactionSuccessStream.onNext(true);
+                        });
 //        NOTE: The SQL Logic is probably alright, but probably should make this return a stream
 
     }
@@ -151,10 +153,14 @@ public final class LocalUserDataModel implements UserDataModel{
                             Debug.log(TAG, "Inside On Next for beneficiary", "Tx value",
                                     val.value());
                         }
-                , (err)->{Debug.err(TAG,"Got Error in Beneficiary!", err);
-                        mAddBeneficiarySuccessStream.onNext(false);}
-                , ()->{Debug.log(TAG, "Completed Addition! Possibly successfully!");
-                        mAddBeneficiarySuccessStream.onNext(true);});
+                        , (err) -> {
+                            Debug.err(TAG, "Got Error in Beneficiary!", err);
+                            mAddBeneficiarySuccessStream.onNext(false);
+                        }
+                        , () -> {
+                            Debug.log(TAG, "Completed Addition! Possibly successfully!");
+                            mAddBeneficiarySuccessStream.onNext(true);
+                        });
     }
 
     @Override
@@ -167,7 +173,7 @@ public final class LocalUserDataModel implements UserDataModel{
         return mTransactionSuccessStream;
     }
 
-    public void onLogout(){
+    public void onLogout() {
         UID = Long.MIN_VALUE;
     }
 }

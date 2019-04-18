@@ -19,8 +19,8 @@ public class ViewManager {
 
     private Database db;
 
-    public LoginAuthDataModel getLoginAuthDataModelInstance(){
-        if(loginAuthDataModel == null){
+    public LoginAuthDataModel getLoginAuthDataModelInstance() {
+        if (loginAuthDataModel == null) {
             loginAuthDataModel = new LocalLoginAuthDataModel();
         }
         return loginAuthDataModel;
@@ -63,7 +63,7 @@ public class ViewManager {
     }
 
     public void setDatabase(Database db) {
-        this.db=db;
+        this.db = db;
     }
 
     public Database getDb() {

@@ -35,9 +35,9 @@ public class MakeTransactionViewModel {
 
     public Observable<Map<String, Beneficiary>> getBenefactors() {
         return mDataModel.getUserBeneficiaries()
-                .flatMap((oldList)-> Observable.fromIterable(oldList)
-                         .toMap(this::getFormattedString)
-                         .toObservable());
+                .flatMap((oldList) -> Observable.fromIterable(oldList)
+                        .toMap(this::getFormattedString)
+                        .toObservable());
 
     }
 
@@ -78,12 +78,12 @@ public class MakeTransactionViewModel {
                 mBeneficiaryData.get(formattedString));
     }
 
-    public Observable<Boolean> getTransacationSuccessStream(){
+    public Observable<Boolean> getTransacationSuccessStream() {
         return mDataModel.getTransactionSuccessStream();
     }
 
     public void makeTransaction() {
-        if(latestBeneficiary.next() != null)
+        if (latestBeneficiary.next() != null)
             mDataModel.makeTransaction(mAccountToUse, mAmount, latestBeneficiary.next());
         else
             Debug.err(TAG, "This should not have happened");

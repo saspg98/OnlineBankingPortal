@@ -7,7 +7,6 @@ import model.BankAccount;
 import ui.ViewManager;
 import viewmodel.constant.Constant;
 
-import java.util.List;
 import java.util.Map;
 
 //Used for opening the MakeTransaction Screen

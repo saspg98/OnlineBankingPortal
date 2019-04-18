@@ -2,7 +2,6 @@ package viewmodel;
 
 import datamodel.SignupAuthDataModel;
 import io.reactivex.Observable;
-import io.reactivex.Scheduler;
 import io.reactivex.schedulers.Schedulers;
 import misc.InputValidator;
 import model.SignupCredentials;
