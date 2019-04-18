@@ -10,6 +10,7 @@ import io.reactivex.schedulers.Schedulers;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import misc.debug.Debug;
 import sun.security.krb5.internal.ccache.Tag;
@@ -33,9 +34,15 @@ public class LoginScreenController implements Initializable {
     private TextField TfUsername;
     @FXML
     private TextField TfPassword;
+    @FXML
+    private Label ErrorLable;
 
     @FXML
-    private void handleButtonAction(ActionEvent event) {
+    private void onSignUp(ActionEvent actionEvent) {
+    }
+
+    @FXML
+    private void onLoginIn(ActionEvent actionEvent) {
 
         System.err.println("Sign Up button clicked");
 
@@ -84,5 +91,4 @@ public class LoginScreenController implements Initializable {
     private void onDispose(){
         mObservables.clear();
     }
-
 }

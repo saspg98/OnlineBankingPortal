@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<GridPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="450.0" prefWidth="400.0" style="-fx-background-color: #dcdcdc;" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.171">
+<GridPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="450.0" prefWidth="400.0" style="-fx-background-color: #dcdcdc;" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.controllers.LoginScreenController">
   <columnConstraints>
     <ColumnConstraints maxWidth="1.7976931348623157E308" minWidth="202.0" prefWidth="203.0" />
     <ColumnConstraints maxWidth="1.7976931348623157E308" minWidth="202.0" prefWidth="203.0" />
@@ -26,7 +26,7 @@
     <RowConstraints maxHeight="99.0" minHeight="10.0" prefHeight="67.0" vgrow="SOMETIMES" />
   </rowConstraints>
    <children>
-      <Button id="BAcceptButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefHeight="0.0" prefWidth="170.0" style="-fx-background-color: #6495ed;" text="Login" textAlignment="JUSTIFY" translateX="4.0" GridPane.columnIndex="1" GridPane.rowIndex="7">
+      <Button fx:id="LoginButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onLoginIn" prefHeight="0.0" prefWidth="170.0" style="-fx-background-color: #6495ed;" text="Login" textAlignment="JUSTIFY" translateX="4.0" GridPane.columnIndex="1" GridPane.rowIndex="7">
          <GridPane.margin>
             <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
          </GridPane.margin>
@@ -54,7 +54,7 @@
             <Font name="System Bold" size="32.0" />
          </font>
       </Label>
-      <Button id="BAcceptButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefHeight="20.0" prefWidth="100.0" style="-fx-background-color: #6495ed;" text="Sign Up" textAlignment="JUSTIFY" GridPane.rowIndex="7">
+      <Button fx:id="SignUpButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onSignUp" prefHeight="20.0" prefWidth="100.0" style="-fx-background-color: #6495ed;" text="Sign Up" textAlignment="JUSTIFY" GridPane.rowIndex="7">
          <font>
             <Font name="Arial Bold" size="20.0" />
          </font>
@@ -67,7 +67,7 @@
             <Font size="24.0" />
          </font>
       </PasswordField>
-      <Label id="LError" disable="true" minHeight="-Infinity" minWidth="-Infinity" prefHeight="42.0" prefWidth="385.0" text="*Please enter a valid Username/Password" textFill="RED" GridPane.rowIndex="1">
+      <Label id="LError" fx:id="ErrorLable" disable="true" minHeight="-Infinity" minWidth="-Infinity" prefHeight="42.0" prefWidth="385.0" text="*Please enter a valid Username/Password" textFill="RED" GridPane.rowIndex="1">
          <font>
             <Font name="Arial Italic" size="20.0" />
          </font>
