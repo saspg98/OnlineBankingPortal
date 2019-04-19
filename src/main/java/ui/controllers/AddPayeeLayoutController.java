@@ -3,8 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package dbmsproject;
+package ui.controllers;
 
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 
 import java.net.URL;
@@ -25,4 +27,7 @@ public class AddPayeeLayoutController implements Initializable {
         // TODO
     }
 
+    @FXML
+    private void onAddPayeeClicked(ActionEvent actionEvent) {
+    }
 }

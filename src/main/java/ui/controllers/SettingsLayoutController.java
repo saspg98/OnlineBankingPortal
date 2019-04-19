@@ -5,6 +5,8 @@
  */
 package ui.controllers;
 
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 
 import java.net.URL;
@@ -25,4 +27,7 @@ public class SettingsLayoutController implements Initializable {
         // TODO
     }
 
+    @FXML
+    private void confirmButtonClicked(ActionEvent actionEvent) {
+    }
 }

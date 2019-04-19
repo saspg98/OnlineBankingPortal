@@ -40,7 +40,9 @@ public class LocalSignUpAuthDataModel implements SignupAuthDataModel {
                     Debug.log(TAG, mConfirmSignUp);
                     if (aBoolean) {
                         db.select("select distinct BCode from Users as u,Accounts as a where a.UID=u.UID and UID=? " +
-                                "and Name=? and DOB=? and Email=?")
+                                "and Name=? and DOB=? and Email=? and AccNo=? and ")
+                                .parameters(credentials.getAdhaar(),credentials.getName(),credentials.getDob(),credentials.getEmail(),
+                                        credentials.getAccountNumber())
                                 .getAs(Long.class)
                                 .map((value) -> verifyBCode(value,credentials))
                                 .subscribe((value)->mConfirmSignUp.onNext(value));

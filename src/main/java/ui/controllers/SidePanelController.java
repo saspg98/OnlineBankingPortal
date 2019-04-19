@@ -6,6 +6,8 @@
 package ui.controllers;
 
 import io.reactivex.disposables.CompositeDisposable;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import ui.controllers.ViewModelUser;
 import viewmodel.MainScreenViewModel;
@@ -38,5 +40,33 @@ public class SidePanelController implements Initializable, ViewModelUser {
     @Override
     public void disposeObservables() {
         mObservables.clear();
+    }
+
+    @FXML
+    private void onAccountClicked(ActionEvent actionEvent) {
+    }
+
+    @FXML
+    private void onSettingClicked(ActionEvent actionEvent) {
+    }
+
+    @FXML
+    private void onHelpClicked(ActionEvent actionEvent) {
+    }
+
+    @FXML
+    private void onTransactionClicked(ActionEvent actionEvent) {
+    }
+
+    @FXML
+    private void onTransferClicked(ActionEvent actionEvent) {
+    }
+
+    @FXML
+    private void onLogoutClicked(ActionEvent actionEvent) {
+    }
+
+    @FXML
+    private void onHomeClicked(ActionEvent actionEvent) {
     }
 }
