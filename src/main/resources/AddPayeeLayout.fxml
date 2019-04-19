@@ -25,7 +25,7 @@
   </rowConstraints>
    <children>
       <Label id="LName" text="Name" GridPane.rowIndex="1" />
-      <Label id="LIFSC" text="IFSC" GridPane.rowIndex="4" />
+      <Label id="LIFSC" text="BCode" GridPane.rowIndex="4" />
       <Label id="LBranchName" text="Branch Name" GridPane.rowIndex="3" />
       <Label id="LAccountNumber" text="Account Number" GridPane.rowIndex="2" />
       <TextField id="TfName" GridPane.columnIndex="1" GridPane.rowIndex="1" />

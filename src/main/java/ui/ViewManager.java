@@ -30,6 +30,7 @@ public class ViewManager {
     private long UID;
 
     private FXMLLoader fxmlLoader = null;
+    private FXMLLoader signUpView = null;
 
     public LoginAuthDataModel getLoginAuthDataModelInstance() {
         if (loginAuthDataModel == null) {
@@ -108,7 +109,8 @@ public class ViewManager {
         newStage = new Stage();
         Parent signUpForm = null;
         try {
-            signUpForm = FXMLLoader.load(getClass().getClassLoader().getResource(Constant.Path.SIGNUP_VIEW));
+            signUpView = new FXMLLoader(getClass().getClassLoader().getResource(Constant.Path.SIGNUP_VIEW));
+            signUpForm = signUpView.load();
         } catch (IOException e) {
             e.printStackTrace();
             Debug.err("Unable to create alert box for sign up");
@@ -122,7 +124,7 @@ public class ViewManager {
         newStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
             @Override
             public void handle(WindowEvent event) {
-                ((SignUpScreenController)fxmlLoader.getController()).disposeObservables();
+                ((SignUpScreenController)signUpView.getController()).disposeObservables();
                 Debug.err("CLOSING",FXMLPATH);
             }
         });

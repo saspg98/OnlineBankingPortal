@@ -10,7 +10,7 @@ public class SignupCredentials extends ChangeableBase {
     String email;
     String password;
     Long adhaar;
-    String IFSC;
+    Long BCode;
     Long accountNumber;
     String address;
     String cpassword;
@@ -98,12 +98,12 @@ public class SignupCredentials extends ChangeableBase {
         notifyListeners();
     }
 
-    public String getIFSC() {
-        return IFSC;
+    public Long getBCode() {
+        return BCode;
     }
 
-    public void setIFSC(String IFSC) {
-        this.IFSC = IFSC;
+    public void setBCode(Long BCode) {
+        this.BCode = BCode;
         notifyListeners();
     }
 
