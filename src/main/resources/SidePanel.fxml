@@ -20,13 +20,13 @@
       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
   </rowConstraints>
    <children>
-      <Button id="ButtonMyAccount" mnemonicParsing="false" prefHeight="210.0" prefWidth="357.0" style="-fx-border-radius: 100;" text="My Account" GridPane.rowIndex="1" />
-      <Button id="ButtonSettings" mnemonicParsing="false" prefHeight="210.0" prefWidth="357.0" style="-fx-border-radius: 100;" text="Settings" GridPane.rowIndex="5" />
-      <Button id="ButtonContactHelp" mnemonicParsing="false" prefHeight="210.0" prefWidth="357.0" style="-fx-border-radius: 100;" text="Contact/Help" GridPane.rowIndex="4" />
-      <Button id="ButtonTransactions" mnemonicParsing="false" prefHeight="210.0" prefWidth="357.0" style="-fx-border-radius: 100;" text="Transactions" GridPane.rowIndex="3" />
-      <Button id="ButtonTranfers" mnemonicParsing="false" prefHeight="210.0" prefWidth="357.0" style="-fx-border-radius: 100;" text="Tranfers" GridPane.rowIndex="2" />
-      <Button id="ButtonLogout" mnemonicParsing="false" prefHeight="210.0" prefWidth="357.0" style="-fx-border-radius: 100;" text="Logout" GridPane.rowIndex="6" />
-      <Button id="ButtonHome" mnemonicParsing="false" prefHeight="700.0" prefWidth="700.0" style="-fx-border-radius: 100;" text="Home" />
+      <Button fx:id="ButtonMyAccount" mnemonicParsing="false" prefHeight="210.0" prefWidth="357.0" style="-fx-border-radius: 100;" text="My Account" GridPane.rowIndex="1" />
+      <Button fx:id="ButtonSettings" mnemonicParsing="false" prefHeight="210.0" prefWidth="357.0" style="-fx-border-radius: 100;" text="Settings" GridPane.rowIndex="5" />
+      <Button fx:id="ButtonContactHelp" mnemonicParsing="false" prefHeight="210.0" prefWidth="357.0" style="-fx-border-radius: 100;" text="Contact/Help" GridPane.rowIndex="4" />
+      <Button fx:id="ButtonTransactions" mnemonicParsing="false" prefHeight="210.0" prefWidth="357.0" style="-fx-border-radius: 100;" text="Transactions" GridPane.rowIndex="3" />
+      <Button fx:id="ButtonTranfers" mnemonicParsing="false" prefHeight="210.0" prefWidth="357.0" style="-fx-border-radius: 100;" text="Tranfers" GridPane.rowIndex="2" />
+      <Button fx:id="ButtonLogout" mnemonicParsing="false" prefHeight="210.0" prefWidth="357.0" style="-fx-border-radius: 100;" text="Logout" GridPane.rowIndex="6" />
+      <Button fx:id="ButtonHome" mnemonicParsing="false" prefHeight="700.0" prefWidth="700.0" style="-fx-border-radius: 100;" text="Home" />
    </children>
    <padding>
       <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
