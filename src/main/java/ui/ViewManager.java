@@ -1,9 +1,6 @@
 package ui;
 
-import datamodel.LocalLoginAuthDataModel;
-import datamodel.LocalSignUpAuthDataModel;
-import datamodel.LoginAuthDataModel;
-import datamodel.SignupAuthDataModel;
+import datamodel.*;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -27,8 +24,10 @@ public class ViewManager {
     private Stage newStage;
     private LoginAuthDataModel loginAuthDataModel;
     private SignupAuthDataModel signupAuthDataModel;
+    private UserDataModel userDataModel;
 
     private Database db;
+    private long UID;
 
     private FXMLLoader fxmlLoader = null;
 
@@ -37,6 +36,14 @@ public class ViewManager {
             loginAuthDataModel = new LocalLoginAuthDataModel();
         }
         return loginAuthDataModel;
+    }
+
+    public UserDataModel getUserDataModel() {
+        if (userDataModel== null) {
+
+            userDataModel= new LocalUserDataModel(UID);
+        }
+        return userDataModel;
     }
 
     public SignupAuthDataModel getSignUpAuthDataModelInstance() {

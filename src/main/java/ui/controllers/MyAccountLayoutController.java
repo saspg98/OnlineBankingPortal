@@ -5,7 +5,15 @@
  */
 package dbmsproject;
 
+import io.reactivex.Scheduler;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.schedulers.Schedulers;
 import javafx.fxml.Initializable;
+import misc.debug.Debug;
+import model.User;
+import ui.ViewManager;
+import ui.controllers.ViewModelUser;
+import viewmodel.SettingsViewModel;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -15,14 +23,41 @@ import java.util.ResourceBundle;
  *
  * @author Pranek
  */
-public class MyAccountLayoutController implements Initializable {
+public class MyAccountLayoutController implements Initializable, ViewModelUser {
+    private CompositeDisposable mObservables = new CompositeDisposable();
+    private SettingsViewModel viewModel;
 
-    /**
-     * Initializes the controller class.
-     */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        viewModel = new SettingsViewModel(ViewManager.getInstance().getUserDataModel());
+        createObservables();
     }
 
+    public void onUpdateInfo(){
+        //TODO: Create a DefaultUser Object and call setUserDetails
+        //User user = new DefaultUser(...);
+        //viewModel.setUserDetails(user);
+    }
+
+    @Override
+    public void createObservables() {
+        viewModel.getUserDetails()
+                .observeOn(Schedulers.trampoline())
+                .subscribe((user) -> setViews(user), this::onError );
+    }
+
+    public void setViews(User user){
+        //TODO: Implementation
+    }
+
+
+    @Override
+    public void disposeObservables() {
+        mObservables.clear();
+    }
+
+    @Override
+    public void onError(Throwable throwable) {
+        Debug.err("MyAccountController", throwable);
+    }
 }
