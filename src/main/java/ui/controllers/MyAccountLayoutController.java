@@ -9,7 +9,9 @@ import io.reactivex.Scheduler;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.rxjavafx.schedulers.JavaFxScheduler;
 import io.reactivex.schedulers.Schedulers;
+import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Label;
 import misc.debug.Debug;
 import model.User;
 import ui.ViewManager;
@@ -27,6 +29,20 @@ import java.util.ResourceBundle;
 public class MyAccountLayoutController implements Initializable, ViewModelUser {
     private CompositeDisposable mObservables = new CompositeDisposable();
     private SettingsViewModel viewModel;
+    @FXML
+    private Label LNameOutput;
+    @FXML
+    private Label LDate;
+    @FXML
+    private Label LEmailIdOutput;
+    @FXML
+    private Label LPhoneNumberOutput;
+    @FXML
+    private Label LAddressOutput;
+    @FXML
+    private Label LAadhaarCardOutput;
+    @FXML
+    private Label LGenderOutput;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {

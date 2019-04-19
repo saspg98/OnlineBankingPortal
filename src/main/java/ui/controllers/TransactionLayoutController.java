@@ -8,9 +8,13 @@ package ui.controllers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.rxjavafx.schedulers.JavaFxScheduler;
 import io.reactivex.schedulers.Schedulers;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import model.BankAccount;
 import model.Transaction;
 import ui.ViewManager;
@@ -30,6 +34,12 @@ public class TransactionLayoutController implements Initializable, ViewModelUser
 
     private CompositeDisposable mObservables = new CompositeDisposable();
     private TransactionHistoryViewModel viewModel;
+    @FXML
+    private Label LAccountTypeOutput;
+    @FXML
+    private Label LAccountNumberOutput;
+    @FXML
+    private TableView transactionTableView;
 
 
     @Override
@@ -59,4 +69,5 @@ public class TransactionLayoutController implements Initializable, ViewModelUser
     public void disposeObservables() {
         mObservables.clear();
     }
+
 }

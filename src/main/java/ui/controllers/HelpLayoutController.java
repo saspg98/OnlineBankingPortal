@@ -5,7 +5,9 @@
  */
 package ui.controllers;
 
+import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Label;
 import viewmodel.HelpScreenViewModel;
 
 import java.net.URL;
@@ -17,6 +19,11 @@ import java.util.ResourceBundle;
  * @author Pranek
  */
 public class HelpLayoutController implements Initializable {
+
+    @FXML
+    private Label LEmailIdOutput;
+    @FXML
+    private Label LContactNumberOutput;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {

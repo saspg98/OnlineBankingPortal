@@ -9,7 +9,12 @@ import io.reactivex.Scheduler;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.rxjavafx.schedulers.JavaFxScheduler;
 import io.reactivex.schedulers.Schedulers;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import misc.debug.Debug;
 import model.BankAccount;
 import model.Beneficiary;
@@ -28,6 +33,23 @@ import java.util.ResourceBundle;
  * @author Pranek
  */
 public class TranferLayoutController implements Initializable, ViewModelUser, DataReceiver {
+
+    @FXML
+    private Label accountType;
+    @FXML
+    private Label accountNumber;
+    @FXML
+    private Label name;
+    @FXML
+    private Label payeeName;
+    @FXML
+    private Label payeeAccNo;
+    @FXML
+    private Label payeeBranchCode;
+    @FXML
+    private TextField amount;
+    @FXML
+    private ComboBox viewPayee;
 
     private MakeTransactionViewModel viewModel;
     private CompositeDisposable mObservables = new CompositeDisposable();
@@ -83,5 +105,13 @@ public class TranferLayoutController implements Initializable, ViewModelUser, Da
         BankAccount bankAccount = (BankAccount) data[0];
         viewModel = new MakeTransactionViewModel(ViewManager.getInstance().getUserDataModel(), bankAccount);
         createObservables();
+    }
+
+    @FXML
+    private void onConfirmPaymentClicked(ActionEvent actionEvent) {
+    }
+
+    @FXML
+    private void onViewPayeeClicked(ActionEvent actionEvent) {
     }
 }

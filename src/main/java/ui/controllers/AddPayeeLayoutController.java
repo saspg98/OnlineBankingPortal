@@ -8,6 +8,9 @@ package ui.controllers;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -18,6 +21,25 @@ import java.util.ResourceBundle;
  * @author Pranek
  */
 public class AddPayeeLayoutController implements Initializable {
+
+    @FXML
+    private Label LName;
+    @FXML
+    private Label LIFSC;
+    @FXML
+    private Label LBranchName;
+    @FXML
+    private TextField TfBranchName;
+    @FXML
+    private TextField TfName;
+    @FXML
+    private Label LAccountNumber;
+    @FXML
+    private TextField TfAccountNumber;
+    @FXML
+    private Button ButtonAddPayee;
+    @FXML
+    private TextField TfIFSC;
 
     /**
      * Initializes the controller class.

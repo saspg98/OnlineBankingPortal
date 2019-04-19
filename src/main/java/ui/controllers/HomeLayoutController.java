@@ -8,7 +8,9 @@ package ui.controllers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.rxjavafx.schedulers.JavaFxScheduler;
 import io.reactivex.schedulers.Schedulers;
+import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Label;
 import model.BankAccount;
 import ui.ViewManager;
 import viewmodel.HomeViewModel;
@@ -24,6 +26,12 @@ import java.util.ResourceBundle;
 public class HomeLayoutController implements Initializable, ViewModelUser{
     private CompositeDisposable mObservables = new CompositeDisposable();
     private HomeViewModel viewModel;
+    @FXML
+    private Label LAccountNumberOutput;
+    @FXML
+    private Label LAccountTypeOutput;
+    @FXML
+    private Label LCurrentBalanceOutput;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {

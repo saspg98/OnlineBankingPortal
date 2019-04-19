@@ -8,6 +8,7 @@ package ui.controllers;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.PasswordField;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -18,6 +19,13 @@ import java.util.ResourceBundle;
  * @author Pranek
  */
 public class SettingsLayoutController implements Initializable {
+
+    @FXML
+    private PasswordField oldPass;
+    @FXML
+    private PasswordField newPass;
+    @FXML
+    private PasswordField confirmPass;
 
     /**
      * Initializes the controller class.
