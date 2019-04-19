@@ -37,7 +37,6 @@ public class SignupViewModel {
                 InputValidator.validateAdhaar(signupCredentials.getAdhaar()) &&
                 InputValidator.validateIFSC(signupCredentials.getIFSC())&&
                 InputValidator.validateEmail(signupCredentials.getEmail())&&
-                InputValidator.validatePinCode(signupCredentials.getPinCode())&&
                 InputValidator.validatePhoneNumber(signupCredentials.getPhoneNumber());
     }
 
@@ -69,9 +68,6 @@ public class SignupViewModel {
         mCurrCredentials.setAddress(address);
     }
 
-    public void setCity(String city) {
-        mCurrCredentials.setCity(city);
-    }
 
     public void setDOB(Date dob) {
         mCurrCredentials.setDob(dob);
@@ -85,9 +81,6 @@ public class SignupViewModel {
         mCurrCredentials.setPhoneNumber(phoneNumber);
     }
 
-    public void setPinCode(int pincode) {
-        mCurrCredentials.setPinCode(pincode);
-    }
 
     public void setUsername(String username) {
         mCurrCredentials.setUsername(username);
