@@ -32,24 +32,36 @@ public class LocalSignUpAuthDataModel implements SignupAuthDataModel {
                     System.out.println("Printing " + value + " on thread " + Thread.currentThread().getName());
                 })
                 .isEmpty()
-                .observeOn(Schedulers.computation())
-                .subscribe(isNotPresent -> {
-                    //Debug.printThread(TAG);
-                    System.out.println("Surprise mofos! \nBoolean is " + isNotPresent);
+                .toObservable()
+                .doOnNext((aBoolean) -> {
+
+                    System.out.println("Surprise mofos! \nBoolean is " + aBoolean);
+
                     Debug.log(TAG, mConfirmSignUp);
-                    if (isNotPresent) {
-                        db.select("select uid from Users as u,Accounts as a where a.UID=u.UID and UID=? " +
-                                "and Name=? and DOB=? and Email=? and ");
+                    if (aBoolean) {
+                        db.select("select distinct BCode from Users as u,Accounts as a where a.UID=u.UID and UID=? " +
+                                "and Name=? and DOB=? and Email=?")
+                                .getAs(Long.class)
+                                .map((value) -> verifyBCode(value,credentials))
+                                .subscribe((value)->mConfirmSignUp.onNext(value));
+
                     } else {
                         mConfirmSignUp.onNext(false);
                     }
-                });
+                })
+                .observeOn(Schedulers.computation())
+                .subscribe();
+    }
+
+    private boolean verifyBCode(Long value, SignupCredentials credentials) {
+
+        if(value == credentials.getBCode())
+            return true;
+        return false;
     }
 
     @Override
     public Observable<Boolean> getConfirmSignUpStream() {
         return mConfirmSignUp;
     }
-
-
 }

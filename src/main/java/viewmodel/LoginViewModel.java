@@ -21,23 +21,25 @@ public class LoginViewModel {
     private LoginAuthDataModel mDataModel;
     private Observable<Boolean> validationStream;
     private Iterator<Boolean> latestValidation;
+    private boolean latestValue;
 
 
     public LoginViewModel(LoginAuthDataModel mDataModel) {
-        Debug.err("Making new model");
+//        Debug.err("Making new model");
         this.mDataModel = mDataModel;
         mCurrLoginCredentials = new LoginCredentials(DEFAULT_EMAIL, DEFAULT_PASSWORD);
         validationStream = RxChangeableBase.observe(mCurrLoginCredentials)
                 .observeOn(Schedulers.computation())
                 .map((loginCredentials) -> {
                     //Debug.printThread(TAG);
-                    Debug.log(TAG, "New Login creds are ", loginCredentials.getUsername(), " , "
-                            , loginCredentials.getPassword());
+//                    Debug.log(TAG, "New Login creds are ", loginCredentials.getUsername(), " , "
+//                            , loginCredentials.getPassword());
                     boolean validity = validateFields(loginCredentials);
-                    Debug.log(TAG, "Returning validity of login creds ", validity);
+//                    Debug.log(TAG, "Returning validity of login creds ", validity);
+                    latestValue = validity;
                     return validity;
                 });
-        latestValidation = validationStream.blockingMostRecent(false).iterator();
+        latestValidation = validationStream.blockingLatest().iterator();
     }
 
     public void setUsername(String mEmail) {
@@ -50,7 +52,7 @@ public class LoginViewModel {
 
     public boolean validateFields(LoginCredentials loginCredentials) {
         return InputValidator.validateUsername(loginCredentials.getUsername()) &&
-                InputValidator.validatePassword(loginCredentials.getPassword(), signupCredentials.getCPassword());
+                InputValidator.validatePassword(loginCredentials.getPassword());
     }
 
     public Observable<Boolean> getValidationStream() {
@@ -65,7 +67,7 @@ public class LoginViewModel {
         //Debug.printThread(TAG);
         System.out.println("onLogin Called!!");
         Debug.log(TAG, latestValidation.next());
-        if (latestValidation.next()) {
+        if (latestValue) {
             Debug.log(TAG, "Login was true!!");
             mDataModel.checkAuthorization(mCurrLoginCredentials);
         }

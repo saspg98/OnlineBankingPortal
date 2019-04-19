@@ -35,7 +35,7 @@ public class SignupViewModel {
                 InputValidator.validatePassword(signupCredentials.getPassword(),signupCredentials.getCPassword()) &&
                 InputValidator.validateAccountNumber(signupCredentials.getAccountNumber()) &&
                 InputValidator.validateAdhaar(signupCredentials.getAdhaar()) &&
-                InputValidator.validateIFSC(signupCredentials.getIFSC())&&
+                InputValidator.validateBCode(signupCredentials.getBCode())&&
                 InputValidator.validateEmail(signupCredentials.getEmail())&&
                 InputValidator.validatePhoneNumber(signupCredentials.getPhoneNumber());
     }
@@ -56,8 +56,8 @@ public class SignupViewModel {
         mCurrCredentials.setAdhaar(adhaar);
     }
 
-    public void setIFSC(String IFSC) {
-        mCurrCredentials.setIFSC(IFSC);
+    public void setIFSC(Long BCode) {
+        mCurrCredentials.setBCode(BCode);
     }
 
     public void setAccountNumber(Long accountNumber) {

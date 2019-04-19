@@ -11,26 +11,37 @@ public class InputValidator {
     public static boolean validateUsername(String username) {
         if (username == null || username.length() < 4)
             return false;
-        RegexValidator validator = new RegexValidator("^([a-zA-Z0-9]*)([^\\s])$");
-        if (!validator.isValid(username)) {
-            Debug.err("Username", "Invalid");
-            return false;
-        }
-        return false;
+//        RegexValidator validator = new RegexValidator("^([a-zA-Z0-9]*)([^\\s])$");
+//        if (!validator.isValid(username)) {
+//            Debug.err("Username", "Invalid");
+//            return false;
+//        }
+        return true;
     }
 
     public static boolean validatePassword(String password, String cPassword) {
         if (password == null || password.length() < 4 ||password!=cPassword)
             return false;
-        RegexValidator validator = new RegexValidator("^([a-zA-Z]{1,})([0-9]{1,})([^\\s])$");
-        if (!(validator.isValid(password) && validator.isValid(cPassword))) {
-            Debug.log("Password", "Invalid");
-            return false;
-        }
-        return false;
+//        RegexValidator validator = new RegexValidator("^([a-zA-Z]{1,})([0-9]{1,})([^\\s])$");
+//        if (!(validator.isValid(password) && validator.isValid(cPassword))) {
+//            Debug.log("Password", "Invalid");
+//            return false;
+//        }
+        return true;
     }
 
-    public static boolean validateIFSC(String ifsc) {
+    public static boolean validatePassword(String password) {
+        if (password == null || password.length() < 4 )
+            return false;
+//        RegexValidator validator = new RegexValidator("^([a-zA-Z]{1,})([0-9]{1,})([^\\s])$");
+//        if (!validator.isValid(password)){
+//            Debug.log("Password", "Invalid");
+//            return false;
+//        }
+        return true;
+    }
+
+    public static boolean validateBCode(Long BCode) {
         return true;
     }
 
