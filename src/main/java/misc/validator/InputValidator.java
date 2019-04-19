@@ -9,35 +9,35 @@ public class InputValidator {
     //Checks the format of the all user input data
 
     public static boolean validateUsername(String username) {
-        if (username == null || username.length() < 4)
-            return false;
-//        RegexValidator validator = new RegexValidator("^([a-zA-Z0-9]*)([^\\s])$");
-//        if (!validator.isValid(username)) {
-//            Debug.err("Username", "Invalid");
+//        if (username == null || username.length() < 4)
 //            return false;
-//        }
+////        RegexValidator validator = new RegexValidator("^([a-zA-Z0-9]*)([^\\s])$");
+////        if (!validator.isValid(username)) {
+////            Debug.err("Username", "Invalid");
+////            return false;
+////        }
         return true;
     }
 
     public static boolean validatePassword(String password, String cPassword) {
-        if (password == null || password.length() < 4 ||password!=cPassword)
-            return false;
-//        RegexValidator validator = new RegexValidator("^([a-zA-Z]{1,})([0-9]{1,})([^\\s])$");
-//        if (!(validator.isValid(password) && validator.isValid(cPassword))) {
-//            Debug.log("Password", "Invalid");
+//        if (password == null || password.length() < 4 ||password!=cPassword)
 //            return false;
-//        }
+////        RegexValidator validator = new RegexValidator("^([a-zA-Z]{1,})([0-9]{1,})([^\\s])$");
+////        if (!(validator.isValid(password) && validator.isValid(cPassword))) {
+////            Debug.log("Password", "Invalid");
+////            return false;
+////        }
         return true;
     }
 
     public static boolean validatePassword(String password) {
-        if (password == null || password.length() < 4 )
-            return false;
-//        RegexValidator validator = new RegexValidator("^([a-zA-Z]{1,})([0-9]{1,})([^\\s])$");
-//        if (!validator.isValid(password)){
-//            Debug.log("Password", "Invalid");
+//        if (password == null || password.length() < 4 )
 //            return false;
-//        }
+////        RegexValidator validator = new RegexValidator("^([a-zA-Z]{1,})([0-9]{1,})([^\\s])$");
+////        if (!validator.isValid(password)){
+////            Debug.log("Password", "Invalid");
+////            return false;
+////        }
         return true;
     }
 
@@ -64,14 +64,6 @@ public class InputValidator {
     public static boolean validateEmail(String email) {
         if(!EmailValidator.getInstance().isValid(email)){
             Debug.err("Invalid Email");
-            return false;
-        }
-        return true;
-    }
-
-    public static boolean validatePhoneNumber(Long phoneNumber) {
-        if(String.valueOf(phoneNumber).length()!= 10) {
-            Debug.err("Wrong phone number");
             return false;
         }
         return true;

@@ -31,8 +31,6 @@ public class SignUpScreenController implements Initializable {
     @FXML
     private TextField TfDateOfBirth;
     @FXML
-    private TextField TfPhoneNumber;
-    @FXML
     private TextField TfEmail;
     @FXML
     private TextField TfAccountNo;
@@ -46,6 +44,8 @@ public class SignUpScreenController implements Initializable {
     private PasswordField TfConfirmPassword;
     @FXML
     private TextField TfAddressLine;
+    @FXML
+    private TextField BCode;
 
     @FXML
     public void onSignUpClicked(ActionEvent actionEvent) {
@@ -58,10 +58,10 @@ public class SignUpScreenController implements Initializable {
             viewModel.setDOB(new SimpleDateFormat("dd/MM/yyyy").parse(TfDateOfBirth.getText().trim()));
             viewModel.setCPassword(TfConfirmPassword.getText().trim());
             viewModel.setName(TfName.getText().trim());
-            viewModel.setPhoneNumber(Long.parseLong(TfPhoneNumber.getText().trim()));
             viewModel.setUsername(TfUsername.getText().trim());
             viewModel.setPassword(TfPassword.getText().trim());
             viewModel.setEmail(TfEmail.getText().trim());
+            viewModel.setBCode(Long.parseLong(BCode.getText()));
             viewModel.onSignUp();
         }catch (NumberFormatException e){
             showErrorLabel(true);
@@ -122,7 +122,6 @@ public class SignUpScreenController implements Initializable {
             TfDateOfBirth.setText("");
             TfConfirmPassword.setText("");
             TfName.setText("");
-            TfPhoneNumber.setText("");
             TfUsername.setText("");
             TfPassword.setText("");
             TfEmail.setText("");

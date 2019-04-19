@@ -15,7 +15,6 @@ public class SignupCredentials extends ChangeableBase {
     String address;
     String cpassword;
     Date dob;
-    Long phoneNumber;
 
     public String getAddress() {
         return address;
@@ -41,15 +40,6 @@ public class SignupCredentials extends ChangeableBase {
 
     public void setDob(Date dob) {
         this.dob = dob;
-        notifyListeners();
-    }
-
-    public Long getPhoneNumber() {
-        return phoneNumber;
-    }
-
-    public void setPhoneNumber(Long phoneNumber) {
-        this.phoneNumber = phoneNumber;
         notifyListeners();
     }
 

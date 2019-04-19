@@ -37,42 +37,37 @@
       <RowConstraints maxHeight="103.0" minHeight="10.0" prefHeight="74.0" vgrow="SOMETIMES" />
   </rowConstraints>
    <children>
-      <Label id="LName" text="Name" GridPane.rowIndex="2">
+      <Label id="LName" text="Name" GridPane.rowIndex="3">
          <font>
             <Font size="24.0" />
          </font>
       </Label>
-      <Label id="LAadhaarCard" text="Aadhaar Card" GridPane.rowIndex="11">
+      <Label id="LAadhaarCard" text="Aadhaar Card" GridPane.rowIndex="10">
          <font>
             <Font size="24.0" />
          </font>
       </Label>
-      <Label id="LPassword" text="Password" GridPane.rowIndex="13">
+      <Label id="LPassword" text="Password" GridPane.rowIndex="12">
          <font>
             <Font size="24.0" />
          </font>
       </Label>
-      <Label id="LConfirmPassword" text="Confirm Password" GridPane.rowIndex="14">
+      <Label id="LConfirmPassword" text="Confirm Password" GridPane.rowIndex="13">
          <font>
             <Font size="24.0" />
          </font>
       </Label>
-      <Label id="LDateOfBirth" text="Date of Birth" GridPane.rowIndex="3">
+      <Label id="LDateOfBirth" text="Date of Birth" GridPane.rowIndex="4">
          <font>
             <Font size="24.0" />
          </font>
       </Label>
-      <Label id="LGender" text="Gender" GridPane.rowIndex="4">
+      <Label id="LGender" text="Gender" GridPane.rowIndex="5">
          <font>
             <Font size="24.0" />
          </font>
       </Label>
-      <Label id="LPhoneNumber" text="Phone Number" GridPane.rowIndex="7">
-         <font>
-            <Font size="24.0" />
-         </font>
-      </Label>
-      <Label id="LUsername" text="Username" GridPane.rowIndex="12">
+      <Label id="LUsername" text="Username" GridPane.rowIndex="11">
          <font>
             <Font size="24.0" />
          </font>
@@ -87,19 +82,13 @@
               <Font size="24.0" />
            </font>
          </Label>
-         <Label id="LAccountType" text="Account Type" GridPane.rowIndex="10">
-            <font>
-               <Font size="24.0" />
-            </font>
-      </Label>
       <Label fx:id="LError" alignment="CENTER" contentDisplay="CENTER" disable="true" prefHeight="36.0" prefWidth="540.0" text="*Sorry, but an error has been made!!" textFill="RED" GridPane.columnSpan="2" GridPane.rowIndex="1" />
-      <TextField fx:id="TfName" promptText=" First Name       Last Name" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-      <TextField fx:id="TfDateOfBirth" promptText="DD/MM/YYYY" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-      <TextField fx:id="TfPhoneNumber" promptText="Eg: 9852645989" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+      <TextField fx:id="TfName" promptText=" First Name       Last Name" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+      <TextField fx:id="TfDateOfBirth" promptText="DD/MM/YYYY" GridPane.columnIndex="1" GridPane.rowIndex="4" />
       <TextField fx:id="TfEmail" promptText="Enter valid email address" GridPane.columnIndex="1" GridPane.rowIndex="8" />
       <TextField fx:id="TfAccountNo" promptText="Enter Account number" GridPane.columnIndex="1" GridPane.rowIndex="9" />
-      <TextField fx:id="TfAadhaarCard" promptText="12 Digit Aadhaar Card Number" GridPane.columnIndex="1" GridPane.rowIndex="11" />
-      <TextField fx:id="TfUsername" promptText="Enter Unique Username" GridPane.columnIndex="1" GridPane.rowIndex="12" />
+      <TextField fx:id="TfAadhaarCard" promptText="12 Digit Aadhaar Card Number" GridPane.columnIndex="1" GridPane.rowIndex="10" />
+      <TextField fx:id="TfUsername" promptText="Enter Unique Username" GridPane.columnIndex="1" GridPane.rowIndex="11" />
       <Button fx:id="signUpButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onSignUpClicked" prefHeight="50.0" prefWidth="130.0" style="-fx-background-color: #6495ed;" text="Sign Up" translateX="100.0" GridPane.columnSpan="2" GridPane.rowIndex="16">
          <font>
             <Font name="System Bold" size="24.0" />
@@ -108,32 +97,27 @@
             <Insets bottom="30.0" left="150.0" />
          </GridPane.margin>
       </Button>
-      <PasswordField fx:id="TfPassword" promptText="Enter atleast 8 characters" GridPane.columnIndex="1" GridPane.rowIndex="13" />
-      <PasswordField fx:id="TfConfirmPassword" promptText="Re-enter Password" GridPane.columnIndex="1" GridPane.rowIndex="14" />
-      <RadioButton id="Male" mnemonicParsing="false" text="Male" GridPane.columnIndex="1" GridPane.rowIndex="4">
+      <PasswordField fx:id="TfPassword" promptText="Enter atleast 8 characters" GridPane.columnIndex="1" GridPane.rowIndex="12" />
+      <PasswordField fx:id="TfConfirmPassword" promptText="Re-enter Password" GridPane.columnIndex="1" GridPane.rowIndex="13" />
+      <RadioButton id="Male" mnemonicParsing="false" text="Male" GridPane.columnIndex="1" GridPane.rowIndex="5">
          <toggleGroup>
             <ToggleGroup fx:id="Sex" />
          </toggleGroup></RadioButton>
-      <RadioButton id="Female" mnemonicParsing="false" text="Female" toggleGroup="$Sex" translateX="100.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-      <RadioButton id="Other" mnemonicParsing="false" text="Other" toggleGroup="$Sex" translateX="200.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-      <RadioButton id="Current " mnemonicParsing="false" text="Current" GridPane.columnIndex="1" GridPane.rowIndex="10">
-         <toggleGroup>
-            <ToggleGroup fx:id="AccountType" />
-         </toggleGroup></RadioButton>
-      <RadioButton id="Savings" mnemonicParsing="false" text="Savings" toggleGroup="$AccountType" translateX="100.0" GridPane.columnIndex="1" GridPane.rowIndex="10" />
+      <RadioButton id="Female" mnemonicParsing="false" text="Female" toggleGroup="$Sex" translateX="100.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+      <RadioButton id="Other" mnemonicParsing="false" text="Other" toggleGroup="$Sex" translateX="200.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
       <Label id="LSignUpHeading" alignment="CENTER" contentDisplay="CENTER" prefHeight="53.0" prefWidth="721.0" text="SignUp" GridPane.columnSpan="2">
          <font>
             <Font name="System Bold" size="36.0" />
          </font>
       </Label>
-      <Label id="LAddress" text="Address" GridPane.rowIndex="5">
+      <Label id="LAddress" text="Address" GridPane.rowIndex="6">
          <font>
             <Font size="24.0" />
          </font>
       </Label>
-      <TextField fx:id="TfAddressLine" promptText="Flat No, Street Name" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-      <TextField fx:id="TfPinCode" promptText="Branch Code" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-      <Label id="LAddress" text="Branch Code" GridPane.rowIndex="6">
+      <TextField fx:id="TfAddressLine" promptText="Flat No, Street Name" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+      <TextField fx:id="BCode" promptText="Branch Code" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+      <Label id="LAddress" text="Branch Code" GridPane.rowIndex="7">
          <font>
             <Font size="24.0" />
          </font>
