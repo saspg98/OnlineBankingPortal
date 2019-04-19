@@ -19,12 +19,13 @@ public interface UserDataModel {
         return account.accNo() + " " + account.bcode();
     }
 
-    Observable<List<Transaction>> getUserTransactions();
+    Observable<List<Transaction>> getUserTransactions(BankAccount bankAccount);
 
     Observable<List<Beneficiary>> getUserBeneficiaries();
 
+    Observable<BankAccount> getPrimaryUserAccount();
 
-    void makeTransaction(BankAccount accountToUse, double amount, Beneficiary benefactor);
+    void makeTransaction(BankAccount accountToUse, double amount, Beneficiary beneficiary);
 
     void addBeneficiary(long beneficiaryAccount, long userAccount);
 

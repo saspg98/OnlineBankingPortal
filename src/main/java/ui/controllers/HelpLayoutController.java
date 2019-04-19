@@ -6,6 +6,7 @@
 package ui.controllers;
 
 import javafx.fxml.Initializable;
+import viewmodel.HelpScreenViewModel;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -17,12 +18,12 @@ import java.util.ResourceBundle;
  */
 public class HelpLayoutController implements Initializable {
 
-    /**
-     * Initializes the controller class.
-     */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        HelpScreenViewModel viewModel = new HelpScreenViewModel();
+        //set UI elements to
+        viewModel.getContactNum();
+        viewModel.getEmailId();
     }
 
 }

@@ -29,15 +29,12 @@ import java.util.ResourceBundle;
 public class TranferLayoutController implements Initializable, ViewModelUser, DataReceiver {
 
     private MakeTransactionViewModel viewModel;
-    private BankAccount bankAccount;
     private CompositeDisposable mObservables = new CompositeDisposable();
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        viewModel = new MakeTransactionViewModel(ViewManager.getInstance().getUserDataModel(), bankAccount);
-        createObservables();
     }
 
     @Override
@@ -82,6 +79,8 @@ public class TranferLayoutController implements Initializable, ViewModelUser, Da
 
     @Override
     public <T> void receiveData(T... data) {
-        bankAccount = (BankAccount) data[0];
+        BankAccount bankAccount = (BankAccount) data[0];
+        viewModel = new MakeTransactionViewModel(ViewManager.getInstance().getUserDataModel(), bankAccount);
+        createObservables();
     }
 }

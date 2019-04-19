@@ -5,7 +5,12 @@
  */
 package ui.controllers;
 
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.schedulers.Schedulers;
 import javafx.fxml.Initializable;
+import model.BankAccount;
+import ui.ViewManager;
+import viewmodel.HomeViewModel;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -15,14 +20,29 @@ import java.util.ResourceBundle;
  *
  * @author Pranek
  */
-public class HomeLayoutController implements Initializable {
+public class HomeLayoutController implements Initializable, ViewModelUser{
+    private CompositeDisposable mObservables = new CompositeDisposable();
+    private HomeViewModel viewModel;
 
-    /**
-     * Initializes the controller class.
-     */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        viewModel = new HomeViewModel(ViewManager.getInstance().getUserDataModel());
+        createObservables();
     }
 
+    @Override
+    public void createObservables() {
+        mObservables.add(viewModel.getSelectedAccount()
+        .observeOn(Schedulers.trampoline())
+        .subscribe(this::setView, this::onError));
+    }
+
+    private void setView(BankAccount bankAccount) {
+        
+    }
+
+    @Override
+    public void disposeObservables() {
+        mObservables.clear();
+    }
 }

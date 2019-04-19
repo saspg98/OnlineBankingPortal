@@ -10,6 +10,7 @@ import model.Transaction;
 import model.User;
 import ui.ViewManager;
 
+import javax.swing.text.View;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.Arrays;
@@ -58,19 +59,30 @@ public final class LocalUserDataModel implements UserDataModel {
 
     }
 
+//    @Override
+//    public Observable<List<Transaction>> getUserTransactions(BankAccount bankAccount) {
+//        return ViewManager.getInstance().getDb()
+//                .select("select * from Transactions " +
+//                        "where sender = ? or receiver = ?")
+//                .parameterListStream(
+//                        ViewManager.getInstance().getDb()
+//                                .select("select AccNo from Accounts " +
+//                                        "where UID = ? ")
+//                                .parameter(UID)
+//                                .getAs(Long.class)
+//                                .map(val -> Arrays.asList(val, val))
+//                )
+//                .autoMap(Transaction.class)
+//                .toList()
+//                .toObservable();
+//    }
+
     @Override
-    public Observable<List<Transaction>> getUserTransactions() {
+    public Observable<List<Transaction>> getUserTransactions(BankAccount bankAccount) {
         return ViewManager.getInstance().getDb()
                 .select("select * from Transactions " +
-                        "where sender = ? or receiver = ?")
-                .parameterListStream(
-                        ViewManager.getInstance().getDb()
-                                .select("select AccNo from Accounts " +
-                                        "where UID = ? ")
-                                .parameter(UID)
-                                .getAs(Long.class)
-                                .map(val -> Arrays.asList(val, val))
-                )
+                        "where sender = :acc or receiver = :acc")
+                .parameter("acc", bankAccount.accNo())
                 .autoMap(Transaction.class)
                 .toList()
                 .toObservable();
@@ -86,7 +98,7 @@ public final class LocalUserDataModel implements UserDataModel {
     @Override
     public Observable<List<Beneficiary>> getUserBeneficiaries() {
         return ViewManager.getInstance().getDb()
-                .select("select AccNo, Balance, AccType, BCode from Accounts " +
+                .select("select * from Accounts " +
                         "where AccNo = ? ")
                 .parameterStream(
                         ViewManager.getInstance().getDb()
@@ -105,6 +117,21 @@ public final class LocalUserDataModel implements UserDataModel {
                 .toList()
                 .toObservable();
 
+    }
+
+    @Override
+    public Observable<BankAccount> getPrimaryUserAccount() {
+        return ViewManager.getInstance().getDb()
+                .select("select * from Accounts " +
+                        "where AccNo = ? ")
+                .parameterStream(
+                        ViewManager.getInstance().getDb()
+                        .select("select AccNo from users where UID = ? and AccType = 'S' ")
+                        .parameter(UID)
+                        .getAs(Long.class)
+                )
+                .autoMap(BankAccount.class)
+                .toObservable();
     }
 
 

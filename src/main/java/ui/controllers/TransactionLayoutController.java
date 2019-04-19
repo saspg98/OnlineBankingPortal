@@ -5,9 +5,17 @@
  */
 package ui.controllers;
 
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.schedulers.Schedulers;
 import javafx.fxml.Initializable;
+import model.BankAccount;
+import model.Transaction;
+import ui.ViewManager;
+import viewmodel.MakeTransactionViewModel;
+import viewmodel.TransactionHistoryViewModel;
 
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 
 /**
@@ -15,14 +23,37 @@ import java.util.ResourceBundle;
  *
  * @author Pranek
  */
-public class TransactionLayoutController implements Initializable {
+public class TransactionLayoutController implements Initializable, ViewModelUser, DataReceiver {
 
-    /**
-     * Initializes the controller class.
-     */
+    private CompositeDisposable mObservables = new CompositeDisposable();
+    private TransactionHistoryViewModel viewModel;
+
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+
     }
 
+    @Override
+    public <T> void receiveData(T... data) {
+        BankAccount bankAccount = (BankAccount) data[0];
+        viewModel = new TransactionHistoryViewModel(ViewManager.getInstance().getUserDataModel(), bankAccount);
+        createObservables();
+    }
+
+    @Override
+    public void createObservables() {
+        mObservables.add(viewModel.getTransactions()
+        .observeOn(Schedulers.trampoline())
+        .subscribe(this::setViews, this::onError));
+    }
+
+    private void setViews(List<Transaction> transactions) {
+
+    }
+
+    @Override
+    public void disposeObservables() {
+        mObservables.clear();
+    }
 }
