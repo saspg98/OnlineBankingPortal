@@ -19,11 +19,11 @@ public class InputValidator {
         return false;
     }
 
-    public static boolean validatePassword(String password) {
-        if (password == null || password.length() < 4)
+    public static boolean validatePassword(String password, String cPassword) {
+        if (password == null || password.length() < 4 ||password!=cPassword)
             return false;
-        RegexValidator validator = new RegexValidator("^([0-9a-zA-Z]+)([^\\s])$");
-        if (!validator.isValid(password)) {
+        RegexValidator validator = new RegexValidator("^([a-zA-Z]{1,})([0-9]{1,})([^\\s])$");
+        if (!(validator.isValid(password) && validator.isValid(cPassword))) {
             Debug.log("Password", "Invalid");
             return false;
         }
@@ -34,18 +34,35 @@ public class InputValidator {
         return true;
     }
 
-    public static boolean validateAdhaar(String adhaar) {
+    public static boolean validateAdhaar(Long adhaar) {
+        if(String.valueOf(adhaar).length()!= 12) {
+            Debug.err("Wrong Adhaar");
+            return false;
+        }
         return true;
     }
 
     public static boolean validateAccountNumber(Long accountNumber) {
+        if(String.valueOf(accountNumber).length()!= 11) {
+            Debug.err("Wrong account number");
+            return false;
+        }
         return true;
     }
 
     public static boolean validateEmail(String email) {
-        return EmailValidator.getInstance().isValid(email);
-
+        if(!EmailValidator.getInstance().isValid(email)){
+            Debug.err("Invalid Email");
+            return false;
+        }
+        return true;
     }
 
-
+    public static boolean validatePhoneNumber(Long phoneNumber) {
+        if(String.valueOf(phoneNumber).length()!= 10) {
+            Debug.err("Wrong phone number");
+            return false;
+        }
+        return true;
+    }
 }

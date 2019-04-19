@@ -13,6 +13,8 @@ import ui.ViewManager;
 import viewmodel.SignupViewModel;
 
 import java.net.URL;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ResourceBundle;
 
 public class SignUpScreenController implements Initializable {
@@ -43,30 +45,26 @@ public class SignUpScreenController implements Initializable {
     private PasswordField TfConfirmPassword;
     @FXML
     private TextField TfAddressLine;
-    @FXML
-    private TextField TfCity;
-    @FXML
-    private TextField TfPinCode;
 
     @FXML
     public void onSignUpClicked(ActionEvent actionEvent) {
 
         Debug.err("SIGNUP","Sign up button clicked");
         try {
-            viewModel.setAadhaar(TfAadhaarCard.getText().trim());
+            viewModel.setAdhaar(Long.parseLong(TfAadhaarCard.getText().trim()));
             viewModel.setAccountNumber(Long.parseLong(TfAccountNo.getText().trim()));
             viewModel.setAddress(TfAddressLine.getText().trim());
-            viewModel.setCity(TfCity.getText().trim());
-            viewModel.setDOB(TfDateOfBirth.getText().trim());
+            viewModel.setDOB(new SimpleDateFormat("dd/MM/yyyy").parse(TfDateOfBirth.getText().trim()));
             viewModel.setCPassword(TfConfirmPassword.getText().trim());
             viewModel.setName(TfName.getText().trim());
             viewModel.setPhoneNumber(Long.parseLong(TfPhoneNumber.getText().trim()));
-            viewModel.setPinCode(Integer.parseInt(TfPinCode.getText().trim()));
             viewModel.setUsername(TfUsername.getText().trim());
             viewModel.setPassword(TfPassword.getText().trim());
             viewModel.setEmail(TfEmail.getText().trim());
             viewModel.onSignUp();
         }catch (NumberFormatException e){
+            showErrorLabel(true);
+        }catch (ParseException e){
             showErrorLabel(true);
         }
     }
@@ -110,6 +108,8 @@ public class SignUpScreenController implements Initializable {
     private void signUpConfirm(Boolean b) {
 
         if (b) {
+            LError.setText("Sign Up successful!");
+            LError.setVisible(true);
             viewModel.onSuccessfullSignUp();
         } else {
             System.err.println("Account already exists");
@@ -118,12 +118,10 @@ public class SignUpScreenController implements Initializable {
             TfAadhaarCard.setText("");
             TfAccountNo.setText("");
             TfAddressLine.setText("");
-            TfCity.setText("");
             TfDateOfBirth.setText("");
             TfConfirmPassword.setText("");
             TfName.setText("");
             TfPhoneNumber.setText("");
-            TfPinCode.setText("");
             TfUsername.setText("");
             TfPassword.setText("");
             TfEmail.setText("");

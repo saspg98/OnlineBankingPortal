@@ -9,23 +9,22 @@ import org.davidmoten.rx.jdbc.Database;
 import ui.ViewManager;
 
 public class LocalSignUpAuthDataModel implements SignupAuthDataModel {
-    private BehaviorSubject<Boolean> mAuthorization = BehaviorSubject.create();
 
+    private BehaviorSubject<Boolean> mConfirmSignUp = BehaviorSubject.create();
     private static final String TAG = "SignupDataModel";
 
     public LocalSignUpAuthDataModel() {
     }
 
-
     @Override
-    public void checkAuthorization(SignupCredentials credentials) {
+    public void checkSignUpDetails(SignupCredentials credentials) {
         //Debug.printThread(TAG);
-        Debug.log(TAG, "Inside checkAuth");
-        //Validate Credentials
+        Debug.log(TAG, "Inside checkSignUpDetails");
+
         Database db = ViewManager.getInstance().getDb();
-        db.select("select uid from Users where Username = ?")
+        db.select("select Password from Users where Username = ?")
                 .parameter(credentials.getUsername())
-                .getAs(Long.class)
+                .getAs(String.class)
                 .doOnNext((value) ->
                 {
                     //Somehow never called :(
@@ -37,18 +36,19 @@ public class LocalSignUpAuthDataModel implements SignupAuthDataModel {
                 .subscribe(isNotPresent -> {
                     //Debug.printThread(TAG);
                     System.out.println("Surprise mofos! \nBoolean is " + isNotPresent);
-                    Debug.log(TAG, mAuthorization);
+                    Debug.log(TAG, mConfirmSignUp);
                     if (isNotPresent) {
-                        mAuthorization.onNext(true);
+                        db.select("select uid from Users as u,Accounts as a where a.UID=u.UID and UID=? " +
+                                "and Name=? and DOB=? and Email=? and ");
                     } else {
-                        mAuthorization.onNext(false);
+                        mConfirmSignUp.onNext(false);
                     }
                 });
     }
 
     @Override
-    public Observable<Boolean> getAuthorizationStream() {
-        return mAuthorization;
+    public Observable<Boolean> getConfirmSignUpStream() {
+        return mConfirmSignUp;
     }
 
 

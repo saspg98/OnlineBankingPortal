@@ -14,8 +14,6 @@ public class LocalLoginAuthDataModel implements LoginAuthDataModel {
     private static final String TAG = "LoginDataModel";
 
     public LocalLoginAuthDataModel() {
-
-
     }
 
     @Override

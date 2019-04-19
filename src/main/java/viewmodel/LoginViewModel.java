@@ -50,7 +50,7 @@ public class LoginViewModel {
 
     public boolean validateFields(LoginCredentials loginCredentials) {
         return InputValidator.validateUsername(loginCredentials.getUsername()) &&
-                InputValidator.validatePassword(loginCredentials.getPassword());
+                InputValidator.validatePassword(loginCredentials.getPassword(), signupCredentials.getCPassword());
     }
 
     public Observable<Boolean> getValidationStream() {

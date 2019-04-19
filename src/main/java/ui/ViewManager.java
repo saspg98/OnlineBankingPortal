@@ -1,12 +1,9 @@
 package ui;
 
-import com.sun.deploy.util.FXLoader;
-import com.sun.xml.internal.bind.v2.runtime.unmarshaller.Loader;
 import datamodel.LocalLoginAuthDataModel;
 import datamodel.LocalSignUpAuthDataModel;
 import datamodel.LoginAuthDataModel;
 import datamodel.SignupAuthDataModel;
-import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -27,6 +24,7 @@ public class ViewManager {
     private static ViewManager mInstance;
 
     private Stage mainStage;
+    private Stage newStage;
     private LoginAuthDataModel loginAuthDataModel;
     private SignupAuthDataModel signupAuthDataModel;
 
@@ -78,7 +76,6 @@ public class ViewManager {
         mainStage.setScene(scene);
         mainStage.centerOnScreen();
         mainStage.show();
-
         mainStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
             @Override
             public void handle(WindowEvent event) {
@@ -95,9 +92,13 @@ public class ViewManager {
 
     }
 
+    public void exitScene(){
+        mainStage.close();
+    }
+
     public void createSignUp(String FXMLPATH) {
 
-        Stage window = new Stage();
+        newStage = new Stage();
         Parent signUpForm = null;
         try {
             signUpForm = FXMLLoader.load(getClass().getClassLoader().getResource(Constant.Path.SIGNUP_VIEW));
@@ -107,17 +108,21 @@ public class ViewManager {
         }
 
         Scene scene = new Scene(signUpForm);
-        window.initModality(Modality.APPLICATION_MODAL);
-        window.setScene(scene);
-        window.centerOnScreen();
-        window.show();
-        window.setOnCloseRequest(new EventHandler<WindowEvent>() {
+        newStage.initModality(Modality.APPLICATION_MODAL);
+        newStage.setScene(scene);
+        newStage.centerOnScreen();
+        newStage.show();
+        newStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
             @Override
             public void handle(WindowEvent event) {
                 ((SignUpScreenController)fxmlLoader.getController()).disposeObservables();
                 Debug.err("CLOSING",FXMLPATH);
             }
         });
+    }
+
+    public void exitSignUp(){
+        newStage.close();
     }
 
     public void setDatabase(Database db) {

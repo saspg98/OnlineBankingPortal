@@ -7,10 +7,15 @@ import misc.debug.Debug;
 import misc.validator.InputValidator;
 import model.SignupCredentials;
 import model.changeapi.RxChangeableBase;
+import ui.ViewManager;
 
+import java.util.Date;
 import java.util.Iterator;
+import java.util.concurrent.TimeUnit;
 
 public class SignupViewModel {
+
+    private final String TAG = "SignUpViewModel";
 
     private SignupCredentials mCurrCredentials = new SignupCredentials();
     private SignupAuthDataModel mDataModel;
@@ -27,10 +32,13 @@ public class SignupViewModel {
 
     private boolean validateFields(SignupCredentials signupCredentials) {
         return InputValidator.validateUsername(signupCredentials.getEmail()) &&
-                InputValidator.validatePassword(signupCredentials.getPassword()) &&
+                InputValidator.validatePassword(signupCredentials.getPassword(),signupCredentials.getCPassword()) &&
                 InputValidator.validateAccountNumber(signupCredentials.getAccountNumber()) &&
                 InputValidator.validateAdhaar(signupCredentials.getAdhaar()) &&
-                InputValidator.validateIFSC(signupCredentials.getIFSC());
+                InputValidator.validateIFSC(signupCredentials.getIFSC())&&
+                InputValidator.validateEmail(signupCredentials.getEmail())&&
+                InputValidator.validatePinCode(signupCredentials.getPinCode())&&
+                InputValidator.validatePhoneNumber(signupCredentials.getPhoneNumber());
     }
 
     public void setName(String name) {
@@ -45,7 +53,7 @@ public class SignupViewModel {
         mCurrCredentials.setPassword(password);
     }
 
-    public void setAadhaar(String adhaar) {
+    public void setAdhaar(Long adhaar) {
         mCurrCredentials.setAdhaar(adhaar);
     }
 
@@ -57,25 +65,32 @@ public class SignupViewModel {
         mCurrCredentials.setAccountNumber(accountNumber);
     }
 
-    public void setAddress(String trim) {
+    public void setAddress(String address) {
+        mCurrCredentials.setAddress(address);
     }
 
-    public void setCity(String trim) {
+    public void setCity(String city) {
+        mCurrCredentials.setCity(city);
     }
 
-    public void setDOB(String trim) {
+    public void setDOB(Date dob) {
+        mCurrCredentials.setDob(dob);
     }
 
-    public void setCPassword(String trim) {
+    public void setCPassword(String cpassword) {
+        mCurrCredentials.setCPassword(cpassword);
     }
 
-    public void setPhoneNumber(long parseLong) {
+    public void setPhoneNumber(long phoneNumber) {
+        mCurrCredentials.setPhoneNumber(phoneNumber);
     }
 
-    public void setPinCode(int parseInt) {
+    public void setPinCode(int pincode) {
+        mCurrCredentials.setPinCode(pincode);
     }
 
-    public void setUsername(String trim) {
+    public void setUsername(String username) {
+        mCurrCredentials.setUsername(username);
     }
 
     public Observable<Boolean> getValidationStream() {
@@ -83,18 +98,26 @@ public class SignupViewModel {
     }
 
     public Observable<Boolean> getConfirmSignUpStream() {
-        return mDataModel.getAuthorizationStream();
+        return mDataModel.getConfirmSignUpStream();
     }
 
     public void onSuccessfullSignUp() {
+        Debug.log(TAG,"Sign up successful");
+        try {
+            TimeUnit.SECONDS.sleep(20);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+            Debug.err("Application paused");
+        }
+        ViewManager.getInstance().exitSignUp();
     }
 
     public void onSignUp() {
 
         System.out.println("onSignUp Called!!");
         if (latestValidation.next()) {
-            Debug.log("SignUpView", "Sign up was true!!");
-            mDataModel.checkAuthorization(mCurrCredentials);
+            Debug.log(TAG, "Sign up was true!!");
+            mDataModel.checkSignUpDetails(mCurrCredentials);
         }
     }
 }

@@ -2,14 +2,56 @@ package model;
 
 import model.changeapi.ChangeableBase;
 
+import java.util.Date;
+
 public class SignupCredentials extends ChangeableBase {
     String username;
     String name;
     String email;
     String password;
-    String adhaar;
+    Long adhaar;
     String IFSC;
     Long accountNumber;
+    String address;
+    String cpassword;
+    Date dob;
+    Long phoneNumber;
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+        notifyListeners();
+    }
+
+    public String getCPassword() {
+        return cpassword;
+    }
+
+    public void setCPassword(String cpassword) {
+        this.cpassword = cpassword;
+        notifyListeners();
+    }
+
+    public Date getDob() {
+        return dob;
+    }
+
+    public void setDob(Date dob) {
+        this.dob = dob;
+        notifyListeners();
+    }
+
+    public Long getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(Long phoneNumber) {
+        this.phoneNumber = phoneNumber;
+        notifyListeners();
+    }
 
     public String getUsername() {
         return username;
@@ -47,11 +89,11 @@ public class SignupCredentials extends ChangeableBase {
         notifyListeners();
     }
 
-    public String getAdhaar() {
+    public Long getAdhaar() {
         return adhaar;
     }
 
-    public void setAdhaar(String adhaar) {
+    public void setAdhaar(Long adhaar) {
         this.adhaar = adhaar;
         notifyListeners();
     }
@@ -73,6 +115,5 @@ public class SignupCredentials extends ChangeableBase {
         this.accountNumber = accountNumber;
         notifyListeners();
     }
-
 
 }
