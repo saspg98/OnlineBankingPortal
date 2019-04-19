@@ -7,6 +7,7 @@ package ui.controllers;
 
 import io.reactivex.Scheduler;
 import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.rxjavafx.schedulers.JavaFxScheduler;
 import io.reactivex.schedulers.Schedulers;
 import javafx.fxml.Initializable;
 import misc.debug.Debug;
@@ -42,7 +43,7 @@ public class MyAccountLayoutController implements Initializable, ViewModelUser {
     @Override
     public void createObservables() {
         mObservables.add(viewModel.getUserDetails()
-                .observeOn(Schedulers.trampoline())
+                .observeOn(JavaFxScheduler.platform())
                 .subscribe((user) -> setViews(user), this::onError ));
     }
 

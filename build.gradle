@@ -15,5 +15,6 @@ dependencies {
     implementation "io.reactivex.rxjava2:rxjava:2.2.8"
     implementation group: 'com.github.davidmoten', name: 'rxjava2-jdbc', version: '0.2.2'
     implementation 'commons-validator:commons-validator:1.4.1'
+    implementation 'io.reactivex.rxjava2:rxjavafx:2.2.2'
     implementation group: 'mysql', name: 'mysql-connector-java', version: '8.0.15'
 }

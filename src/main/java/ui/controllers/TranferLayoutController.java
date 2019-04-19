@@ -7,6 +7,7 @@ package ui.controllers;
 
 import io.reactivex.Scheduler;
 import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.rxjavafx.schedulers.JavaFxScheduler;
 import io.reactivex.schedulers.Schedulers;
 import javafx.fxml.Initializable;
 import misc.debug.Debug;
@@ -40,16 +41,16 @@ public class TranferLayoutController implements Initializable, ViewModelUser, Da
     @Override
     public void createObservables() {
         mObservables.add(viewModel.getAmountValidityStream()
-                        .observeOn(Schedulers.trampoline())
+                        .observeOn(JavaFxScheduler.platform())
                         .subscribe(this::onAmountValid, this::onError));
         mObservables.add(viewModel.getBenefactors()
-        .observeOn(Schedulers.trampoline())
+        .observeOn(JavaFxScheduler.platform())
         .subscribe(this::onDetailsReceived, this::onError));
         mObservables.add(viewModel.getSelectedBenefactor()
-        .observeOn(Schedulers.trampoline())
+        .observeOn(JavaFxScheduler.platform())
         .subscribe(this::onBeneficiarySelected, this::onError));
         mObservables.add(viewModel.getTransacationSuccessStream()
-        .observeOn(Schedulers.trampoline())
+        .observeOn(JavaFxScheduler.platform())
         .subscribe(this::onTransactionSuccess, this::onError));
     }
 

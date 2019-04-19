@@ -1,6 +1,7 @@
 package ui.controllers;
 
 import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.rxjavafx.schedulers.JavaFxScheduler;
 import io.reactivex.schedulers.Schedulers;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -80,12 +81,12 @@ public class SignUpScreenController implements Initializable {
     private void createObservables(){
 
         mObservables.add(viewModel.getValidationStream()
-                .observeOn(Schedulers.trampoline())
+                .observeOn(JavaFxScheduler.platform())
                 .subscribe((answer) -> {
                     showErrorLabel(!answer);
                 }, this::onSignUpError));
         mObservables.add(viewModel.getConfirmSignUpStream()
-                .observeOn(Schedulers.trampoline())
+                .observeOn(JavaFxScheduler.platform())
                 .subscribe(this::signUpConfirm, this::onSignUpError));
     }
 

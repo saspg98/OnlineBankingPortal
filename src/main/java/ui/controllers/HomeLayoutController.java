@@ -6,6 +6,7 @@
 package ui.controllers;
 
 import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.rxjavafx.schedulers.JavaFxScheduler;
 import io.reactivex.schedulers.Schedulers;
 import javafx.fxml.Initializable;
 import model.BankAccount;
@@ -33,12 +34,12 @@ public class HomeLayoutController implements Initializable, ViewModelUser{
     @Override
     public void createObservables() {
         mObservables.add(viewModel.getSelectedAccount()
-        .observeOn(Schedulers.trampoline())
+        .observeOn(JavaFxScheduler.platform())
         .subscribe(this::setView, this::onError));
     }
 
     private void setView(BankAccount bankAccount) {
-        
+
     }
 
     @Override

@@ -5,6 +5,7 @@ package ui.controllers;/*
  */
 
 import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.rxjavafx.schedulers.JavaFxScheduler;
 import io.reactivex.schedulers.Schedulers;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -64,12 +65,12 @@ public class LoginScreenController implements Initializable {
     private void createObservables(){
 
         mObservables.add(viewModel.getValidationStream()
-                .observeOn(Schedulers.trampoline())
+                .observeOn(JavaFxScheduler.platform())
                 .subscribe((answer) -> {
                     showErrorLabel(!answer);
                 }, this::onLoginError));
         mObservables.add(viewModel.getAuthorizationStream()
-                .observeOn(Schedulers.trampoline())
+                .observeOn(JavaFxScheduler.platform())
                 .subscribe(this::loginAuth, this::onLoginError));
     }
 
