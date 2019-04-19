@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package dbmsproject;
+package ui.controllers;
 
 import io.reactivex.Scheduler;
 import io.reactivex.disposables.CompositeDisposable;
@@ -41,9 +41,9 @@ public class MyAccountLayoutController implements Initializable, ViewModelUser {
 
     @Override
     public void createObservables() {
-        viewModel.getUserDetails()
+        mObservables.add(viewModel.getUserDetails()
                 .observeOn(Schedulers.trampoline())
-                .subscribe((user) -> setViews(user), this::onError );
+                .subscribe((user) -> setViews(user), this::onError ));
     }
 
     public void setViews(User user){

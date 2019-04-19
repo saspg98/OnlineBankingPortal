@@ -3,9 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package dbmsproject;
+package ui.controllers;
 
+import io.reactivex.disposables.CompositeDisposable;
 import javafx.fxml.Initializable;
+import ui.controllers.ViewModelUser;
+import viewmodel.MainScreenViewModel;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -15,14 +18,25 @@ import java.util.ResourceBundle;
  *
  * @author Pranek
  */
-public class SidePanelController implements Initializable {
+public class SidePanelController implements Initializable, ViewModelUser {
 
-    /**
-     * Initializes the controller class.
-     */
+    private CompositeDisposable mObservables = new CompositeDisposable();
+
+
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+
+        createObservables();
     }
 
+    @Override
+    public void createObservables() {
+
+    }
+
+    @Override
+    public void disposeObservables() {
+        mObservables.clear();
+    }
 }

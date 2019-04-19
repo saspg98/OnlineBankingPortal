@@ -1,7 +1,11 @@
 package ui.controllers;
 
+import misc.debug.Debug;
+
 public interface ViewModelUser {
     void createObservables();
     void disposeObservables();
-    void onError(Throwable throwable);
+    default void onError(Throwable throwable){
+        Debug.err(this.getClass().getName(), throwable);
+    }
 }
