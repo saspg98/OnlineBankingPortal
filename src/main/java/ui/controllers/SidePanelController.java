@@ -8,10 +8,14 @@ package ui.controllers;
 import io.reactivex.disposables.CompositeDisposable;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.layout.GridPane;
 import ui.controllers.ViewModelUser;
 import viewmodel.MainScreenViewModel;
+import viewmodel.constant.Constant;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -23,13 +27,24 @@ import java.util.ResourceBundle;
 public class SidePanelController implements Initializable, ViewModelUser {
 
     private CompositeDisposable mObservables = new CompositeDisposable();
-
+    @FXML
+    private GridPane gridPane;
 
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 
-        createObservables();
+        GridPane homePane = null;
+
+        try {
+            homePane = FXMLLoader.load(getClass().getClassLoader().getResource(Constant.Path.HOME_SCREEN_VIEW));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        gridPane.add(homePane,1,0,2,8);
+        
+        //createObservables();
     }
 
     @Override

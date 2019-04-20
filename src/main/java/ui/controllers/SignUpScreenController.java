@@ -18,7 +18,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ResourceBundle;
 
-public class SignUpScreenController implements Initializable {
+public class SignUpScreenController implements Initializable, ViewModelUser {
 
     private static final String TAG = "SignUpScreenController";
     SignupViewModel viewModel = null;
@@ -78,7 +78,7 @@ public class SignUpScreenController implements Initializable {
         createObservables();
     }
 
-    private void createObservables(){
+    public void createObservables(){
 
         mObservables.add(viewModel.getValidationStream()
                 .observeOn(JavaFxScheduler.platform())

@@ -46,26 +46,26 @@ public class InputValidator {
     }
 
     public static boolean validateAdhaar(Long adhaar) {
-        if(String.valueOf(adhaar).length()!= 12) {
-            Debug.err("Wrong Adhaar");
-            return false;
-        }
+//        if(String.valueOf(adhaar).length()!= 12) {
+//            Debug.err("Wrong Adhaar");
+//            return false;
+//        }
         return true;
     }
 
     public static boolean validateAccountNumber(Long accountNumber) {
-        if(String.valueOf(accountNumber).length()!= 11) {
-            Debug.err("Wrong account number");
-            return false;
-        }
+//        if(String.valueOf(accountNumber).length()!= 11) {
+//            Debug.err("Wrong account number");
+//            return false;
+//        }
         return true;
     }
 
     public static boolean validateEmail(String email) {
-        if(!EmailValidator.getInstance().isValid(email)){
-            Debug.err("Invalid Email");
-            return false;
-        }
+//        if(!EmailValidator.getInstance().isValid(email)){
+//            Debug.err("Invalid Email");
+//            return false;
+//        }
         return true;
     }
 }

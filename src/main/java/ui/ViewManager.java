@@ -1,6 +1,7 @@
 package ui;
 
 import datamodel.*;
+import io.reactivex.Observable;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -11,8 +12,10 @@ import javafx.stage.WindowEvent;
 import misc.debug.Debug;
 import org.davidmoten.rx.jdbc.Database;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
+import ui.controllers.DataReceiver;
 import ui.controllers.LoginScreenController;
 import ui.controllers.SignUpScreenController;
+import ui.controllers.ViewModelUser;
 import viewmodel.constant.Constant;
 
 import java.io.IOException;
@@ -25,6 +28,7 @@ public class ViewManager {
     private LoginAuthDataModel loginAuthDataModel;
     private SignupAuthDataModel signupAuthDataModel;
     private UserDataModel userDataModel;
+    private String TAG ="ViewManager";
 
     private Database db;
     private long UID;
@@ -41,7 +45,6 @@ public class ViewManager {
 
     public UserDataModel getUserDataModel() {
         if (userDataModel== null) {
-
             userDataModel= new LocalUserDataModel(UID);
         }
         return userDataModel;
@@ -55,7 +58,6 @@ public class ViewManager {
     }
 
     private ViewManager() {
-
     }
 
     public static synchronized ViewManager getInstance() {
@@ -87,8 +89,8 @@ public class ViewManager {
         mainStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
             @Override
             public void handle(WindowEvent event) {
-                ((LoginScreenController)fxmlLoader.getController()).disposeObservables();
-                Debug.err("CLOSING", FXMLPATH);
+                ((ViewModelUser)fxmlLoader.getController()).disposeObservables();
+                Debug.log("CLOSING:"+ FXMLPATH);
                 System.exit(0);
             }
         });
@@ -98,10 +100,8 @@ public class ViewManager {
         //TODO: Handle Passing of data here
         throw new Exception("Data Passing not implemented", new NotImplementedException());
 
-    }
+        //(DataReceiver).... .re
 
-    public void exitScene(){
-        mainStage.close();
     }
 
     public void createSignUp(String FXMLPATH) {
@@ -124,7 +124,7 @@ public class ViewManager {
         newStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
             @Override
             public void handle(WindowEvent event) {
-                ((SignUpScreenController)signUpView.getController()).disposeObservables();
+                ((ViewModelUser)signUpView.getController()).disposeObservables();
                 Debug.err("CLOSING",FXMLPATH);
             }
         });
@@ -140,5 +140,15 @@ public class ViewManager {
 
     public Database getDb() {
         return db;
+    }
+
+    public void setUid(Observable<Long> uidStream) {
+        uidStream.subscribe((uid)->{
+            this.UID=uid;
+            Debug.log(TAG,"UID is "+UID);
+        },this::onError);
+    }
+    private void onError(Throwable throwable) {
+        Debug.err(TAG, throwable);
     }
 }

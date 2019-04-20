@@ -8,6 +8,7 @@ import misc.validator.InputValidator;
 import model.LoginCredentials;
 import model.changeapi.RxChangeableBase;
 import ui.ViewManager;
+import viewmodel.constant.Constant;
 
 import java.util.Iterator;
 
@@ -75,7 +76,9 @@ public class LoginViewModel {
 
     public void onSuccessfullLogin() {
         //Debug.printThread(TAG);
-        Debug.err(TAG, "Successful login!!");
+        Debug.log(TAG, "Successful login!!");
+        ViewManager.getInstance().setUid(mDataModel.getUidStream());
+        ViewManager.getInstance().setScene(Constant.Path.SIDE_PANE);
     }
 
     public void onSignUp(String signUpView) {

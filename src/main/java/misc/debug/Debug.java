@@ -25,9 +25,15 @@ public class Debug {
 
     public static void err(String tag, Object... vals) {
         System.err.println("TAG:" + tag);
-        for (Object val : vals) {
-            System.err.print(val.toString() + " ");
+        if(vals[0] instanceof Exception){
+            ((Exception)vals[0]).printStackTrace();
+        } else{
+
+            for (Object val : vals) {
+                System.err.print(val.toString() + "\n");
+            }
+            System.err.println();
         }
-        System.err.println();
+
     }
 }

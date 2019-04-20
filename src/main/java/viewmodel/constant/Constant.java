@@ -3,9 +3,10 @@ package viewmodel.constant;
 public class Constant {
 
     public static class Path {
-        public static final String MAIN_SCREEN_VIEW = "";
+        public static final String MAIN_SCREEN_VIEW = "MainScreenLayout.fxml";
         public static final String TRANSFER_VIEW = "";
-        public static final String HOME_SCREEN_VIEW = "";
+        public static final String SIDE_PANE = "SidePanel.fxml";
+        public static final String HOME_SCREEN_VIEW = "HomeLayout.fxml";
         public static final String LOGIN_VIEW = "LoginScreen.fxml";
         public static final String SETTINGS_VIEW = "";
         public static final String SIGNUP_VIEW = "SignUpScreen.fxml";

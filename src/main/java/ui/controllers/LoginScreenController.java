@@ -23,7 +23,7 @@ import java.util.ResourceBundle;
 /**
  * @author Pranek
  */
-public class LoginScreenController implements Initializable {
+public class LoginScreenController implements Initializable, ViewModelUser {
 
     private static final String TAG = "LoginScreenController";
     LoginViewModel viewModel = null;
@@ -62,7 +62,7 @@ public class LoginScreenController implements Initializable {
 
     }
 
-    private void createObservables(){
+     public void createObservables(){
 
         mObservables.add(viewModel.getValidationStream()
                 .observeOn(JavaFxScheduler.platform())
@@ -86,7 +86,7 @@ public class LoginScreenController implements Initializable {
         if (b) {
             viewModel.onSuccessfullLogin();
         } else {
-            System.err.println("Wrong Username or Password");
+            Debug.err(TAG,"Wrong Username or Password");
             errorLabel.setText("Invalid Username or Password!");
             errorLabel.setVisible(true);
         }

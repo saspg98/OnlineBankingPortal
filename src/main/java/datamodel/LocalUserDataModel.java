@@ -126,7 +126,7 @@ public final class LocalUserDataModel implements UserDataModel {
                         "where AccNo = ? ")
                 .parameterStream(
                         ViewManager.getInstance().getDb()
-                        .select("select AccNo from users where UID = ? and AccType = 'S' ")
+                        .select("select AccNo from Accounts where UID = ? and AccType = 'S' ")
                         .parameter(UID)
                         .getAs(Long.class)
                 )

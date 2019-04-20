@@ -6,7 +6,7 @@ public interface BankAccount {
     @Column
     double balance();
 
-    @Column
+    @Column("AccNo")
     long accNo();
 
     @Column

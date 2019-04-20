@@ -91,10 +91,10 @@ public class SignupViewModel {
     public void onSuccessfullSignUp() {
         Debug.log(TAG,"Sign up successful");
         try {
-            TimeUnit.SECONDS.sleep(20);
+            Debug.err("Application paused");
+            TimeUnit.SECONDS.sleep(10);
         } catch (InterruptedException e) {
             e.printStackTrace();
-            Debug.err("Application paused");
         }
         ViewManager.getInstance().exitSignUp();
     }

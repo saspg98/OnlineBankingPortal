@@ -8,4 +8,6 @@ public interface LoginAuthDataModel {
     void checkAuthorization(LoginCredentials credentials);
 
     Observable<Boolean> getAuthorizationStream();
+
+    Observable<Long> getUidStream();
 }
