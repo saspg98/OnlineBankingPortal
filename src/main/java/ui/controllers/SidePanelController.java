@@ -5,7 +5,6 @@
  */
 package ui.controllers;
 
-import com.sun.xml.internal.bind.v2.runtime.reflect.opt.Const;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.rxjavafx.schedulers.JavaFxScheduler;
 import javafx.event.ActionEvent;
@@ -14,7 +13,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.layout.GridPane;
 import ui.ViewManager;
-import ui.controllers.ViewModelUser;
 import viewmodel.MainScreenViewModel;
 import viewmodel.constant.Constant;
 
@@ -82,7 +80,7 @@ public class SidePanelController implements Initializable, ViewModelUser {
 
     @FXML
     private void onAccountClicked(ActionEvent actionEvent) {
-        viewModel.setState(Constant.Path.ACCOUNT_VIEW);
+        viewModel.setState(Constant.Path.MY_ACCOUNT_LAYOUT);
     }
 
     @FXML
