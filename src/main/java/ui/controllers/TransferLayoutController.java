@@ -32,7 +32,7 @@ import java.util.ResourceBundle;
  *
  * @author Pranek
  */
-public class TranferLayoutController implements Initializable, ViewModelUser, DataReceiver {
+public class TransferLayoutController implements Initializable, ViewModelUser, DataReceiver {
 
     @FXML
     private Label accountType;

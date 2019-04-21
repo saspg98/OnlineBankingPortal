@@ -6,7 +6,6 @@ import java.util.Date;
 
 //Interface for Rx2-java
 public interface User {
-    //TODO: Convert to interface
     @Column
     Long uid();
 

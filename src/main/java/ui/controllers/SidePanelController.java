@@ -12,6 +12,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.layout.GridPane;
+import misc.debug.Debug;
 import ui.ViewManager;
 import viewmodel.MainScreenViewModel;
 import viewmodel.constant.Constant;
@@ -52,16 +53,19 @@ public class SidePanelController implements Initializable, ViewModelUser {
         viewModel.setState(Constant.Path.HOME_SCREEN_VIEW);
     }
 
-    void setState(String path){
-        GridPane statePane = null;
+    void setState(MainScreenViewModel.StateInformation stateInformation){
+        GridPane newStatePane = null;
+        String path = stateInformation.getNextStatePath();
 
         try {
-            statePane = FXMLLoader.load(getClass().getClassLoader().getResource(path));
+            Debug.log(path);
+            newStatePane = FXMLLoader.load(getClass().getClassLoader().getResource(path));
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-        gridPane.add(statePane,1,0,2,8);
+        gridPane.getChildren().removeAll(stateInformation.getCurrentState());
+        gridPane.add(newStatePane,1,0,2,8);
+        viewModel.setGridPane(newStatePane);
 
 
     }

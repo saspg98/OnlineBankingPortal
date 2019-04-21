@@ -72,7 +72,7 @@ public class ViewManager {
     }
 
     public void setScene(String FXMLPATH) {
-
+        Debug.log(TAG, FXMLPATH);
         Parent root = null;
         try {
             fxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource(FXMLPATH));

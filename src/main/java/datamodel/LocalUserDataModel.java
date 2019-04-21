@@ -137,7 +137,7 @@ public final class LocalUserDataModel implements UserDataModel {
 
     @Override
     public void makeTransaction(BankAccount accountToUse, double amount, Beneficiary beneficiary) {
-        //TODO: Either change to a transactionStream or call method async with call backs
+        //Note: Possible Source of Errors!
         ViewManager.getInstance().getDb()
                 .update("insert into Transactions(Sender, Receiver, Time, Amount) " +
                         "values( ?, ?, ?, ?)")
@@ -201,6 +201,7 @@ public final class LocalUserDataModel implements UserDataModel {
     }
 
     public void onLogout() {
+        //TODO: Call this when logging out from side panel view
         UID = Long.MIN_VALUE;
     }
 }
