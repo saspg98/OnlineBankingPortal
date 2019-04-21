@@ -12,6 +12,8 @@ public class Constant {
         public static final String SIGNUP_VIEW = "SignUpScreen.fxml";
         public static final String ACCOUNT_VIEW = "";
         public static final String BENEFACTOR_DETAIL_VIEW = "";
+        public static final String HELP_VIEW = "";
+        public static final String TRANSACTION_VIEW = "";
     }
 
     public static class Connection {
