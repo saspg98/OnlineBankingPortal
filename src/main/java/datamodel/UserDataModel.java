@@ -7,6 +7,7 @@ import model.Transaction;
 import model.User;
 
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.List;
 import java.util.Map;
 
@@ -29,11 +30,15 @@ public interface UserDataModel {
 
     void makeTransaction(BankAccount accountToUse, BigDecimal amount, Beneficiary beneficiary);
 
-    void addBeneficiary(long beneficiaryAccount, long userAccount);
+    void addBeneficiary(long beneficiaryAccount, BigInteger userAccount);
 
     Observable<Boolean> getAddBeneficiarySuccessStream();
 
     Observable<Boolean> getTransactionSuccessStream();
+
+    Observable<User> getUserDetails();
+
+    Observable<User> getPayeeDetails(BankAccount account);
 
     void onLogout();
 }

@@ -24,6 +24,7 @@ import javafx.stage.WindowEvent;
 import misc.debug.Debug;
 import model.BankAccount;
 import model.Beneficiary;
+import model.User;
 import ui.ViewManager;
 import viewmodel.MakeTransactionViewModel;
 import viewmodel.constant.Constant;
@@ -63,7 +64,7 @@ public class TransferLayoutController implements Initializable, ViewModelUser {
     @FXML
     private ComboBox<String> viewPayee;
     @FXML
-    private ComboBox accountNumberDrop;
+    private ComboBox<String> accountNumberDrop;
 
     /**
      * Initializes the controller class.
@@ -85,7 +86,7 @@ public class TransferLayoutController implements Initializable, ViewModelUser {
         mObservables.add(viewModel.getSelectedBeneficiaryStream()
         .observeOn(JavaFxScheduler.platform())
         .subscribe(this::onBeneficiarySelected, this::onError));
-        mObservables.add(viewModel.getTransacationSuccessStream()
+        mObservables.add(viewModel.getTransactionSuccessStream()
         .observeOn(JavaFxScheduler.platform())
         .subscribe(this::onTransactionSuccess, this::onError));
         mObservables.add(viewModel.getSelectedAccountStream()
@@ -94,37 +95,53 @@ public class TransferLayoutController implements Initializable, ViewModelUser {
         mObservables.add(viewModel.getBankAccounts()
         .observeOn(JavaFxScheduler.platform())
         .subscribe(this::onAccountDetailsReceived, this::onError));
+        mObservables.add(viewModel.getUserData()
+        .observeOn(JavaFxScheduler.platform())
+        .subscribe(this::onUserDataReceived, this::onError));
+    }
+
+    private void onUserDataReceived(User user) {
+        name.setText(user.name());
     }
 
     private void onAccountDetailsReceived(Map<String, BankAccount> bankAccountDetails) {
         accountNumberDrop.setItems(FXCollections.observableList(new ArrayList<>(bankAccountDetails.keySet())));
-        accountNumberDrop.getSelectionModel().select(0);
         viewModel.setBankAccountData(bankAccountDetails);
+        accountNumberDrop.getSelectionModel().select(0);
     }
 
     private void onAccountSelected(BankAccount bankAccount) {
         accountType.setText(bankAccount.Acctype());
+
     }
 
     private void onTransactionSuccess(boolean isTransactionSuccessful) {
         //TODO: Implementation
+        if(isTransactionSuccessful)
+            Debug.log(TAG, "Transaction Successfully Processed!");
+        else
+            Debug.log(TAG,"Transaction could not be processed at this time");
     }
 
     private void onBeneficiarySelected(Beneficiary beneficiary) {
         payeeAccNo.setText(beneficiary.accNo().toString());
         payeeBranchCode.setText(String.valueOf(beneficiary.bcode()));
+
     }
 
     private void onDetailsReceived(Map<String, Beneficiary> stringBeneficiaryMap) {
 
         viewPayee.setItems(FXCollections.observableList(new ArrayList<>(stringBeneficiaryMap.keySet())));
-        viewPayee.getSelectionModel().select(0);
         viewModel.setBeneficiaryData(stringBeneficiaryMap);
+        viewPayee.getSelectionModel().select(0);
+
     }
 
     private void onAmountValid(boolean isValid) {
-        //Handle the case when the amount the user entered is valid
-        viewModel.makeTransaction();
+        //Handle the case when the amount the user entered is invalid
+        if(!isValid){
+            Debug.log(TAG,"INVALID AMOUNT");
+        }
     }
 
     @Override
@@ -135,33 +152,31 @@ public class TransferLayoutController implements Initializable, ViewModelUser {
 
     @FXML
     private void onConfirmPaymentClicked(ActionEvent actionEvent) {
-
+        Debug.log(TAG,"Confirm Button Clicked");
+        viewModel.setAmount(amount.getText().trim());
     }
 
     @FXML
     private void onAddNewPayeeClicked(ActionEvent actionEvent) {
+        viewModel.onOpenAddPayee(accountNumberDrop.getValue());
+    }
 
-        Stage newStage = new Stage();
-        Parent addPayee = null;
-        try {
-            fxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource(Constant.Path.ADD_PAYEE));
-            addPayee = fxmlLoader.load();
-        } catch (IOException e) {
-            e.printStackTrace();
-            Debug.err("Unable to create alert box for sign up");
-        }
+    @FXML
+    private void onPayeeDropDownSelected(ActionEvent actionEvent) {
+        viewModel.beneficiarySelected(viewPayee.getValue());
+        viewModel.getPayeeDetails(viewPayee.getValue())
+                .observeOn(JavaFxScheduler.platform())
+                .subscribe(this::setPayeeDetails, this::onError);
 
-        Scene scene = new Scene(addPayee);
-        newStage.initModality(Modality.APPLICATION_MODAL);
-        newStage.setScene(scene);
-        newStage.centerOnScreen();
-        newStage.show();
-        newStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
-            @Override
-            public void handle(WindowEvent event) {
-                ((ViewModelUser)fxmlLoader.getController()).disposeObservables();
-                Debug.log("CLOSING","Add payee pop up!");
-            }
-        });
+    }
+
+    private void setPayeeDetails(User payee) {
+        payeeName.setText(payee.name());
+        //other if necessary
+    }
+
+    @FXML
+    private void onAccountDropDownSelected(ActionEvent actionEvent) {
+        viewModel.accountSelected(accountNumberDrop.getValue());
     }
 }

@@ -1,5 +1,6 @@
 package datamodel;
 
+import io.reactivex.Flowable;
 import io.reactivex.Observable;
 import io.reactivex.schedulers.Schedulers;
 import io.reactivex.subjects.BehaviorSubject;
@@ -11,12 +12,10 @@ import model.User;
 import ui.ViewManager;
 
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
-import java.util.AbstractMap;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public final class LocalUserDataModel implements UserDataModel {
     private static final String TAG = "UserDataModel";
@@ -165,22 +164,32 @@ public final class LocalUserDataModel implements UserDataModel {
     @Override
     public void makeTransaction(BankAccount accountToUse, BigDecimal amount, Beneficiary beneficiary) {
         //Note: Possible Source of Errors!
+        Debug.log(TAG, "Making Transaction");
+        List<Object> l1 =  Arrays.asList(accountToUse.balance().subtract(amount), accountToUse.accNo());
+        List<Object> l2 = Arrays.asList(beneficiary.balance().add(amount), beneficiary.accNo());
+        List<List<Object>> cumulativeList= Arrays.asList(l1,l2);
         ViewManager.getInstance().getDb()
                 .update("insert into Transactions(Sender, Receiver, Time, Amount) " +
                         "values( ?, ?, ?, ?)")
                 .parameters(accountToUse.accNo(), beneficiary.accNo(), Timestamp.valueOf(LocalDateTime.now()), amount)
-                .transaction()
-                .doOnNext((obj) -> {
-                    obj.update("update Accounts set balance = ? " +
-                            "where AccNo = ? ")
-                            .parameters(accountToUse.balance().subtract(amount), accountToUse.accNo())
-                            .transactedValuesOnly();
+                .transacted()
+                .tx()
+                .doOnNext((data)->{
+                    Debug.log(TAG,"Inserted Record, Updating now");
                 })
+                .flatMap((tx) -> tx.update("update Accounts set balance = ? " +
+                        "where AccNo = ? ")
+                        .parameterListStream(Flowable.fromIterable(cumulativeList))
+                        .valuesOnly()
+                        .counts()
+                        .doOnNext((data)->{
+                            Debug.log(TAG, "Updated one record");
+                        }))
                 .observeOn(Schedulers.computation())
-                .subscribe((val) ->
+                .subscribe((updateCount) ->
                         {
                             Debug.log(TAG, "Inside On Next for Transaction", "Tx value",
-                                    val.value());
+                                    updateCount);
                         }
                         , (err) -> {
                             Debug.err(TAG, "Got Error in Transaction!", err);
@@ -195,10 +204,9 @@ public final class LocalUserDataModel implements UserDataModel {
     }
 
     @Override
-    public void addBeneficiary(long beneficiaryAccNo, long userAccount) {
+    public void addBeneficiary(long beneficiaryAccNo, BigInteger userAccount) {
         ViewManager.getInstance().getDb()
-                .update("insert into Beneficiaries values( " +
-                        "?, ?")
+                .update("insert into Beneficiaries values( ?, ?)")
                 .parameters(userAccount, beneficiaryAccNo)
                 .transaction()
                 .observeOn(Schedulers.computation())
@@ -208,7 +216,7 @@ public final class LocalUserDataModel implements UserDataModel {
                                     val.value());
                         }
                         , (err) -> {
-                            Debug.err(TAG, "Got Error in Beneficiary!", err);
+                            Debug.err(TAG, err);
                             mAddBeneficiarySuccessStream.onNext(false);
                         }
                         , () -> {
@@ -226,6 +234,26 @@ public final class LocalUserDataModel implements UserDataModel {
     public Observable<Boolean> getTransactionSuccessStream() {
         return mTransactionSuccessStream;
     }
+    @Override
+    public Observable<User> getUserDetails() {
+        return ViewManager.getInstance().getDb()
+                .select("select * from users " +
+                        "where uid = ?")
+                .parameter(UID)
+                .autoMap(User.class)
+                .toObservable();
+    }
+
+    @Override
+    public Observable<User> getPayeeDetails(BankAccount beneficiaryAccount) {
+        return ViewManager.getInstance().getDb()
+                .select("select * from users " +
+                        "where uid = ?")
+                .parameter(beneficiaryAccount.uid())
+                .autoMap(User.class)
+                .toObservable();
+    }
+
 
     @Override
     public void onLogout() {
