@@ -6,6 +6,7 @@ import io.reactivex.subjects.BehaviorSubject;
 import misc.debug.Debug;
 import model.BankAccount;
 import model.Beneficiary;
+import model.User;
 import ui.ViewManager;
 import viewmodel.constant.Constant;
 
@@ -41,6 +42,16 @@ public class MakeTransactionViewModel {
 
     }
 
+
+    public Observable<User> getUserData(){
+        return mDataModel.getUserDetails();
+    }
+
+    public  Observable<User> getPayeeDetails(String accountString){
+        return mDataModel.getPayeeDetails(mBeneficiaryData.get(accountString));
+    }
+
+
     public Observable<Map<String, Beneficiary>> getBeneficiaries() {
         return mDataModel.getUserBeneficiaries()
                 .flatMap((oldList) -> Observable.fromIterable(oldList)
@@ -74,17 +85,19 @@ public class MakeTransactionViewModel {
         try {
             d = new BigDecimal(amount);
         } catch (NumberFormatException e) {
+            Debug.log(TAG,"NumberFormatException");
             mAmountValidityStream.onNext(false);
             return;
         }
 
         if (lastSelectedAccount.balance()
-                .subtract(d).compareTo(Constant.Bank.MIN_ACCOUNT_BALANCE) >= 0) {
+                .subtract(d).compareTo(Constant.Bank.MIN_ACCOUNT_BALANCE) < 0) {
             mAmountValidityStream.onNext(false);
             return;
         }
         mAmountValidityStream.onNext(true);
         mAmount = d;
+        makeTransaction();
     }
 
     public void beneficiarySelected(String formattedString) {
@@ -103,11 +116,11 @@ public class MakeTransactionViewModel {
                 mBeneficiaryData.get(formattedString));
     }
 
-    public Observable<Boolean> getTransacationSuccessStream() {
+    public Observable<Boolean> getTransactionSuccessStream() {
         return mDataModel.getTransactionSuccessStream();
     }
 
-    public void makeTransaction() {
+    private void makeTransaction() {
         if (lastSelectedBeneficiary!=null)
             mDataModel.makeTransaction(lastSelectedAccount, mAmount, lastSelectedBeneficiary);
         else

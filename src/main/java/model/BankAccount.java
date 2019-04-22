@@ -16,7 +16,7 @@ public interface BankAccount {
     long bcode();
 
     @Column("UID")
-    long uid();
+    Long uid();
 
     @Column
     String Acctype();

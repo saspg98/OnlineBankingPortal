@@ -35,5 +35,9 @@ public interface UserDataModel {
 
     Observable<Boolean> getTransactionSuccessStream();
 
+    Observable<User> getUserDetails();
+
+    Observable<User> getPayeeDetails(BankAccount account);
+
     void onLogout();
 }
