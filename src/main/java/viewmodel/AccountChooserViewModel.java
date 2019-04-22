@@ -31,7 +31,7 @@ public class AccountChooserViewModel {
         return mSelectedAccount;
     }
 
-    public Observable<Map<String, BankAccount>> getRegisteredBranches() {
+    public Observable<Map<String, BankAccount>> getBankAccountDetails() {
         return mDataModel.getUserAccounts()
                 .flatMap(list ->
                         Observable.fromIterable(list)

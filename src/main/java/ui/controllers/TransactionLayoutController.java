@@ -20,6 +20,7 @@ import viewmodel.TransactionHistoryViewModel;
 
 import java.net.URL;
 import java.util.List;
+import java.util.Map;
 import java.util.ResourceBundle;
 
 /**
@@ -27,7 +28,7 @@ import java.util.ResourceBundle;
  *
  * @author Pranek
  */
-public class TransactionLayoutController implements Initializable, ViewModelUser, DataReceiver {
+public class TransactionLayoutController implements Initializable, ViewModelUser{
 
     private CompositeDisposable mObservables = new CompositeDisposable();
     private TransactionHistoryViewModel viewModel;
@@ -43,23 +44,34 @@ public class TransactionLayoutController implements Initializable, ViewModelUser
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        viewModel = new TransactionHistoryViewModel(ViewManager.getInstance().getUserDataModel());
 
-    }
 
-    @Override
-    public <T> void receiveData(T... data) {
-        BankAccount bankAccount = (BankAccount) data[0];
-        viewModel = new TransactionHistoryViewModel(ViewManager.getInstance().getUserDataModel(), bankAccount);
-        LAccountNumberOutput.setText(String.valueOf(viewModel.getBankAccount().accNo()));
-        LAccountTypeOutput.setText(viewModel.getBankAccount().Acctype());
         createObservables();
     }
 
     @Override
     public void createObservables() {
-        mObservables.add(viewModel.getTransactions()
+        mObservables.add(viewModel.getTransactionStream()
         .observeOn(JavaFxScheduler.platform())
         .subscribe(this::setViews, this::onError));
+        mObservables.add(viewModel.getBankAccountDetails()
+        .observeOn(JavaFxScheduler.platform())
+        .subscribe(this::setAccountViewDetails,this::onError));
+        mObservables.add(viewModel.getSelectedAccountStream()
+        .observeOn(JavaFxScheduler.platform())
+        .subscribe(this::onAccountSelected, this::onError));
+
+    }
+
+    private void onAccountSelected(BankAccount account) {
+        //set balance or other stuff
+    }
+
+    private void setAccountViewDetails(Map<String, BankAccount> stringBankAccountMap) {
+        //set drop down list values
+        //here
+        viewModel.setAccountData(stringBankAccountMap);
     }
 
     private void setViews(List<Transaction> transactions) {
