@@ -41,6 +41,7 @@ public class AccountChooserViewModel {
     }
 
     public void openTransferPage() throws Exception {
-        ViewManager.getInstance().setScene(Constant.Path.TRANSFER_VIEW, mSelectedAccount.blockingLast());
+        ViewManager.getInstance().setScene(Constant.Path.TRANSFER_VIEW, mSelectedAccount
+                .blockingLatest().iterator().next());
     }
 }

@@ -69,6 +69,7 @@ public class AddPayeeLayoutController implements Initializable,ViewModelUser, Da
 
     @FXML
     private void onAddPayeeClicked(ActionEvent actionEvent) {
+        viewModel.setBeneficiaryAccNo(TfAccountNumber.getText());
     }
 
     @Override
@@ -83,10 +84,15 @@ public class AddPayeeLayoutController implements Initializable,ViewModelUser, Da
     }
 
     private void isValid(boolean isValid) {
+        if(!isValid){
+            //TODO: Show error message, acc no is not 11 digit long etc
+        }
     }
 
     private void isSuccessful(boolean isSuccesful) {
-
+        if(!isSuccesful){
+            //TODO: Show other error message, acc doesn't exist etc
+        }
     }
 
     @Override

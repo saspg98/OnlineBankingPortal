@@ -10,7 +10,6 @@ import java.util.Iterator;
 public class AddBeneficiaryViewModel {
     private UserDataModel mUserDataModel;
     private BehaviorSubject<Boolean> validationStream = BehaviorSubject.create();
-    private Iterator<Boolean> latestValidation;
     private long mBeneficiaryAccountNumber = -1;
     private final long mUserAccount;
 
@@ -18,11 +17,13 @@ public class AddBeneficiaryViewModel {
         this.mUserDataModel = mUserDataModel;
         this.mUserAccount = mUserAccount;
         //TODO: Change ALL blockingMostRecent calls
-        latestValidation = validationStream.blockingMostRecent(false).iterator();
+
     }
 
     public Observable<Boolean> getValidationStream() {
-        return validationStream;
+        return validationStream.doOnNext((valid)->{
+            if(valid){addBeneficiary();}
+        });
     }
 
     public Observable<Boolean> getSuccessListenerStream() {
@@ -46,8 +47,8 @@ public class AddBeneficiaryViewModel {
         return InputValidator.validateAccountNumber(accNo);
     }
 
-    public void addBeneficiary() {
-        if (latestValidation.next())
-            mUserDataModel.addBeneficiary(mBeneficiaryAccountNumber, mUserAccount);
+    private void addBeneficiary() {
+
+        mUserDataModel.addBeneficiary(mBeneficiaryAccountNumber, mUserAccount);
     }
 }
