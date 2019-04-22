@@ -11,16 +11,20 @@ import viewmodel.constant.Constant;
 
 import java.math.BigDecimal;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 public class MakeTransactionViewModel {
     private UserDataModel mDataModel;
     private BehaviorSubject<Beneficiary> mSelectedBeneficiary = BehaviorSubject.create();
-    private final BankAccount mAccountToUse;
+    private BehaviorSubject<BankAccount>  mSelectedBankAccount = BehaviorSubject.create();
+    private Map<String, BankAccount> mBankAccountData;
+    private Map<String, Beneficiary> mBeneficiaryData;
+    private BankAccount lastSelectedAccount;
+    private Beneficiary lastSelectedBeneficiary;
     private BehaviorSubject<Boolean> mAmountValidityStream = BehaviorSubject.create();
     private BigDecimal mAmount;
-    private Map<String, Beneficiary> mBeneficiaryData;
-    private Iterator<Beneficiary> latestBeneficiary;
+
     private static final String TAG = "MakeTransactionVM";
 
 
@@ -28,13 +32,16 @@ public class MakeTransactionViewModel {
         this.mBeneficiaryData = mBeneficiaryData;
     }
 
-    public MakeTransactionViewModel(UserDataModel userDataModel, BankAccount mAccountToUse) {
-        this.mDataModel = userDataModel;
-        this.mAccountToUse = mAccountToUse;
-        latestBeneficiary = mSelectedBeneficiary.blockingMostRecent(null).iterator();
+    public void setBankAccountData(Map<String, BankAccount> mBankAccountData) {
+        this.mBankAccountData = mBankAccountData;
     }
 
-    public Observable<Map<String, Beneficiary>> getBenefactors() {
+    public MakeTransactionViewModel(UserDataModel userDataModel) {
+        this.mDataModel = userDataModel;
+
+    }
+
+    public Observable<Map<String, Beneficiary>> getBeneficiaries() {
         return mDataModel.getUserBeneficiaries()
                 .flatMap((oldList) -> Observable.fromIterable(oldList)
                         .toMap(this::getFormattedString)
@@ -42,12 +49,24 @@ public class MakeTransactionViewModel {
 
     }
 
-    private String getFormattedString(Beneficiary beneficiary) {
-        return beneficiary.toString();
+    public Observable<Map<String, BankAccount>> getBankAccounts(){
+        return mDataModel.getUserAccounts()
+                .flatMap((oldList) -> Observable.fromIterable(oldList)
+                        .toMap(this::getFormattedString)
+                        .toObservable());
+
     }
 
-    public Observable<Beneficiary> getSelectedBenefactor() {
+    private String getFormattedString(BankAccount bankAccount) {
+        return bankAccount.toString();
+    }
+
+    public Observable<Beneficiary> getSelectedBeneficiaryStream() {
         return mSelectedBeneficiary;
+    }
+
+    public Observable<BankAccount> getSelectedAccountStream() {
+        return mSelectedBankAccount;
     }
 
     public Observable<Boolean> getAmountValidityStream() {
@@ -62,7 +81,9 @@ public class MakeTransactionViewModel {
             mAmountValidityStream.onNext(false);
             return;
         }
-        if (mAccountToUse.balance().compareTo(d)==1) {
+
+        if (lastSelectedAccount.balance()
+                .subtract(d).compareTo(Constant.Bank.MIN_ACCOUNT_BALANCE) >= 0) {
             mAmountValidityStream.onNext(false);
             return;
         }
@@ -70,8 +91,15 @@ public class MakeTransactionViewModel {
         mAmount = d;
     }
 
-    public void benefactorSelected(String formattedString) {
-        mSelectedBeneficiary.onNext(mBeneficiaryData.get(formattedString));
+    public void beneficiarySelected(String formattedString) {
+        lastSelectedBeneficiary = mBeneficiaryData.get(formattedString);
+        mSelectedBeneficiary.onNext(lastSelectedBeneficiary);
+
+    }
+
+    public void accountSelected(String formattedString){
+        lastSelectedAccount = mBankAccountData.get(formattedString);
+        mSelectedBankAccount.onNext(lastSelectedAccount);
     }
 
     public void requestBenefactorDetails(String formattedString) throws Exception {
@@ -84,8 +112,8 @@ public class MakeTransactionViewModel {
     }
 
     public void makeTransaction() {
-        if (latestBeneficiary.next() != null)
-            mDataModel.makeTransaction(mAccountToUse, mAmount, latestBeneficiary.next());
+        if (lastSelectedBeneficiary!=null)
+            mDataModel.makeTransaction(lastSelectedAccount, mAmount, lastSelectedBeneficiary);
         else
             Debug.err(TAG, "This should not have happened");
     }

@@ -5,10 +5,8 @@
  */
 package ui.controllers;
 
-import io.reactivex.Scheduler;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.rxjavafx.schedulers.JavaFxScheduler;
-import io.reactivex.schedulers.Schedulers;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -19,8 +17,6 @@ import misc.debug.Debug;
 import model.BankAccount;
 import model.Beneficiary;
 import ui.ViewManager;
-import ui.controllers.DataReceiver;
-import ui.controllers.ViewModelUser;
 import viewmodel.MakeTransactionViewModel;
 
 import java.net.URL;
@@ -65,18 +61,36 @@ public class TransferLayoutController implements Initializable, ViewModelUser, D
     @Override
     public void createObservables() {
         mObservables.add(viewModel.getAmountValidityStream()
-                        .observeOn(JavaFxScheduler.platform())
-                        .subscribe(this::onAmountValid, this::onError));
-        mObservables.add(viewModel.getBenefactors()
+        .observeOn(JavaFxScheduler.platform())
+        .subscribe(this::onAmountValid, this::onError));
+        mObservables.add(viewModel.getBeneficiaries()
         .observeOn(JavaFxScheduler.platform())
         .subscribe(this::onDetailsReceived, this::onError));
-        mObservables.add(viewModel.getSelectedBenefactor()
+        mObservables.add(viewModel.getSelectedBeneficiaryStream()
         .observeOn(JavaFxScheduler.platform())
         .subscribe(this::onBeneficiarySelected, this::onError));
         mObservables.add(viewModel.getTransacationSuccessStream()
         .observeOn(JavaFxScheduler.platform())
         .subscribe(this::onTransactionSuccess, this::onError));
+        mObservables.add(viewModel.getSelectedAccountStream()
+        .observeOn(JavaFxScheduler.platform())
+        .subscribe(this::onAccountSelected, this::onError));
+        mObservables.add(viewModel.getBankAccounts()
+        .observeOn(JavaFxScheduler.platform())
+        .subscribe(this::onAccountDetailsReceived, this::onError));
     }
+
+    private void onAccountDetailsReceived(Map<String, BankAccount> bankAccountDetails) {
+        //TODO: set views
+        // Populate Dropdown box
+
+        viewModel.setBankAccountData(bankAccountDetails);
+    }
+
+    private void onAccountSelected(BankAccount bankAccount) {
+        accountType.setText(bankAccount.Acctype());
+    }
+
 
     private void onTransactionSuccess(boolean isTransactionSuccessful) {
         //TODO: Implementation
@@ -92,7 +106,7 @@ public class TransferLayoutController implements Initializable, ViewModelUser, D
         viewModel.setBeneficiaryData(stringBeneficiaryMap);
     }
 
-    private void onAmountValid(boolean aBoolean) {
+    private void onAmountValid(boolean isValid) {
         //Handle the case when the amount the user entered is valid
         viewModel.makeTransaction();
     }
@@ -106,7 +120,7 @@ public class TransferLayoutController implements Initializable, ViewModelUser, D
     @Override
     public <T> void receiveData(T... data) {
         BankAccount bankAccount = (BankAccount) data[0];
-        viewModel = new MakeTransactionViewModel(ViewManager.getInstance().getUserDataModel(), bankAccount);
+        viewModel = new MakeTransactionViewModel(ViewManager.getInstance().getUserDataModel());
         createObservables();
     }
 
