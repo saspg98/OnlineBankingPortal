@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="650.0" style="-fx-background-color: #dcdcdc;" stylesheets="style.css" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.controllers.SignUpScreenController">
+<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="950.0" prefWidth="650.0" style="-fx-background-color: #dcdcdc;" stylesheets="style.css" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.controllers.SignUpScreenController">
   <columnConstraints>
     <ColumnConstraints hgrow="SOMETIMES" maxWidth="578.0" minWidth="10.0" prefWidth="231.0" />
     <ColumnConstraints hgrow="SOMETIMES" maxWidth="436.0" minWidth="10.0" prefWidth="395.0" />
@@ -20,107 +20,105 @@
   <rowConstraints>
       <RowConstraints maxHeight="153.0" minHeight="0.0" prefHeight="71.0" vgrow="SOMETIMES" />
       <RowConstraints maxHeight="40.0" minHeight="40.0" prefHeight="40.0" vgrow="SOMETIMES" />
-      <RowConstraints maxHeight="40.0" minHeight="40.0" prefHeight="40.0" vgrow="SOMETIMES" />
-      <RowConstraints maxHeight="40.0" minHeight="40.0" prefHeight="40.0" vgrow="SOMETIMES" />
-    <RowConstraints maxHeight="40.0" minHeight="40.0" prefHeight="40.0" vgrow="SOMETIMES" />
-    <RowConstraints maxHeight="40.0" minHeight="40.0" prefHeight="40.0" vgrow="SOMETIMES" />
-      <RowConstraints maxHeight="40.0" minHeight="40.0" prefHeight="40.0" vgrow="SOMETIMES" />
-      <RowConstraints maxHeight="40.0" minHeight="40.0" prefHeight="40.0" vgrow="SOMETIMES" />
-    <RowConstraints maxHeight="40.0" minHeight="40.0" prefHeight="40.0" vgrow="SOMETIMES" />
-      <RowConstraints maxHeight="40.0" minHeight="40.0" prefHeight="40.0" vgrow="SOMETIMES" />
-      <RowConstraints maxHeight="40.0" minHeight="40.0" prefHeight="40.0" vgrow="SOMETIMES" />
-      <RowConstraints maxHeight="40.0" minHeight="40.0" prefHeight="40.0" vgrow="SOMETIMES" />
-      <RowConstraints maxHeight="40.0" minHeight="40.0" prefHeight="40.0" vgrow="SOMETIMES" />
-      <RowConstraints maxHeight="40.0" minHeight="40.0" prefHeight="40.0" vgrow="SOMETIMES" />
-      <RowConstraints maxHeight="40.0" minHeight="40.0" prefHeight="40.0" vgrow="SOMETIMES" />
-      <RowConstraints maxHeight="40.0" minHeight="40.0" prefHeight="40.0" vgrow="SOMETIMES" />
-      <RowConstraints maxHeight="103.0" minHeight="10.0" prefHeight="74.0" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="60.0" minHeight="18.0" prefHeight="60.0" vgrow="SOMETIMES" />
+    <RowConstraints maxHeight="65.0" minHeight="29.0" prefHeight="55.0" vgrow="SOMETIMES" />
+    <RowConstraints maxHeight="61.0" minHeight="25.0" prefHeight="61.0" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="64.0" minHeight="40.0" prefHeight="59.0" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="68.0" minHeight="40.0" prefHeight="62.0" vgrow="SOMETIMES" />
+    <RowConstraints maxHeight="67.0" minHeight="36.0" prefHeight="57.0" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="79.0" minHeight="37.0" prefHeight="60.0" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="83.0" minHeight="40.0" prefHeight="60.0" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="93.0" minHeight="40.0" prefHeight="60.0" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="93.0" minHeight="37.0" prefHeight="59.0" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="93.0" minHeight="40.0" prefHeight="56.0" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="100.0" minHeight="40.0" prefHeight="63.0" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="124.0" minHeight="10.0" prefHeight="95.0" vgrow="SOMETIMES" />
   </rowConstraints>
    <children>
-      <Label id="LName" text="Name" GridPane.rowIndex="3">
+      <Label id="LName" text="Name" GridPane.rowIndex="2">
          <font>
             <Font size="24.0" />
          </font>
       </Label>
-      <Label id="LAadhaarCard" text="Aadhaar Card" GridPane.rowIndex="10">
+      <Label id="LAadhaarCard" text="Aadhaar Card" GridPane.rowIndex="9">
          <font>
             <Font size="24.0" />
          </font>
       </Label>
-      <Label id="LPassword" text="Password" GridPane.rowIndex="12">
+      <Label id="LPassword" text="Password" GridPane.rowIndex="11">
          <font>
             <Font size="24.0" />
          </font>
       </Label>
-      <Label id="LConfirmPassword" text="Confirm Password" GridPane.rowIndex="13">
+      <Label id="LConfirmPassword" text="Confirm Password" GridPane.rowIndex="12">
          <font>
             <Font size="24.0" />
          </font>
       </Label>
-      <Label id="LDateOfBirth" text="Date of Birth" GridPane.rowIndex="4">
+      <Label id="LDateOfBirth" text="Date of Birth" GridPane.rowIndex="3">
          <font>
             <Font size="24.0" />
          </font>
       </Label>
-      <Label id="LGender" text="Gender" GridPane.rowIndex="5">
+      <Label id="LGender" text="Gender" GridPane.rowIndex="4">
          <font>
             <Font size="24.0" />
          </font>
       </Label>
-      <Label id="LUsername" text="Username" GridPane.rowIndex="11">
+      <Label id="LUsername" text="Username" GridPane.rowIndex="10">
          <font>
             <Font size="24.0" />
          </font>
        </Label>
-       <Label id="LEmail" text="Email Id" GridPane.rowIndex="8">
+       <Label id="LEmail" text="Email Id" GridPane.rowIndex="7">
           <font>
              <Font size="24.0" />
           </font>
         </Label>
-        <Label id="LAccountNo" text="Account Number" GridPane.rowIndex="9">
+        <Label id="LAccountNo" text="Account Number" GridPane.rowIndex="8">
            <font>
               <Font size="24.0" />
            </font>
          </Label>
-      <Label fx:id="LError" alignment="CENTER" contentDisplay="CENTER" disable="true" prefHeight="36.0" prefWidth="540.0" text="*Sorry, but an error has been made!!" textFill="RED" GridPane.columnSpan="2" GridPane.rowIndex="1" />
-      <TextField fx:id="TfName" onMouseClicked="#nameTfClicked" promptText=" First Name       Last Name" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-      <TextField fx:id="TfDateOfBirth" onMouseClicked="#dateTfClicked" promptText="DD/MM/YYYY" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-      <TextField fx:id="TfEmail" onMouseClicked="#emailTfClicked" promptText="Enter valid email address" GridPane.columnIndex="1" GridPane.rowIndex="8" />
-      <TextField fx:id="TfAccountNo" onMouseClicked="#accTfClicked" promptText="Enter Account number" GridPane.columnIndex="1" GridPane.rowIndex="9" />
-      <TextField fx:id="TfAadhaarCard" onMouseClicked="#uidTfClicked" promptText="12 Digit Aadhaar Card Number" GridPane.columnIndex="1" GridPane.rowIndex="10" />
-      <TextField fx:id="TfUsername" onMouseClicked="#usernameTfClicked" promptText="Enter Unique Username" GridPane.columnIndex="1" GridPane.rowIndex="11" />
-      <Button fx:id="signUpButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onSignUpClicked" prefHeight="50.0" prefWidth="130.0" text="Sign Up" translateX="100.0" GridPane.columnSpan="2" GridPane.rowIndex="16">
+      <Label fx:id="LError" alignment="CENTER" contentDisplay="CENTER" disable="true" prefHeight="36.0" prefWidth="650.0" text="*Sorry, but an error has been made!!" textFill="RED" GridPane.columnSpan="2" GridPane.rowIndex="1" />
+      <TextField fx:id="TfName" onMouseClicked="#nameTfClicked" promptText=" First Name       Last Name" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+      <TextField fx:id="TfDateOfBirth" onMouseClicked="#dateTfClicked" promptText="DD/MM/YYYY" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+      <TextField fx:id="TfEmail" onMouseClicked="#emailTfClicked" promptText="Enter valid email address" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+      <TextField fx:id="TfAccountNo" onMouseClicked="#accTfClicked" promptText="Enter Account number" GridPane.columnIndex="1" GridPane.rowIndex="8" />
+      <TextField fx:id="TfAadhaarCard" onMouseClicked="#uidTfClicked" promptText="12 Digit Aadhaar Card Number" GridPane.columnIndex="1" GridPane.rowIndex="9" />
+      <TextField fx:id="TfUsername" onMouseClicked="#usernameTfClicked" promptText="Enter Unique Username" GridPane.columnIndex="1" GridPane.rowIndex="10" />
+      <Button fx:id="signUpButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onSignUpClicked" prefHeight="50.0" prefWidth="130.0" text="Sign Up" translateX="100.0" GridPane.columnIndex="1" GridPane.rowIndex="13" GridPane.rowSpan="2">
          <font>
             <Font name="System Bold" size="24.0" />
          </font>
          <GridPane.margin>
-            <Insets bottom="30.0" left="150.0" />
+            <Insets />
          </GridPane.margin>
          <padding>
             <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
          </padding>
       </Button>
-      <PasswordField fx:id="TfPassword" onMouseClicked="#passTfClicked" promptText="Enter atleast 8 characters" GridPane.columnIndex="1" GridPane.rowIndex="12" />
-      <PasswordField fx:id="TfConfirmPassword" onMouseClicked="#confirmPassTfClicked" promptText="Re-enter Password" GridPane.columnIndex="1" GridPane.rowIndex="13" />
-      <RadioButton id="Male" mnemonicParsing="false" text="Male" GridPane.columnIndex="1" GridPane.rowIndex="5">
+      <PasswordField fx:id="TfPassword" onMouseClicked="#passTfClicked" promptText="Enter atleast 8 characters" GridPane.columnIndex="1" GridPane.rowIndex="11" />
+      <PasswordField fx:id="TfConfirmPassword" onMouseClicked="#confirmPassTfClicked" promptText="Re-enter Password" GridPane.columnIndex="1" GridPane.rowIndex="12" />
+      <RadioButton id="Male" mnemonicParsing="false" text="Male" GridPane.columnIndex="1" GridPane.rowIndex="4">
          <toggleGroup>
             <ToggleGroup fx:id="Sex" />
          </toggleGroup></RadioButton>
-      <RadioButton id="Female" mnemonicParsing="false" text="Female" toggleGroup="$Sex" translateX="100.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-      <RadioButton id="Other" mnemonicParsing="false" text="Other" toggleGroup="$Sex" translateX="200.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+      <RadioButton id="Female" mnemonicParsing="false" text="Female" toggleGroup="$Sex" translateX="100.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+      <RadioButton id="Other" mnemonicParsing="false" text="Other" toggleGroup="$Sex" translateX="200.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
       <Label id="LSignUpHeading" alignment="CENTER" contentDisplay="CENTER" prefHeight="53.0" prefWidth="721.0" text="SignUp" GridPane.columnSpan="2">
          <font>
             <Font name="System Bold" size="36.0" />
          </font>
       </Label>
-      <Label id="LAddress" text="Address" GridPane.rowIndex="6">
+      <Label id="LAddress" text="Address" GridPane.rowIndex="5">
          <font>
             <Font size="24.0" />
          </font>
       </Label>
-      <TextField fx:id="TfAddressLine" onMouseClicked="#addrTfClicked" promptText="Flat No, Street Name" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-      <TextField fx:id="BCode" onMouseClicked="#branchTfClicked" promptText="Branch Code" GridPane.columnIndex="1" GridPane.rowIndex="7" />
-      <Label id="LAddress" text="Branch Code" GridPane.rowIndex="7">
+      <TextField fx:id="TfAddressLine" onMouseClicked="#addrTfClicked" promptText="Flat No, Street Name" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+      <TextField fx:id="BCode" onMouseClicked="#branchTfClicked" promptText="Branch Code" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+      <Label id="LAddress" text="Branch Code" GridPane.rowIndex="6">
          <font>
             <Font size="24.0" />
          </font>

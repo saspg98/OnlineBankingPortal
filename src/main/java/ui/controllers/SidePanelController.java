@@ -59,7 +59,7 @@ public class SidePanelController implements Initializable, ViewModelUser {
             e.printStackTrace();
         }
         gridPane.getChildren().removeAll(stateInformation.getCurrentState());
-        gridPane.add(newStatePane,1,0,2,8);
+        gridPane.add(newStatePane,1,0,2,11);
         viewModel.setGridPane(newStatePane);
     }
 

@@ -7,96 +7,83 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<GridPane maxHeight="700.0" maxWidth="700.0" minHeight="700.0" minWidth="700.0" prefHeight="700.0"
-          prefWidth="700.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="ui.controllers.MyAccountLayoutController">
+<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.controllers.MyAccountLayoutController">
   <columnConstraints>
-    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+    <ColumnConstraints hgrow="SOMETIMES" maxWidth="459.0" minWidth="10.0" prefWidth="390.0" />
+    <ColumnConstraints hgrow="SOMETIMES" maxWidth="399.0" minWidth="10.0" prefWidth="390.0" />
   </columnConstraints>
   <rowConstraints>
-    <RowConstraints maxHeight="75.0" minHeight="75.0" prefHeight="75.0" vgrow="SOMETIMES" />
-    <RowConstraints maxHeight="75.0" minHeight="75.0" prefHeight="75.0" vgrow="SOMETIMES" />
-    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+    <RowConstraints maxHeight="99.0" minHeight="75.0" prefHeight="99.0" vgrow="SOMETIMES" />
+    <RowConstraints maxHeight="95.0" minHeight="10.0" prefHeight="54.0" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="92.0" minHeight="10.0" prefHeight="53.0" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="87.0" minHeight="10.0" prefHeight="49.0" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="84.0" minHeight="10.0" prefHeight="52.0" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="74.0" minHeight="10.0" prefHeight="58.0" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="84.0" minHeight="10.0" prefHeight="55.0" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="95.0" minHeight="10.0" prefHeight="64.0" vgrow="SOMETIMES" />
   </rowConstraints>
    <children>
-      <GridPane style="-fx-background-color: #fcdcdcdd;" GridPane.columnSpan="2" GridPane.rowSpan="2">
-         <columnConstraints>
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
-         </columnConstraints>
-         <rowConstraints>
-            <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
-         </rowConstraints>
-         <children>
-            <Label fx:id="LMyAccount" text="My Account" translateX="250.0">
-               <font>
-                  <Font name="System Bold" size="36.0" />
-               </font>
-            </Label>
-         </children>
-      </GridPane>
-      <Label fx:id="LName" text="Name" underline="true" GridPane.rowIndex="2">
+      <Label fx:id="LName" alignment="CENTER" contentDisplay="CENTER" prefHeight="28.0" prefWidth="290.0" text="Name:" GridPane.rowIndex="1">
          <font>
-            <Font size="18.0" />
+            <Font name="GoodPro-WideMedium" size="24.0" />
          </font></Label>
-      <Label fx:id="LDateOfBirth" text="Date of birth" underline="true" GridPane.rowIndex="3">
+      <Label fx:id="LDateOfBirth" alignment="CENTER" contentDisplay="CENTER" prefHeight="28.0" prefWidth="368.0" text="Date of birth:" GridPane.rowIndex="2">
          <font>
-            <Font size="18.0" />
+            <Font name="GoodPro-WideMedium" size="24.0" />
          </font></Label>
-      <Label fx:id="LEmailId" text="Email Id" underline="true" GridPane.rowIndex="5">
+      <Label fx:id="LEmailId" alignment="CENTER" contentDisplay="CENTER" prefHeight="28.0" prefWidth="316.0" text="Email Id:" GridPane.rowIndex="4">
          <font>
-            <Font size="18.0" />
+            <Font name="GoodPro-WideMedium" size="24.0" />
          </font></Label>
-      <Label fx:id="LPhoneNumber" text="Phone Number" underline="true" GridPane.rowIndex="6">
+      <Label fx:id="LPhoneNumber" alignment="CENTER" contentDisplay="CENTER" prefHeight="28.0" prefWidth="489.0" text="Phone Number:" GridPane.rowIndex="5">
          <font>
-            <Font size="18.0" />
+            <Font name="GoodPro-WideMedium" size="24.0" />
          </font></Label>
-      <Label fx:id="LAddress" text="Address" underline="true" GridPane.rowIndex="7">
+      <Label fx:id="LAddress" alignment="CENTER" contentDisplay="CENTER" prefHeight="28.0" prefWidth="317.0" text="Address:" GridPane.rowIndex="6">
          <font>
-            <Font size="18.0" />
+            <Font name="GoodPro-WideMedium" size="24.0" />
          </font></Label>
-      <Label fx:id="LAAdhaarCard" text="Aadhaar Card" underline="true" GridPane.rowIndex="8">
+      <Label fx:id="LAAdhaarCard" alignment="CENTER" contentDisplay="CENTER" prefHeight="28.0" prefWidth="378.0" text="Aadhaar Card:" GridPane.rowIndex="7">
          <font>
-            <Font size="18.0" />
+            <Font name="GoodPro-WideMedium" size="24.0" />
          </font></Label>
-      <Label fx:id="LNameOutput" prefHeight="21.0" prefWidth="850.0" text="Pranek" GridPane.columnIndex="1" GridPane.rowIndex="2">
+      <Label fx:id="LNameOutput" prefHeight="21.0" prefWidth="850.0" text="Pranek" GridPane.columnIndex="1" GridPane.rowIndex="1">
          <font>
-            <Font size="18.0" />
+            <Font name="GoodPro-WideMedium" size="24.0" />
          </font></Label>
-      <Label fx:id="LDate" prefHeight="21.0" prefWidth="934.0" text="15/8/1999" GridPane.columnIndex="1" GridPane.rowIndex="3">
+      <Label fx:id="LDate" prefHeight="21.0" prefWidth="934.0" text="15/8/1999" GridPane.columnIndex="1" GridPane.rowIndex="2">
          <font>
-            <Font size="18.0" />
+            <Font name="GoodPro-WideMedium" size="24.0" />
          </font></Label>
-      <Label fx:id="LEmailIdOutput" prefHeight="21.0" prefWidth="558.0" text="pranek.g@gmail.com" GridPane.columnIndex="1" GridPane.rowIndex="5">
+      <Label fx:id="LEmailIdOutput" prefHeight="21.0" prefWidth="558.0" text="pranek.g@gmail.com" GridPane.columnIndex="1" GridPane.rowIndex="4">
          <font>
-            <Font size="18.0" />
+            <Font name="GoodPro-WideMedium" size="24.0" />
          </font></Label>
-      <Label fx:id="LPhoneNumberOutput" prefHeight="21.0" prefWidth="456.0" text="9867622542" GridPane.columnIndex="1" GridPane.rowIndex="6">
+      <Label fx:id="LPhoneNumberOutput" prefHeight="21.0" prefWidth="456.0" text="9867622542" GridPane.columnIndex="1" GridPane.rowIndex="5">
          <font>
-            <Font size="18.0" />
+            <Font name="GoodPro-WideMedium" size="24.0" />
          </font></Label>
-      <Label fx:id="LAddressOutput" prefHeight="1.0" prefWidth="340.0" text="106/14 Mlabar hill Mumbai 40082." GridPane.columnIndex="1" GridPane.rowIndex="7">
+      <Label fx:id="LAddressOutput" prefHeight="1.0" prefWidth="340.0" text="106/14 Mlabar hill Mumbai 40082." GridPane.columnIndex="1" GridPane.rowIndex="6">
          <font>
-            <Font size="18.0" />
+            <Font name="GoodPro-WideMedium" size="24.0" />
          </font></Label>
-      <Label fx:id="LAadhaarCardOutput" prefHeight="21.0" prefWidth="800.0" text="484444844848" GridPane.columnIndex="1" GridPane.rowIndex="8">
+      <Label fx:id="LAadhaarCardOutput" prefHeight="21.0" prefWidth="800.0" text="484444844848" GridPane.columnIndex="1" GridPane.rowIndex="7">
          <font>
-            <Font size="18.0" />
+            <Font name="GoodPro-WideMedium" size="24.0" />
          </font></Label>
-      <Label fx:id="LGender" text="Gender" underline="true" GridPane.rowIndex="4">
+      <Label fx:id="LGender" alignment="CENTER" contentDisplay="CENTER" prefHeight="28.0" prefWidth="304.0" text="Gender:" GridPane.rowIndex="3">
          <font>
-            <Font size="18.0" />
+            <Font name="GoodPro-WideMedium" size="24.0" />
          </font></Label>
-      <Label fx:id="LGenderOutput" prefHeight="21.0" prefWidth="837.0" text="Male" GridPane.columnIndex="1" GridPane.rowIndex="4">
+      <Label fx:id="LGenderOutput" prefHeight="21.0" prefWidth="837.0" text="Male" GridPane.columnIndex="1" GridPane.rowIndex="3">
          <font>
-            <Font size="18.0" />
+            <Font name="GoodPro-WideMedium" size="24.0" />
          </font></Label>
+      <Label fx:id="LMyAccount" alignment="CENTER" prefHeight="76.0" prefWidth="780.0" text="My Account" GridPane.columnSpan="2">
+         <font>
+            <Font name="System Bold" size="36.0" />
+         </font>
+      </Label>
    </children>
    <padding>
       <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
