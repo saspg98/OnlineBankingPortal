@@ -19,9 +19,9 @@ import java.util.ResourceBundle;
  *
  * @author Pranek
  */
-public class SettingsLayoutController implements Initializable,ViewModelUser {
+public class ChangePasswordLayoutController implements Initializable,ViewModelUser {
 
-    private final String TAG = "SettingsLayoutController";
+    private final String TAG = "ChangePasswordLayoutController";
 
     @FXML
     private PasswordField oldPass;

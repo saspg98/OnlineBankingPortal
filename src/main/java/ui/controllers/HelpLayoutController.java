@@ -32,18 +32,18 @@ public class HelpLayoutController implements Initializable,ViewModelUser {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         HelpScreenViewModel viewModel = new HelpScreenViewModel();
-        //set UI elements to
-        viewModel.getContactNum();
-        viewModel.getEmailId();
+
+        LEmailIdOutput.setText(viewModel.getEmailId());
+        LContactNumberOutput.setText(viewModel.getContactNum());
     }
 
     @Override
     public void createObservables() {
-        Debug.log(TAG,"Disposing observables");
+
     }
 
     @Override
     public void disposeObservables() {
-
+        Debug.log(TAG,"Disposing observables");
     }
 }

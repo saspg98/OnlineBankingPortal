@@ -9,6 +9,7 @@ import model.Beneficiary;
 import ui.ViewManager;
 import viewmodel.constant.Constant;
 
+import java.math.BigDecimal;
 import java.util.Iterator;
 import java.util.Map;
 
@@ -17,7 +18,7 @@ public class MakeTransactionViewModel {
     private BehaviorSubject<Beneficiary> mSelectedBeneficiary = BehaviorSubject.create();
     private final BankAccount mAccountToUse;
     private BehaviorSubject<Boolean> mAmountValidityStream = BehaviorSubject.create();
-    private double mAmount;
+    private BigDecimal mAmount;
     private Map<String, Beneficiary> mBeneficiaryData;
     private Iterator<Beneficiary> latestBeneficiary;
     private static final String TAG = "MakeTransactionVM";
@@ -54,14 +55,14 @@ public class MakeTransactionViewModel {
     }
 
     public void setAmount(String amount) {
-        double d = 0;
+        BigDecimal d ;
         try {
-            d = Double.parseDouble(amount);
+            d = new BigDecimal(amount);
         } catch (NumberFormatException e) {
             mAmountValidityStream.onNext(false);
             return;
         }
-        if (mAccountToUse.balance() > d) {
+        if (mAccountToUse.balance().compareTo(d)==1) {
             mAmountValidityStream.onNext(false);
             return;
         }

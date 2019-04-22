@@ -2,12 +2,15 @@ package model;
 
 import org.davidmoten.rx.jdbc.annotations.Column;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
+
 public interface BankAccount {
     @Column
-    double balance();
+    BigDecimal balance();
 
     @Column("AccNo")
-    long accNo();
+    BigInteger accNo();
 
     @Column
     long bcode();
@@ -16,5 +19,5 @@ public interface BankAccount {
     long uid();
 
     @Column
-    char Acctype();
+    String Acctype();
 }

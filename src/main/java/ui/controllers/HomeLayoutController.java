@@ -16,7 +16,9 @@ import model.BankAccount;
 import ui.ViewManager;
 import viewmodel.HomeViewModel;
 
+import java.math.BigInteger;
 import java.net.URL;
+import java.util.HashMap;
 import java.util.ResourceBundle;
 
 /**
@@ -29,6 +31,7 @@ public class HomeLayoutController implements Initializable, ViewModelUser{
     private CompositeDisposable mObservables = new CompositeDisposable();
     private HomeViewModel viewModel;
     private final String TAG = "HomeLayouttController";
+    private HashMap<String,String> accType = new HashMap<>();
 
     @FXML
     private Label LAccountNumberOutput;
@@ -41,6 +44,8 @@ public class HomeLayoutController implements Initializable, ViewModelUser{
     public void initialize(URL url, ResourceBundle rb) {
         viewModel = new HomeViewModel(ViewManager.getInstance().getUserDataModel());
         createObservables();
+        accType.put("S","Saving");
+        accType.put("C","Current");
     }
 
     @Override
@@ -51,7 +56,9 @@ public class HomeLayoutController implements Initializable, ViewModelUser{
     }
 
     private void setView(BankAccount bankAccount) {
-
+        LAccountNumberOutput.setText(bankAccount.accNo().toString());
+        LAccountTypeOutput.setText(accType.get(bankAccount.Acctype()));
+        LCurrentBalanceOutput.setText(bankAccount.balance().toString());
     }
 
     @Override

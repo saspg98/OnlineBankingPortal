@@ -5,6 +5,7 @@
  */
 package ui.controllers;
 
+import io.reactivex.Observable;
 import io.reactivex.Scheduler;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.rxjavafx.schedulers.JavaFxScheduler;
@@ -19,7 +20,7 @@ import ui.controllers.ViewModelUser;
 import viewmodel.SettingsViewModel;
 
 import java.net.URL;
-import java.util.ResourceBundle;
+import java.util.*;
 
 /**
  * FXML Controller class
@@ -31,6 +32,7 @@ public class MyAccountLayoutController implements Initializable, ViewModelUser {
     private CompositeDisposable mObservables = new CompositeDisposable();
     private SettingsViewModel viewModel;
     private final String TAG = "MyAccountLayoutController";
+    private final HashMap<String,String> sex = new HashMap<>();
 
     @FXML
     private Label LNameOutput;
@@ -51,6 +53,8 @@ public class MyAccountLayoutController implements Initializable, ViewModelUser {
     public void initialize(URL url, ResourceBundle rb) {
         viewModel = new SettingsViewModel(ViewManager.getInstance().getUserDataModel());
         createObservables();
+        sex.put("M","Male");
+        sex.put("F","Female");
     }
 
     public void onUpdateInfo(){
@@ -66,8 +70,25 @@ public class MyAccountLayoutController implements Initializable, ViewModelUser {
                 .subscribe((user) -> setViews(user), this::onError ));
     }
 
-    public void setViews(User user){
-        //TODO: Implementation
+    public void setViews(Map<User, List<Long>> userMap){
+       if(userMap.size()>1){
+           //Throw error
+       } else {
+           User user = userMap.keySet().iterator().next();
+           LNameOutput.setText(user.name());
+           LAadhaarCardOutput.setText(user.uid().toString());
+           LAddressOutput.setText(user.Address());
+           LDate.setText(user.DOB().toString());
+           LEmailIdOutput.setText(user.Email());
+           LGenderOutput.setText(sex.get(user.Sex()));
+           StringBuilder builder = new StringBuilder();
+           for (long l: userMap.get(user)) {
+               builder.append(l+"\n");
+           }
+
+           LPhoneNumberOutput.setText(builder.toString());
+       }
+
     }
 
 
@@ -79,6 +100,6 @@ public class MyAccountLayoutController implements Initializable, ViewModelUser {
 
     @Override
     public void onError(Throwable throwable) {
-        Debug.err("MyAccountController", throwable);
+        Debug.err(TAG, throwable);
     }
 }

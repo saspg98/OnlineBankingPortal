@@ -7,12 +7,12 @@ public class DefaultUser implements User {
     private String name;
     private String address;
     private Date dob;
-    private char sex;
+    private String sex;
     private String username;
     private String password;
     private String email;
 
-    public DefaultUser(long uid, String name, String address, Date dob, char sex, String username, String password, String email) {
+    public DefaultUser(long uid, String name, String address, Date dob, String sex, String username, String password, String email) {
         this.uid = uid;
         this.name = name;
         this.address = address;
@@ -46,7 +46,7 @@ public class DefaultUser implements User {
     }
 
     @Override
-    public char Sex() {
+    public String Sex() {
         return sex;
     }
 

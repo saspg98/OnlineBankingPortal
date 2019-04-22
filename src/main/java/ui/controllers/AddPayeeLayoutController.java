@@ -5,6 +5,8 @@
  */
 package ui.controllers;
 
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.rxjavafx.schedulers.JavaFxScheduler;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -12,6 +14,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import misc.debug.Debug;
+import ui.ViewManager;
+import viewmodel.AddBeneficiaryViewModel;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -21,9 +25,11 @@ import java.util.ResourceBundle;
  *
  * @author Pranek
  */
-public class AddPayeeLayoutController implements Initializable,ViewModelUser {
+public class AddPayeeLayoutController implements Initializable,ViewModelUser, DataReceiver {
 
     private final String TAG = "AddPayeeLayoutController";
+    private AddBeneficiaryViewModel viewModel;
+    private CompositeDisposable mObservables = new CompositeDisposable();
 
     @FXML
     private Label LName;
@@ -50,6 +56,15 @@ public class AddPayeeLayoutController implements Initializable,ViewModelUser {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
+
+    }
+
+    @Override
+    public <T> void receiveData(T... data) {
+        long accno = (Long) data[0];
+        viewModel = new AddBeneficiaryViewModel(ViewManager.getInstance().getUserDataModel(),accno);
+
+        createObservables();
     }
 
     @FXML
@@ -58,6 +73,19 @@ public class AddPayeeLayoutController implements Initializable,ViewModelUser {
 
     @Override
     public void createObservables() {
+        mObservables.add(viewModel.getValidationStream()
+                        .observeOn(JavaFxScheduler.platform())
+                        .subscribe(this::isValid, this::onError));
+        mObservables.add(viewModel.getSuccessListenerStream()
+                .observeOn(JavaFxScheduler.platform())
+                .subscribe(this::isSuccessful, this::onError));
+
+    }
+
+    private void isValid(boolean isValid) {
+    }
+
+    private void isSuccessful(boolean isSuccesful) {
 
     }
 
@@ -65,4 +93,6 @@ public class AddPayeeLayoutController implements Initializable,ViewModelUser {
     public void disposeObservables() {
         Debug.log(TAG,"Disposing Observables");
     }
+
+
 }

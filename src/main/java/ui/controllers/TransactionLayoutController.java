@@ -7,19 +7,15 @@ package ui.controllers;
 
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.rxjavafx.schedulers.JavaFxScheduler;
-import io.reactivex.schedulers.Schedulers;
-import javafx.event.ActionEvent;
+import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
 import misc.debug.Debug;
 import model.BankAccount;
 import model.Transaction;
 import ui.ViewManager;
-import viewmodel.MakeTransactionViewModel;
 import viewmodel.TransactionHistoryViewModel;
 
 import java.net.URL;
@@ -42,7 +38,7 @@ public class TransactionLayoutController implements Initializable, ViewModelUser
     @FXML
     private Label LAccountNumberOutput;
     @FXML
-    private TableView transactionTableView;
+    private TableView<Transaction> transactionTableView;
 
 
     @Override
@@ -54,6 +50,8 @@ public class TransactionLayoutController implements Initializable, ViewModelUser
     public <T> void receiveData(T... data) {
         BankAccount bankAccount = (BankAccount) data[0];
         viewModel = new TransactionHistoryViewModel(ViewManager.getInstance().getUserDataModel(), bankAccount);
+        LAccountNumberOutput.setText(String.valueOf(viewModel.getBankAccount().accNo()));
+        LAccountTypeOutput.setText(viewModel.getBankAccount().Acctype());
         createObservables();
     }
 
@@ -65,6 +63,8 @@ public class TransactionLayoutController implements Initializable, ViewModelUser
     }
 
     private void setViews(List<Transaction> transactions) {
+
+        transactionTableView.setItems(FXCollections.observableList(transactions));
 
     }
 

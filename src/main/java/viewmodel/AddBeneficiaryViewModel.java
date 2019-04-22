@@ -12,10 +12,12 @@ public class AddBeneficiaryViewModel {
     private BehaviorSubject<Boolean> validationStream = BehaviorSubject.create();
     private Iterator<Boolean> latestValidation;
     private long mBeneficiaryAccountNumber = -1;
-    private long mUserAccount;
+    private final long mUserAccount;
 
     public AddBeneficiaryViewModel(UserDataModel mUserDataModel, long mUserAccount) {
         this.mUserDataModel = mUserDataModel;
+        this.mUserAccount = mUserAccount;
+        //TODO: Change ALL blockingMostRecent calls
         latestValidation = validationStream.blockingMostRecent(false).iterator();
     }
 

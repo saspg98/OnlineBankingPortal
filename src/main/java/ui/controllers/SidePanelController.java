@@ -83,7 +83,7 @@ public class SidePanelController implements Initializable, ViewModelUser {
 
     @FXML
     private void onSettingClicked(ActionEvent actionEvent) {
-        viewModel.setState(Constant.Path.SETTINGS_VIEW);
+        viewModel.setState(Constant.Path.CHANGE_PASSWORD_VIEW);
     }
 
     @FXML

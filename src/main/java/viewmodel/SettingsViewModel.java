@@ -4,16 +4,18 @@ import datamodel.UserDataModel;
 import io.reactivex.Observable;
 import model.User;
 
+import java.util.List;
+import java.util.Map;
+
 public class SettingsViewModel {
 
     UserDataModel mDataModel;
-
 
     public SettingsViewModel(UserDataModel mDataModel) {
         this.mDataModel = mDataModel;
     }
 
-    public Observable<User> getUserDetails() {
+    public Observable<Map<User, List<Long>>> getUserDetails() {
         return mDataModel.fetchUserDetails();
     }
 

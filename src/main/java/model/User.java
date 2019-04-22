@@ -19,7 +19,7 @@ public interface User {
     Date DOB();
 
     @Column
-    char Sex();
+    String Sex();
 
     @Column
     String Username();

@@ -19,4 +19,8 @@ public class TransactionHistoryViewModel {
     public Observable<List<Transaction>> getTransactions() {
         return userDataModel.getUserTransactions(bankAccount);
     }
+
+    public BankAccount getBankAccount(){
+        return bankAccount;
+    }
 }

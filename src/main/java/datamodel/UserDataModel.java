@@ -6,10 +6,12 @@ import model.Beneficiary;
 import model.Transaction;
 import model.User;
 
+import java.math.BigDecimal;
 import java.util.List;
+import java.util.Map;
 
 public interface UserDataModel {
-    Observable<User> fetchUserDetails();
+    Observable<Map<User, List<Long>>> fetchUserDetails();
 
     void updateUser(User u);
 
@@ -25,7 +27,7 @@ public interface UserDataModel {
 
     Observable<BankAccount> getPrimaryUserAccount();
 
-    void makeTransaction(BankAccount accountToUse, double amount, Beneficiary beneficiary);
+    void makeTransaction(BankAccount accountToUse, BigDecimal amount, Beneficiary beneficiary);
 
     void addBeneficiary(long beneficiaryAccount, long userAccount);
 

@@ -10,11 +10,13 @@ import model.Transaction;
 import model.User;
 import ui.ViewManager;
 
-import javax.swing.text.View;
+import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
-import java.util.Arrays;
+import java.util.AbstractMap;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public final class LocalUserDataModel implements UserDataModel {
     private static final String TAG = "UserDataModel";
@@ -27,12 +29,32 @@ public final class LocalUserDataModel implements UserDataModel {
     }
 
     @Override
-    public Observable<User> fetchUserDetails() {
+    public Observable<Map<User, List<Long>>> fetchUserDetails() {
+        //TODO: Unknown Column Number in Field List
+        Observable<List<Long>> list = ViewManager.getInstance().getDb()
+                .select("select PhNumber from PhNo where uid = ?")
+                .parameter(UID)
+                .getAs(Long.class)
+                .toList()
+                .toObservable();
         return ViewManager.getInstance().getDb()
                 .select("Select * from users where uid = ?")
                 .parameter(UID)
                 .autoMap(User.class)
+                .toObservable()
+                .zipWith(list, (numlist,user)->{ return
+                    new HashMap.SimpleEntry<>(user, numlist);
+                })
+                .toList()
+                .map((listOf)->{
+                    Map<User,List<Long>> map = new HashMap<>();
+                    for(AbstractMap.SimpleEntry<List<Long>,User> e: listOf){
+                        map.put(e.getValue(), e.getKey());
+                    }
+                    return map;
+                })
                 .toObservable();
+
     }
 
     @Override
@@ -136,7 +158,7 @@ public final class LocalUserDataModel implements UserDataModel {
 
 
     @Override
-    public void makeTransaction(BankAccount accountToUse, double amount, Beneficiary beneficiary) {
+    public void makeTransaction(BankAccount accountToUse, BigDecimal amount, Beneficiary beneficiary) {
         //Note: Possible Source of Errors!
         ViewManager.getInstance().getDb()
                 .update("insert into Transactions(Sender, Receiver, Time, Amount) " +
@@ -146,7 +168,7 @@ public final class LocalUserDataModel implements UserDataModel {
                 .doOnNext((obj) -> {
                     obj.update("update Accounts set balance = ? " +
                             "where AccNo = ? ")
-                            .parameters(accountToUse.balance() - amount, accountToUse.accNo())
+                            .parameters(accountToUse.balance().subtract(amount), accountToUse.accNo())
                             .transactedValuesOnly();
                 })
                 .observeOn(Schedulers.computation())

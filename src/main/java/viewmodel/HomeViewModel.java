@@ -14,7 +14,6 @@ public class HomeViewModel {
         this.mDataModel = mDataModel;
     }
 
-
     public Observable<BankAccount> getSelectedAccount() {
         return mDataModel.getPrimaryUserAccount();
     }
