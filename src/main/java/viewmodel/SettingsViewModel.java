@@ -19,9 +19,4 @@ public class SettingsViewModel {
         return mDataModel.fetchUserDetails();
     }
 
-    public void setUserDetails(User u) {
-        mDataModel.updateUser(u);
-    }
-
-
 }

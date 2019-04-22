@@ -1,6 +1,7 @@
 package datamodel;
 
 import io.reactivex.Observable;
+import io.reactivex.Scheduler;
 import io.reactivex.schedulers.Schedulers;
 import io.reactivex.subjects.BehaviorSubject;
 import misc.debug.Debug;
@@ -20,7 +21,7 @@ public class LocalLoginAuthDataModel implements LoginAuthDataModel {
     @Override
     public void checkAuthorization(LoginCredentials credentials) {
         //Debug.printThread(TAG);
-        Debug.log(TAG, "Inside checkAuth");
+        Debug.log(TAG, "Inside checkAuth","Login Creds:", credentials.getUsername(), credentials.getPassword());
         //Validate Credentials
         Database db = ViewManager.getInstance().getDb();
         db.select("select uid from Users where Username = ? and Password = ?")

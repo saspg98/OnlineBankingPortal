@@ -30,7 +30,7 @@ public final class LocalUserDataModel implements UserDataModel {
 
     @Override
     public Observable<Map<User, List<Long>>> fetchUserDetails() {
-        //TODO: Unknown Column Number in Field List
+
         Observable<List<Long>> list = ViewManager.getInstance().getDb()
                 .select("select PhNumber from PhNo where uid = ?")
                 .parameter(UID)
@@ -57,15 +57,20 @@ public final class LocalUserDataModel implements UserDataModel {
 
     }
 
-    @Override
-    public void updateUser(User u) {
-        //TODO: Implementation after User is implemented
-        //Implement after User is implemented!
-//        ViewManager.getInstance().getDb()
-//                .update("update users " +
-//                        "set password = ? " +
-//                        "where uid = ?")
-//                .parameters(u)
+    public Observable<Boolean> updatePassword(String oldPass, String newPass) {
+
+        return ViewManager.getInstance().getDb()
+                .update("update users " +
+                        "set password = ? " +
+                        "where uid = ? and password =?")
+                .parameters(newPass,oldPass)
+                .counts()
+                .map((value)->{
+                    if(value == 0 )
+                        return false;
+                    return true;
+                })
+                .toObservable();
 
     }
 

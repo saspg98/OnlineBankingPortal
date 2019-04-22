@@ -5,11 +5,15 @@
  */
 package ui.controllers;
 
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.rxjavafx.schedulers.JavaFxScheduler;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.PasswordField;
 import misc.debug.Debug;
+import misc.validator.InputValidator;
+import viewmodel.ChangePasswordViewModel;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -22,6 +26,8 @@ import java.util.ResourceBundle;
 public class ChangePasswordLayoutController implements Initializable,ViewModelUser {
 
     private final String TAG = "ChangePasswordLayoutController";
+    private ChangePasswordViewModel viewModel;
+    CompositeDisposable mObservables = new CompositeDisposable();
 
     @FXML
     private PasswordField oldPass;
@@ -35,20 +41,39 @@ public class ChangePasswordLayoutController implements Initializable,ViewModelUs
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        viewModel = new ChangePasswordViewModel();
+        oldPass.setText("");
+        newPass.setText("");
+        confirmPass.setText("");
     }
 
     @FXML
     private void confirmButtonClicked(ActionEvent actionEvent) {
+        String oldPass = this.oldPass.getText().trim();
+        String newPass = this.newPass.getText().trim();
+        InputValidator.validatePassword(oldPass);
+        InputValidator.validatePassword(newPass);
+        mObservables.add(viewModel.setPassword(oldPass,newPass)
+                .observeOn(JavaFxScheduler.platform())
+                .subscribe(this::successfulPasswordChange ,this::showErrorLabel));
     }
 
     @Override
     public void createObservables() {
+      Debug.log(TAG,"Not Implemented createObservables");
+    }
+
+    private void showErrorLabel(Throwable throwable) {
+
+    }
+
+    private void successfulPasswordChange(boolean isSuccessful) {
 
     }
 
     @Override
     public void disposeObservables() {
         Debug.log(TAG,"Disposing Observables");
+        mObservables.clear();
     }
 }

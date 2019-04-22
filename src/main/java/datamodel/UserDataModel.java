@@ -13,7 +13,7 @@ import java.util.Map;
 public interface UserDataModel {
     Observable<Map<User, List<Long>>> fetchUserDetails();
 
-    void updateUser(User u);
+    Observable<Boolean> updatePassword(String oldPass, String newPass);
 
     Observable<List<BankAccount>> getUserAccounts();
 
