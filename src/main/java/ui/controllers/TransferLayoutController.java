@@ -28,7 +28,7 @@ import java.util.ResourceBundle;
  *
  * @author Pranek
  */
-public class TransferLayoutController implements Initializable, ViewModelUser, DataReceiver {
+public class TransferLayoutController implements Initializable, ViewModelUser {
 
     private final String TAG = "TransferLayoutController";
 
@@ -56,6 +56,8 @@ public class TransferLayoutController implements Initializable, ViewModelUser, D
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        viewModel = new MakeTransactionViewModel(ViewManager.getInstance().getUserDataModel());
+        createObservables();
     }
 
     @Override
@@ -117,12 +119,7 @@ public class TransferLayoutController implements Initializable, ViewModelUser, D
         mObservables.clear();
     }
 
-    @Override
-    public <T> void receiveData(T... data) {
-        BankAccount bankAccount = (BankAccount) data[0];
-        viewModel = new MakeTransactionViewModel(ViewManager.getInstance().getUserDataModel());
-        createObservables();
-    }
+
 
     @FXML
     private void onConfirmPaymentClicked(ActionEvent actionEvent) {
