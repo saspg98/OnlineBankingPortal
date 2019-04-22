@@ -2,13 +2,13 @@ package ui.controllers;
 
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.rxjavafx.schedulers.JavaFxScheduler;
-import io.reactivex.schedulers.Schedulers;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
 import misc.debug.Debug;
 import ui.ViewManager;
 import viewmodel.SignupViewModel;
@@ -76,6 +76,7 @@ public class SignUpScreenController implements Initializable, ViewModelUser {
         LError.setVisible(false);
         viewModel = new SignupViewModel(ViewManager.getInstance().getSignUpAuthDataModelInstance());
         createObservables();
+        setTfEmpty();
     }
 
     public void createObservables(){
@@ -116,16 +117,20 @@ public class SignUpScreenController implements Initializable, ViewModelUser {
             System.err.println("Account already exists");
             LError.setText("Account already exists!");
             LError.setVisible(true);
-            TfAadhaarCard.setText("");
-            TfAccountNo.setText("");
-            TfAddressLine.setText("");
-            TfDateOfBirth.setText("");
-            TfConfirmPassword.setText("");
-            TfName.setText("");
-            TfUsername.setText("");
-            TfPassword.setText("");
-            TfEmail.setText("");
+           setTfEmpty();
         }
+    }
+
+    private void setTfEmpty(){
+        TfAadhaarCard.setText("");
+        TfAccountNo.setText("");
+        TfAddressLine.setText("");
+        TfDateOfBirth.setText("");
+        TfConfirmPassword.setText("");
+        TfName.setText("");
+        TfUsername.setText("");
+        TfPassword.setText("");
+        TfEmail.setText("");
     }
 
     public void disposeObservables(){
@@ -135,52 +140,62 @@ public class SignUpScreenController implements Initializable, ViewModelUser {
     }
 
     @FXML
-    private void nameTfClicked(ActionEvent actionEvent) {
+    private void nameTfClicked(MouseEvent actionEvent) {
         LError.setVisible(false);
+        setTfEmpty();
     }
 
     @FXML
-    private void dateTfClicked(ActionEvent actionEvent) {
+    private void dateTfClicked(MouseEvent actionEvent) {
         LError.setVisible(false);
+        setTfEmpty();
     }
 
     @FXML
-    private void emailTfClicked(ActionEvent actionEvent) {
+    private void emailTfClicked(MouseEvent actionEvent) {
         LError.setVisible(false);
+        setTfEmpty();
     }
 
     @FXML
-    private void accTfClicked(ActionEvent actionEvent) {
+    private void accTfClicked(MouseEvent actionEvent) {
         LError.setVisible(false);
+        setTfEmpty();
     }
 
     @FXML
-    private void uidTfClicked(ActionEvent actionEvent) {
+    private void uidTfClicked(MouseEvent actionEvent) {
         LError.setVisible(false);
+        setTfEmpty();
     }
 
     @FXML
-    private void usernameTfClicked(ActionEvent actionEvent) {
+    private void usernameTfClicked(MouseEvent actionEvent) {
         LError.setVisible(false);
+        setTfEmpty();
     }
 
     @FXML
-    private void passTfClicked(ActionEvent actionEvent) {
+    private void passTfClicked(MouseEvent actionEvent) {
         LError.setVisible(false);
+        setTfEmpty();
     }
 
     @FXML
-    private void confirmPassTfClicked(ActionEvent actionEvent) {
+    private void confirmPassTfClicked(MouseEvent actionEvent) {
         LError.setVisible(false);
+        setTfEmpty();
     }
 
     @FXML
-    private void addrTfClicked(ActionEvent actionEvent) {
+    private void addrTfClicked(MouseEvent actionEvent) {
         LError.setVisible(false);
+        setTfEmpty();
     }
 
     @FXML
-    private void branchTfClicked(ActionEvent actionEvent) {
+    private void branchTfClicked(MouseEvent actionEvent) {
         LError.setVisible(false);
+        setTfEmpty();
     }
 }

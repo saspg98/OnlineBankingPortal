@@ -15,7 +15,7 @@ public interface BankAccount {
     @Column
     long bcode();
 
-    @Column
+    @Column("UID")
     long uid();
 
     @Column

@@ -6,12 +6,12 @@ package ui.controllers;/*
 
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.rxjavafx.schedulers.JavaFxScheduler;
-import io.reactivex.schedulers.Schedulers;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
 import misc.debug.Debug;
 import ui.ViewManager;
 import viewmodel.LoginViewModel;
@@ -58,6 +58,7 @@ public class LoginScreenController implements Initializable, ViewModelUser {
 
         errorLabel.setVisible(false);
         viewModel = new LoginViewModel(ViewManager.getInstance().getLoginAuthDataModelInstance());
+        setTfEmpty();
         createObservables();
 
     }
@@ -106,13 +107,20 @@ public class LoginScreenController implements Initializable, ViewModelUser {
         mObservables.clear();
     }
 
-    @FXML
-    private void onUsernameClicked(ActionEvent actionEvent) {
-        errorLabel.setVisible(false);
+    private void setTfEmpty(){
+        TfPassword.setText("");
+        TfUsername.setText("");
     }
 
     @FXML
-    private void onPasswordClicked(ActionEvent actionEvent) {
+    private void onUsernameClicked(MouseEvent actionEvent) {
         errorLabel.setVisible(false);
+        setTfEmpty();
+    }
+
+    @FXML
+    private void onPasswordClicked(MouseEvent actionEvent) {
+        errorLabel.setVisible(false);
+        setTfEmpty();
     }
 }

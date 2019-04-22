@@ -12,8 +12,10 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
+import javafx.scene.input.MouseEvent;
 import misc.debug.Debug;
 import misc.validator.InputValidator;
+import ui.ViewManager;
 import viewmodel.ChangePasswordViewModel;
 
 import java.net.URL;
@@ -43,11 +45,15 @@ public class ChangePasswordLayoutController implements Initializable,ViewModelUs
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        viewModel = new ChangePasswordViewModel();
+        viewModel = new ChangePasswordViewModel(ViewManager.getInstance().getUserDataModel());
+        setTfEmpty();
+        passChangeLabel.setVisible(false);
+    }
+
+    private void setTfEmpty(){
         oldPass.setText("");
         newPass.setText("");
         confirmPass.setText("");
-        passChangeLabel.setVisible(false);
     }
 
     @FXML
@@ -65,11 +71,13 @@ public class ChangePasswordLayoutController implements Initializable,ViewModelUs
 
         if(!(InputValidator.validatePassword(newPwd)&&InputValidator.validatePassword(oldPwd))) {
             passChangeLabel.setText("Password is weak!");
+            passChangeLabel.setVisible(true);
             return false;
         }
 
         if(!(InputValidator.validatePassword(newPwd,confirmPwd))){
             passChangeLabel.setText("Password do not match");
+            passChangeLabel.setVisible(true);
             return false;
         }
         return true;
@@ -89,6 +97,8 @@ public class ChangePasswordLayoutController implements Initializable,ViewModelUs
             passChangeLabel.setText("Password change successful!");
         else
             passChangeLabel.setText("Wrong old password!");
+
+        passChangeLabel.setVisible(true);
     }
 
     @Override
@@ -98,17 +108,20 @@ public class ChangePasswordLayoutController implements Initializable,ViewModelUs
     }
 
     @FXML
-    private void onOldPassClicked(ActionEvent actionEvent) {
+    private void onOldPassClicked(MouseEvent actionEvent) {
         passChangeLabel.setVisible(false);
+        setTfEmpty();
     }
 
     @FXML
-    private void onNewPassTextfield(ActionEvent actionEvent) {
+    private void onNewPassTextfield(MouseEvent actionEvent) {
         passChangeLabel.setVisible(false);
+        setTfEmpty();
     }
 
     @FXML
-    private void onConfirmTextfield(ActionEvent actionEvent) {
+    private void onConfirmTextfield(MouseEvent actionEvent) {
         passChangeLabel.setVisible(false);
+        setTfEmpty();
     }
 }

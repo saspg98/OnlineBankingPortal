@@ -63,7 +63,7 @@ public final class LocalUserDataModel implements UserDataModel {
                 .update("update users " +
                         "set password = ? " +
                         "where uid = ? and password =?")
-                .parameters(newPass,oldPass)
+                .parameters(newPass,UID,oldPass)
                 .counts()
                 .map((value)->{
                     if(value == 0 )
