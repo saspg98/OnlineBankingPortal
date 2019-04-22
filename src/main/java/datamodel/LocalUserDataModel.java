@@ -117,8 +117,7 @@ public final class LocalUserDataModel implements UserDataModel {
 
     @Override
     public String getFormattedAccountDetails(BankAccount account) {
-        //TODO: Implementation
-        return null;
+        return account.accNo()+ " - "+ account.bcode();
     }
 
 
