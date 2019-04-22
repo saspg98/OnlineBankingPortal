@@ -3,17 +3,19 @@ package viewmodel;
 import datamodel.UserDataModel;
 import io.reactivex.Observable;
 import io.reactivex.subjects.BehaviorSubject;
+import misc.debug.Debug;
 import misc.validator.InputValidator;
 
+import java.math.BigInteger;
 import java.util.Iterator;
 
 public class AddBeneficiaryViewModel {
     private UserDataModel mUserDataModel;
     private BehaviorSubject<Boolean> validationStream = BehaviorSubject.create();
     private long mBeneficiaryAccountNumber = -1;
-    private final long mUserAccount;
+    private final BigInteger mUserAccount;
 
-    public AddBeneficiaryViewModel(UserDataModel mUserDataModel, long mUserAccount) {
+    public AddBeneficiaryViewModel(UserDataModel mUserDataModel, BigInteger mUserAccount) {
         this.mUserDataModel = mUserDataModel;
         this.mUserAccount = mUserAccount;
         //TODO: Change ALL blockingMostRecent calls
@@ -22,6 +24,7 @@ public class AddBeneficiaryViewModel {
 
     public Observable<Boolean> getValidationStream() {
         return validationStream.doOnNext((valid)->{
+            Debug.log("AddBenVM", "valid value:", valid);
             if(valid){addBeneficiary();}
         });
     }

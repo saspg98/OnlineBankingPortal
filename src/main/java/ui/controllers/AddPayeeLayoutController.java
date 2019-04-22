@@ -17,6 +17,7 @@ import misc.debug.Debug;
 import ui.ViewManager;
 import viewmodel.AddBeneficiaryViewModel;
 
+import java.math.BigInteger;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -64,7 +65,7 @@ public class AddPayeeLayoutController implements Initializable,ViewModelUser, Da
 
     @Override
     public <T> void receiveData(T... data) {
-        long accno = (Long) data[0];
+        BigInteger accno = (BigInteger) data[0];
         viewModel = new AddBeneficiaryViewModel(ViewManager.getInstance().getUserDataModel(),accno);
         createObservables();
     }
@@ -87,12 +88,14 @@ public class AddPayeeLayoutController implements Initializable,ViewModelUser, Da
 
     private void isValid(boolean isValid) {
         if(!isValid){
+            Debug.log(TAG,"Error Message coz is not valid");
             //TODO: Show error message, acc no is not 11 digit long etc
         }
     }
 
     private void isSuccessful(boolean isSuccessful) {
         if(!isSuccessful){
+            Debug.log(TAG,"Error Message coz is not successful");
             //TODO: Show other error message, acc doesn't exist etc
         }
     }

@@ -3,19 +3,30 @@ package viewmodel;
 import datamodel.UserDataModel;
 import io.reactivex.Observable;
 import io.reactivex.subjects.BehaviorSubject;
+import javafx.event.EventHandler;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import misc.debug.Debug;
 import model.BankAccount;
 import model.Beneficiary;
 import model.User;
 import ui.ViewManager;
+import ui.controllers.DataReceiver;
+import ui.controllers.ViewModelUser;
 import viewmodel.constant.Constant;
 
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
 public class MakeTransactionViewModel {
+    private FXMLLoader fxmlLoader;
     private UserDataModel mDataModel;
     private BehaviorSubject<Beneficiary> mSelectedBeneficiary = BehaviorSubject.create();
     private BehaviorSubject<BankAccount>  mSelectedBankAccount = BehaviorSubject.create();
@@ -125,6 +136,34 @@ public class MakeTransactionViewModel {
             mDataModel.makeTransaction(lastSelectedAccount, mAmount, lastSelectedBeneficiary);
         else
             Debug.err(TAG, "This should not have happened");
+    }
+
+    public void onOpenAddPayee(String accName){
+
+        Stage newStage = new Stage();
+        Parent addPayee = null;
+        try {
+            fxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource(Constant.Path.ADD_PAYEE));
+            addPayee = fxmlLoader.load();
+        } catch (IOException e) {
+            e.printStackTrace();
+            Debug.err("Unable to create alert box for sign up");
+        }
+
+        ((DataReceiver)fxmlLoader.getController()).receiveData(mBankAccountData.get(accName).accNo());
+        Scene scene = new Scene(addPayee);
+        newStage.initModality(Modality.APPLICATION_MODAL);
+        newStage.setScene(scene);
+        newStage.centerOnScreen();
+        newStage.show();
+        newStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+            @Override
+            public void handle(WindowEvent event) {
+                ((ViewModelUser)fxmlLoader.getController()).disposeObservables();
+                Debug.log("CLOSING","Add payee pop up!");
+            }
+        });
+
     }
 
 }

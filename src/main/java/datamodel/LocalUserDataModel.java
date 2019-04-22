@@ -12,6 +12,7 @@ import model.User;
 import ui.ViewManager;
 
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.*;
@@ -203,10 +204,9 @@ public final class LocalUserDataModel implements UserDataModel {
     }
 
     @Override
-    public void addBeneficiary(long beneficiaryAccNo, long userAccount) {
+    public void addBeneficiary(long beneficiaryAccNo, BigInteger userAccount) {
         ViewManager.getInstance().getDb()
-                .update("insert into Beneficiaries values( " +
-                        "?, ?")
+                .update("insert into Beneficiaries values( ?, ?)")
                 .parameters(userAccount, beneficiaryAccNo)
                 .transaction()
                 .observeOn(Schedulers.computation())
@@ -216,7 +216,7 @@ public final class LocalUserDataModel implements UserDataModel {
                                     val.value());
                         }
                         , (err) -> {
-                            Debug.err(TAG, "Got Error in Beneficiary!", err);
+                            Debug.err(TAG, err);
                             mAddBeneficiarySuccessStream.onNext(false);
                         }
                         , () -> {
