@@ -47,7 +47,7 @@ public class TransactionLayoutController implements Initializable, ViewModelUser
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         viewModel = new TransactionHistoryViewModel(ViewManager.getInstance().getUserDataModel());
-
+        accountNumberDrop.getSelectionModel().select(0);
         createObservables();
     }
 
@@ -73,6 +73,7 @@ public class TransactionLayoutController implements Initializable, ViewModelUser
         //set drop down list values
         accountNumberDrop.setItems(FXCollections.observableList(new ArrayList<>(stringBankAccountMap.keySet())));
         viewModel.setAccountData(stringBankAccountMap);
+
     }
 
     private void setTransactionListView(List<Transaction> transactions) {
