@@ -133,5 +133,54 @@ public class SignUpScreenController implements Initializable, ViewModelUser {
         Debug.log(TAG,"Disposing Observables");
         mObservables.clear();
     }
-    
+
+    @FXML
+    private void nameTfClicked(ActionEvent actionEvent) {
+        LError.setVisible(false);
+    }
+
+    @FXML
+    private void dateTfClicked(ActionEvent actionEvent) {
+        LError.setVisible(false);
+    }
+
+    @FXML
+    private void emailTfClicked(ActionEvent actionEvent) {
+        LError.setVisible(false);
+    }
+
+    @FXML
+    private void accTfClicked(ActionEvent actionEvent) {
+        LError.setVisible(false);
+    }
+
+    @FXML
+    private void uidTfClicked(ActionEvent actionEvent) {
+        LError.setVisible(false);
+    }
+
+    @FXML
+    private void usernameTfClicked(ActionEvent actionEvent) {
+        LError.setVisible(false);
+    }
+
+    @FXML
+    private void passTfClicked(ActionEvent actionEvent) {
+        LError.setVisible(false);
+    }
+
+    @FXML
+    private void confirmPassTfClicked(ActionEvent actionEvent) {
+        LError.setVisible(false);
+    }
+
+    @FXML
+    private void addrTfClicked(ActionEvent actionEvent) {
+        LError.setVisible(false);
+    }
+
+    @FXML
+    private void branchTfClicked(ActionEvent actionEvent) {
+        LError.setVisible(false);
+    }
 }

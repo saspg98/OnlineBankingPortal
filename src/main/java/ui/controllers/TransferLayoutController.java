@@ -117,4 +117,8 @@ public class TransferLayoutController implements Initializable, ViewModelUser, D
     @FXML
     private void onViewPayeeClicked(ActionEvent actionEvent) {
     }
+
+    @FXML
+    private void onAddNewPayeeClicked(ActionEvent actionEvent) {
+    }
 }

@@ -10,6 +10,7 @@ import io.reactivex.rxjavafx.schedulers.JavaFxScheduler;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import misc.debug.Debug;
 import misc.validator.InputValidator;
@@ -28,6 +29,8 @@ public class ChangePasswordLayoutController implements Initializable,ViewModelUs
     private final String TAG = "ChangePasswordLayoutController";
     private ChangePasswordViewModel viewModel;
     CompositeDisposable mObservables = new CompositeDisposable();
+    private String oldPwd = "Default";
+    private String newPwd = "Default";
 
     @FXML
     private PasswordField oldPass;
@@ -35,27 +38,41 @@ public class ChangePasswordLayoutController implements Initializable,ViewModelUs
     private PasswordField newPass;
     @FXML
     private PasswordField confirmPass;
+    @FXML
+    private Label passChangeLabel;
 
-    /**
-     * Initializes the controller class.
-     */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         viewModel = new ChangePasswordViewModel();
         oldPass.setText("");
         newPass.setText("");
         confirmPass.setText("");
+        passChangeLabel.setVisible(false);
     }
 
     @FXML
     private void confirmButtonClicked(ActionEvent actionEvent) {
-        String oldPass = this.oldPass.getText().trim();
-        String newPass = this.newPass.getText().trim();
-        InputValidator.validatePassword(oldPass);
-        InputValidator.validatePassword(newPass);
-        mObservables.add(viewModel.setPassword(oldPass,newPass)
-                .observeOn(JavaFxScheduler.platform())
-                .subscribe(this::successfulPasswordChange ,this::showErrorLabel));
+        oldPwd = oldPass.getText().trim();
+        newPwd = newPass.getText().trim();
+        if(validateInput(oldPwd,newPwd,confirmPass.getText().trim())) {
+            mObservables.add(viewModel.setPassword(oldPwd, newPwd)
+                    .observeOn(JavaFxScheduler.platform())
+                    .subscribe(this::successfulPasswordChange, this::showError));
+        }
+    }
+
+    private boolean validateInput(String newPwd, String oldPwd, String confirmPwd) {
+
+        if(!(InputValidator.validatePassword(newPwd)&&InputValidator.validatePassword(oldPwd))) {
+            passChangeLabel.setText("Password is weak!");
+            return false;
+        }
+
+        if(!(InputValidator.validatePassword(newPwd,confirmPwd))){
+            passChangeLabel.setText("Password do not match");
+            return false;
+        }
+        return true;
     }
 
     @Override
@@ -63,17 +80,35 @@ public class ChangePasswordLayoutController implements Initializable,ViewModelUs
       Debug.log(TAG,"Not Implemented createObservables");
     }
 
-    private void showErrorLabel(Throwable throwable) {
-
+    private void showError(Throwable throwable) {
+        Debug.err(TAG,(Object[]) throwable.getStackTrace());
     }
 
     private void successfulPasswordChange(boolean isSuccessful) {
-
+        if(isSuccessful)
+            passChangeLabel.setText("Password change successful!");
+        else
+            passChangeLabel.setText("Wrong old password!");
     }
 
     @Override
     public void disposeObservables() {
         Debug.log(TAG,"Disposing Observables");
         mObservables.clear();
+    }
+
+    @FXML
+    private void onOldPassClicked(ActionEvent actionEvent) {
+        passChangeLabel.setVisible(false);
+    }
+
+    @FXML
+    private void onNewPassTextfield(ActionEvent actionEvent) {
+        passChangeLabel.setVisible(false);
+    }
+
+    @FXML
+    private void onConfirmTextfield(ActionEvent actionEvent) {
+        passChangeLabel.setVisible(false);
     }
 }

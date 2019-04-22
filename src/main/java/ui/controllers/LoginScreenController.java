@@ -105,4 +105,14 @@ public class LoginScreenController implements Initializable, ViewModelUser {
         Debug.log(TAG,"disposing observables");
         mObservables.clear();
     }
+
+    @FXML
+    private void onUsernameClicked(ActionEvent actionEvent) {
+        errorLabel.setVisible(false);
+    }
+
+    @FXML
+    private void onPasswordClicked(ActionEvent actionEvent) {
+        errorLabel.setVisible(false);
+    }
 }
