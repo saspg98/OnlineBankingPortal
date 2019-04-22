@@ -57,7 +57,8 @@ public class AddPayeeLayoutController implements Initializable,ViewModelUser, Da
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+
+        errorLabel.setVisible(false);
 
     }
 

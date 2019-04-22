@@ -16,6 +16,7 @@ public class Constant {
         public static final String BENEFACTOR_DETAIL_VIEW = "";
         public static final String HELP_VIEW = "HelpLayout.fxml";
         public static final String TRANSACTION_VIEW = "TransactionLayout.fxml";
+        public static final String ADD_PAYEE = "AddPayeeLayout.fxml";
     }
 
     public static class Connection {

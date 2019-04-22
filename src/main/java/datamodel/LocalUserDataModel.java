@@ -77,7 +77,7 @@ public final class LocalUserDataModel implements UserDataModel {
     @Override
     public Observable<List<BankAccount>> getUserAccounts() {
         return ViewManager.getInstance().getDb()
-                .select("select AccNo, Balance, AccType, BCode from Accounts " +
+                .select("select * from Accounts " +
                         "where UID = ? ")
                 .parameter(UID)
                 .autoMap(BankAccount.class)

@@ -8,17 +8,26 @@ package ui.controllers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.rxjavafx.schedulers.JavaFxScheduler;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import misc.debug.Debug;
 import model.BankAccount;
 import model.Beneficiary;
 import ui.ViewManager;
 import viewmodel.MakeTransactionViewModel;
+import viewmodel.constant.Constant;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.Map;
 import java.util.ResourceBundle;
@@ -31,6 +40,7 @@ import java.util.ResourceBundle;
 public class TransferLayoutController implements Initializable, ViewModelUser {
 
     private final String TAG = "TransferLayoutController";
+    private FXMLLoader fxmlLoader;
 
     @FXML
     private Label accountType;
@@ -119,8 +129,6 @@ public class TransferLayoutController implements Initializable, ViewModelUser {
         mObservables.clear();
     }
 
-
-
     @FXML
     private void onConfirmPaymentClicked(ActionEvent actionEvent) {
     }
@@ -131,5 +139,28 @@ public class TransferLayoutController implements Initializable, ViewModelUser {
 
     @FXML
     private void onAddNewPayeeClicked(ActionEvent actionEvent) {
+
+        Stage newStage = new Stage();
+        Parent addPayee = null;
+        try {
+            fxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource(Constant.Path.ADD_PAYEE));
+            addPayee = fxmlLoader.load();
+        } catch (IOException e) {
+            e.printStackTrace();
+            Debug.err("Unable to create alert box for sign up");
+        }
+
+        Scene scene = new Scene(addPayee);
+        newStage.initModality(Modality.APPLICATION_MODAL);
+        newStage.setScene(scene);
+        newStage.centerOnScreen();
+        newStage.show();
+        newStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+            @Override
+            public void handle(WindowEvent event) {
+                ((ViewModelUser)fxmlLoader.getController()).disposeObservables();
+                Debug.log("CLOSING","Add payee pop up!");
+            }
+        });
     }
 }

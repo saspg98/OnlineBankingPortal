@@ -8,8 +8,10 @@ package ui.controllers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.rxjavafx.schedulers.JavaFxScheduler;
 import io.reactivex.schedulers.Schedulers;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import misc.debug.Debug;
 import model.BankAccount;
@@ -30,15 +32,15 @@ public class HomeLayoutController implements Initializable, ViewModelUser{
 
     private CompositeDisposable mObservables = new CompositeDisposable();
     private HomeViewModel viewModel;
-    private final String TAG = "HomeLayouttController";
+    private final String TAG = "HomeLayoutController";
     private HashMap<String,String> accType = new HashMap<>();
 
-    @FXML
-    private Label LAccountNumberOutput;
     @FXML
     private Label LAccountTypeOutput;
     @FXML
     private Label LCurrentBalanceOutput;
+    @FXML
+    private ComboBox accountNumberDrop;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -56,7 +58,7 @@ public class HomeLayoutController implements Initializable, ViewModelUser{
     }
 
     private void setView(BankAccount bankAccount) {
-        LAccountNumberOutput.setText(bankAccount.accNo().toString());
+        //accountNumberDrop.(bankAccount.accNo().toString());
         LAccountTypeOutput.setText(accType.get(bankAccount.Acctype()));
         LCurrentBalanceOutput.setText(bankAccount.balance().toString());
     }
@@ -65,5 +67,9 @@ public class HomeLayoutController implements Initializable, ViewModelUser{
     public void disposeObservables() {
         Debug.log(TAG,"Disposing Observables");
         mObservables.clear();
+    }
+
+    @FXML
+    private void onAccDropdownClicked(ActionEvent actionEvent) {
     }
 }
