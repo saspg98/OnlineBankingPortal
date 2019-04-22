@@ -11,6 +11,7 @@ import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableView;
 import misc.debug.Debug;
@@ -20,9 +21,7 @@ import ui.ViewManager;
 import viewmodel.TransactionHistoryViewModel;
 
 import java.net.URL;
-import java.util.List;
-import java.util.Map;
-import java.util.ResourceBundle;
+import java.util.*;
 
 /**
  * FXML Controller class
@@ -41,12 +40,13 @@ public class TransactionLayoutController implements Initializable, ViewModelUser
     private Label LAccountNumberOutput;
     @FXML
     private TableView<Transaction> transactionTableView;
+    @FXML
+    private ComboBox<String> accountNumberDrop;
 
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         viewModel = new TransactionHistoryViewModel(ViewManager.getInstance().getUserDataModel());
-
 
         createObservables();
     }
@@ -55,7 +55,7 @@ public class TransactionLayoutController implements Initializable, ViewModelUser
     public void createObservables() {
         mObservables.add(viewModel.getTransactionStream()
         .observeOn(JavaFxScheduler.platform())
-        .subscribe(this::setViews, this::onError));
+        .subscribe(this::setTransactionListView, this::onError));
         mObservables.add(viewModel.getBankAccountDetails()
         .observeOn(JavaFxScheduler.platform())
         .subscribe(this::setAccountViewDetails,this::onError));
@@ -66,16 +66,16 @@ public class TransactionLayoutController implements Initializable, ViewModelUser
     }
 
     private void onAccountSelected(BankAccount account) {
-        //set balance or other stuff
+        LAccountTypeOutput.setText(account.Acctype());
     }
 
     private void setAccountViewDetails(Map<String, BankAccount> stringBankAccountMap) {
         //set drop down list values
-        //here
+        accountNumberDrop.setItems(FXCollections.observableList(new ArrayList<>(stringBankAccountMap.keySet())));
         viewModel.setAccountData(stringBankAccountMap);
     }
 
-    private void setViews(List<Transaction> transactions) {
+    private void setTransactionListView(List<Transaction> transactions) {
 
         transactionTableView.setItems(FXCollections.observableList(transactions));
 
@@ -89,5 +89,7 @@ public class TransactionLayoutController implements Initializable, ViewModelUser
 
     @FXML
     private void accDropdownClicked(ActionEvent actionEvent) {
+        viewModel.accountSelected(accountNumberDrop.getValue());
+
     }
 }
