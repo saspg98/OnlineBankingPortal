@@ -66,7 +66,6 @@ public class AddPayeeLayoutController implements Initializable,ViewModelUser, Da
     public <T> void receiveData(T... data) {
         long accno = (Long) data[0];
         viewModel = new AddBeneficiaryViewModel(ViewManager.getInstance().getUserDataModel(),accno);
-
         createObservables();
     }
 
@@ -92,8 +91,8 @@ public class AddPayeeLayoutController implements Initializable,ViewModelUser, Da
         }
     }
 
-    private void isSuccessful(boolean isSuccesful) {
-        if(!isSuccesful){
+    private void isSuccessful(boolean isSuccessful) {
+        if(!isSuccessful){
             //TODO: Show other error message, acc doesn't exist etc
         }
     }

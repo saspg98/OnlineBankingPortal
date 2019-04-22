@@ -64,6 +64,8 @@ public class ChangePasswordLayoutController implements Initializable,ViewModelUs
             mObservables.add(viewModel.setPassword(oldPwd, newPwd)
                     .observeOn(JavaFxScheduler.platform())
                     .subscribe(this::successfulPasswordChange, this::showError));
+        }else{
+            setTfEmpty();
         }
     }
 
@@ -110,18 +112,15 @@ public class ChangePasswordLayoutController implements Initializable,ViewModelUs
     @FXML
     private void onOldPassClicked(MouseEvent actionEvent) {
         passChangeLabel.setVisible(false);
-        setTfEmpty();
     }
 
     @FXML
     private void onNewPassTextfield(MouseEvent actionEvent) {
         passChangeLabel.setVisible(false);
-        setTfEmpty();
     }
 
     @FXML
     private void onConfirmTextfield(MouseEvent actionEvent) {
         passChangeLabel.setVisible(false);
-        setTfEmpty();
     }
 }

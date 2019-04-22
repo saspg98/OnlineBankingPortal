@@ -97,6 +97,7 @@ public class SignUpScreenController implements Initializable, ViewModelUser {
             System.err.println("Invalid entry in field(s)");
             LError.setText("Invalid field entry");
             LError.setVisible(true);
+            setTfEmpty();
         }
     }
 
@@ -105,6 +106,7 @@ public class SignUpScreenController implements Initializable, ViewModelUser {
         Debug.log(TAG, "onLoginError!! printing throwable", throwable);
         LError.setText("Error in Signing!");
         LError.setVisible(true);
+        setTfEmpty();
     }
 
     private void signUpConfirm(Boolean b) {
@@ -142,60 +144,50 @@ public class SignUpScreenController implements Initializable, ViewModelUser {
     @FXML
     private void nameTfClicked(MouseEvent actionEvent) {
         LError.setVisible(false);
-        setTfEmpty();
     }
 
     @FXML
     private void dateTfClicked(MouseEvent actionEvent) {
         LError.setVisible(false);
-        setTfEmpty();
     }
 
     @FXML
     private void emailTfClicked(MouseEvent actionEvent) {
         LError.setVisible(false);
-        setTfEmpty();
     }
 
     @FXML
     private void accTfClicked(MouseEvent actionEvent) {
         LError.setVisible(false);
-        setTfEmpty();
     }
 
     @FXML
     private void uidTfClicked(MouseEvent actionEvent) {
         LError.setVisible(false);
-        setTfEmpty();
     }
 
     @FXML
     private void usernameTfClicked(MouseEvent actionEvent) {
         LError.setVisible(false);
-        setTfEmpty();
     }
 
     @FXML
     private void passTfClicked(MouseEvent actionEvent) {
         LError.setVisible(false);
-        setTfEmpty();
     }
 
     @FXML
     private void confirmPassTfClicked(MouseEvent actionEvent) {
         LError.setVisible(false);
-        setTfEmpty();
     }
 
     @FXML
     private void addrTfClicked(MouseEvent actionEvent) {
         LError.setVisible(false);
-        setTfEmpty();
     }
 
     @FXML
     private void branchTfClicked(MouseEvent actionEvent) {
         LError.setVisible(false);
-        setTfEmpty();
     }
 }

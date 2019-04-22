@@ -80,6 +80,7 @@ public class LoginScreenController implements Initializable, ViewModelUser {
         Debug.log(TAG, "onLoginError!! printing throwable", throwable);
         errorLabel.setText("Error in Logging!");
         errorLabel.setVisible(true);
+        setTfEmpty();
     }
 
     private void loginAuth(Boolean b) {
@@ -90,6 +91,7 @@ public class LoginScreenController implements Initializable, ViewModelUser {
             Debug.err(TAG,"Wrong Username or Password");
             errorLabel.setText("Invalid Username or Password!");
             errorLabel.setVisible(true);
+            setTfEmpty();
         }
     }
 
@@ -99,6 +101,7 @@ public class LoginScreenController implements Initializable, ViewModelUser {
             System.err.println("Invalid Username or Password");
             errorLabel.setText("Invalid Username or Password!");
             errorLabel.setVisible(true);
+            setTfEmpty();
         }
     }
 
@@ -115,12 +118,10 @@ public class LoginScreenController implements Initializable, ViewModelUser {
     @FXML
     private void onUsernameClicked(MouseEvent actionEvent) {
         errorLabel.setVisible(false);
-        setTfEmpty();
     }
 
     @FXML
     private void onPasswordClicked(MouseEvent actionEvent) {
         errorLabel.setVisible(false);
-        setTfEmpty();
     }
 }

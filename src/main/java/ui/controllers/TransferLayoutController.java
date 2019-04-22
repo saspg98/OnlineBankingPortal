@@ -7,6 +7,7 @@ package ui.controllers;
 
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.rxjavafx.schedulers.JavaFxScheduler;
+import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -29,6 +30,7 @@ import viewmodel.constant.Constant;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Map;
 import java.util.ResourceBundle;
 
@@ -41,6 +43,8 @@ public class TransferLayoutController implements Initializable, ViewModelUser {
 
     private final String TAG = "TransferLayoutController";
     private FXMLLoader fxmlLoader;
+    private MakeTransactionViewModel viewModel;
+    private CompositeDisposable mObservables = new CompositeDisposable();
 
     @FXML
     private Label accountType;
@@ -57,10 +61,10 @@ public class TransferLayoutController implements Initializable, ViewModelUser {
     @FXML
     private TextField amount;
     @FXML
-    private ComboBox viewPayee;
+    private ComboBox<String> viewPayee;
+    @FXML
+    private ComboBox accountNumberDrop;
 
-    private MakeTransactionViewModel viewModel;
-    private CompositeDisposable mObservables = new CompositeDisposable();
     /**
      * Initializes the controller class.
      */
@@ -93,9 +97,8 @@ public class TransferLayoutController implements Initializable, ViewModelUser {
     }
 
     private void onAccountDetailsReceived(Map<String, BankAccount> bankAccountDetails) {
-        //TODO: set views
-        // Populate Dropdown box
-
+        accountNumberDrop.setItems(FXCollections.observableList(new ArrayList<>(bankAccountDetails.keySet())));
+        accountNumberDrop.getSelectionModel().select(0);
         viewModel.setBankAccountData(bankAccountDetails);
     }
 
@@ -103,18 +106,19 @@ public class TransferLayoutController implements Initializable, ViewModelUser {
         accountType.setText(bankAccount.Acctype());
     }
 
-
     private void onTransactionSuccess(boolean isTransactionSuccessful) {
         //TODO: Implementation
     }
 
     private void onBeneficiarySelected(Beneficiary beneficiary) {
-        //TODO: Set the beneficiary details in the views
+        payeeAccNo.setText(beneficiary.accNo().toString());
+        payeeBranchCode.setText(String.valueOf(beneficiary.bcode()));
     }
 
     private void onDetailsReceived(Map<String, Beneficiary> stringBeneficiaryMap) {
-        //TODO: Implementation
-        //set views here
+
+        viewPayee.setItems(FXCollections.observableList(new ArrayList<>(stringBeneficiaryMap.keySet())));
+        viewPayee.getSelectionModel().select(0);
         viewModel.setBeneficiaryData(stringBeneficiaryMap);
     }
 
@@ -131,10 +135,7 @@ public class TransferLayoutController implements Initializable, ViewModelUser {
 
     @FXML
     private void onConfirmPaymentClicked(ActionEvent actionEvent) {
-    }
 
-    @FXML
-    private void onViewPayeeClicked(ActionEvent actionEvent) {
     }
 
     @FXML

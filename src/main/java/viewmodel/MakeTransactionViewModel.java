@@ -44,7 +44,7 @@ public class MakeTransactionViewModel {
     public Observable<Map<String, Beneficiary>> getBeneficiaries() {
         return mDataModel.getUserBeneficiaries()
                 .flatMap((oldList) -> Observable.fromIterable(oldList)
-                        .toMap(this::getFormattedString)
+                        .toMap(mDataModel::getFormattedAccountDetails)
                         .toObservable());
 
     }
@@ -52,13 +52,9 @@ public class MakeTransactionViewModel {
     public Observable<Map<String, BankAccount>> getBankAccounts(){
         return mDataModel.getUserAccounts()
                 .flatMap((oldList) -> Observable.fromIterable(oldList)
-                        .toMap(this::getFormattedString)
+                        .toMap(mDataModel::getFormattedAccountDetails)
                         .toObservable());
 
-    }
-
-    private String getFormattedString(BankAccount bankAccount) {
-        return bankAccount.toString();
     }
 
     public Observable<Beneficiary> getSelectedBeneficiaryStream() {
