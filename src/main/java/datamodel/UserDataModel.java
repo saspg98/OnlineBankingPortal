@@ -32,4 +32,6 @@ public interface UserDataModel {
     Observable<Boolean> getAddBeneficiarySuccessStream();
 
     Observable<Boolean> getTransactionSuccessStream();
+
+    void onLogout();
 }

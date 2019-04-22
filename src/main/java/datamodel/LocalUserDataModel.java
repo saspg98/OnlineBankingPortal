@@ -200,8 +200,8 @@ public final class LocalUserDataModel implements UserDataModel {
         return mTransactionSuccessStream;
     }
 
+    @Override
     public void onLogout() {
-        //TODO: Call this when logging out from side panel view
         UID = Long.MIN_VALUE;
     }
 }

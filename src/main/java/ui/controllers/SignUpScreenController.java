@@ -129,6 +129,8 @@ public class SignUpScreenController implements Initializable, ViewModelUser {
     }
 
     public void disposeObservables(){
+
+        Debug.log(TAG,"Disposing Observables");
         mObservables.clear();
     }
     

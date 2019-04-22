@@ -9,6 +9,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.PasswordField;
+import misc.debug.Debug;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -18,7 +19,9 @@ import java.util.ResourceBundle;
  *
  * @author Pranek
  */
-public class SettingsLayoutController implements Initializable {
+public class SettingsLayoutController implements Initializable,ViewModelUser {
+
+    private final String TAG = "SettingsLayoutController";
 
     @FXML
     private PasswordField oldPass;
@@ -37,5 +40,15 @@ public class SettingsLayoutController implements Initializable {
 
     @FXML
     private void confirmButtonClicked(ActionEvent actionEvent) {
+    }
+
+    @Override
+    public void createObservables() {
+
+    }
+
+    @Override
+    public void disposeObservables() {
+        Debug.log(TAG,"Disposing Observables");
     }
 }

@@ -27,8 +27,11 @@ import java.util.ResourceBundle;
  * @author Pranek
  */
 public class MyAccountLayoutController implements Initializable, ViewModelUser {
+
     private CompositeDisposable mObservables = new CompositeDisposable();
     private SettingsViewModel viewModel;
+    private final String TAG = "MyAccountLayoutController";
+
     @FXML
     private Label LNameOutput;
     @FXML
@@ -70,6 +73,7 @@ public class MyAccountLayoutController implements Initializable, ViewModelUser {
 
     @Override
     public void disposeObservables() {
+        Debug.log(TAG,"Disposing Observables");
         mObservables.clear();
     }
 

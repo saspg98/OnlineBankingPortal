@@ -4,8 +4,11 @@ import datamodel.UserDataModel;
 import io.reactivex.Observable;
 import io.reactivex.subjects.BehaviorSubject;
 import javafx.scene.layout.GridPane;
+import misc.debug.Debug;
 import ui.ViewManager;
 import viewmodel.constant.Constant;
+
+import javax.swing.text.View;
 
 public class MainScreenViewModel {
 
@@ -14,6 +17,7 @@ public class MainScreenViewModel {
     private UserDataModel mUserDataModel;
     private GridPane mLastGridPane;
     private StateInformation stateInformation;
+    private final String TAG = Constant.Path.MAIN_SCREEN_VIEW;
 
     public MainScreenViewModel(UserDataModel userdm) {
         mUserDataModel = userdm;
@@ -33,11 +37,11 @@ public class MainScreenViewModel {
         stateInformation.setCurrentState(mLastGridPane);
     }
 
-
-
-
     public void onLogout() {
 
+        Debug.log(TAG,"Loging out");
+        mUserDataModel.onLogout();
+        ViewManager.getInstance().setScene(Constant.Path.LOGIN_VIEW);
     }
 
     public static class StateInformation{
@@ -52,7 +56,6 @@ public class MainScreenViewModel {
         public String getNextStatePath() {
             return nextStatePath;
         }
-
 
         public GridPane getCurrentState() {
             return currentState;

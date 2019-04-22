@@ -11,6 +11,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import misc.debug.Debug;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -20,7 +21,9 @@ import java.util.ResourceBundle;
  *
  * @author Pranek
  */
-public class AddPayeeLayoutController implements Initializable {
+public class AddPayeeLayoutController implements Initializable,ViewModelUser {
+
+    private final String TAG = "AddPayeeLayoutController";
 
     @FXML
     private Label LName;
@@ -51,5 +54,15 @@ public class AddPayeeLayoutController implements Initializable {
 
     @FXML
     private void onAddPayeeClicked(ActionEvent actionEvent) {
+    }
+
+    @Override
+    public void createObservables() {
+
+    }
+
+    @Override
+    public void disposeObservables() {
+        Debug.log(TAG,"Disposing Observables");
     }
 }

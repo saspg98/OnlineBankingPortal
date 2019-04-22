@@ -30,6 +30,8 @@ public class SidePanelController implements Initializable, ViewModelUser {
 
     private CompositeDisposable mObservables = new CompositeDisposable();
     private MainScreenViewModel viewModel;
+    private FXMLLoader fxmlLoader = null;
+    private final String TAG = "SidePanelConstroller";
 
     @FXML
     private GridPane gridPane;
@@ -38,17 +40,6 @@ public class SidePanelController implements Initializable, ViewModelUser {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         viewModel = new MainScreenViewModel(ViewManager.getInstance().getUserDataModel());
-
-//        GridPane homePane = null;
-//
-//        try {
-//            homePane = FXMLLoader.load(getClass().getClassLoader().getResource(Constant.Path.HOME_SCREEN_VIEW));
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//
-//        gridPane.add(homePane,1,0,2,8);
-        
         createObservables();
         viewModel.setState(Constant.Path.HOME_SCREEN_VIEW);
     }
@@ -57,17 +48,19 @@ public class SidePanelController implements Initializable, ViewModelUser {
         GridPane newStatePane = null;
         String path = stateInformation.getNextStatePath();
 
+        if(fxmlLoader != null)
+            ((ViewModelUser)fxmlLoader.getController()).disposeObservables();
+
         try {
             Debug.log(path);
-            newStatePane = FXMLLoader.load(getClass().getClassLoader().getResource(path));
+            fxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource(path));
+            newStatePane = fxmlLoader.load();
         } catch (IOException e) {
             e.printStackTrace();
         }
         gridPane.getChildren().removeAll(stateInformation.getCurrentState());
         gridPane.add(newStatePane,1,0,2,8);
         viewModel.setGridPane(newStatePane);
-
-
     }
 
     @Override
@@ -79,6 +72,7 @@ public class SidePanelController implements Initializable, ViewModelUser {
 
     @Override
     public void disposeObservables() {
+        Debug.log(TAG,"Disposing Observables");
         mObservables.clear();
     }
 

@@ -15,6 +15,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import misc.debug.Debug;
 import model.BankAccount;
 import model.Transaction;
 import ui.ViewManager;
@@ -34,6 +35,8 @@ public class TransactionLayoutController implements Initializable, ViewModelUser
 
     private CompositeDisposable mObservables = new CompositeDisposable();
     private TransactionHistoryViewModel viewModel;
+    private final String TAG = "TransactionLayoutController";
+
     @FXML
     private Label LAccountTypeOutput;
     @FXML
@@ -67,6 +70,7 @@ public class TransactionLayoutController implements Initializable, ViewModelUser
 
     @Override
     public void disposeObservables() {
+        Debug.log(TAG,"Disposing Observables");
         mObservables.clear();
     }
 

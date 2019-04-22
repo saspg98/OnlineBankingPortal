@@ -102,6 +102,7 @@ public class LoginScreenController implements Initializable, ViewModelUser {
     }
 
     public void disposeObservables() {
+        Debug.log(TAG,"disposing observables");
         mObservables.clear();
     }
 }

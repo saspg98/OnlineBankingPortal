@@ -34,6 +34,8 @@ import java.util.ResourceBundle;
  */
 public class TransferLayoutController implements Initializable, ViewModelUser, DataReceiver {
 
+    private final String TAG = "TransferLayoutController";
+
     @FXML
     private Label accountType;
     @FXML
@@ -97,6 +99,7 @@ public class TransferLayoutController implements Initializable, ViewModelUser, D
 
     @Override
     public void disposeObservables() {
+        Debug.log(TAG,"Disposing Observables");
         mObservables.clear();
     }
 

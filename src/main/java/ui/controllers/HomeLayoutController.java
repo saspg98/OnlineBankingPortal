@@ -11,6 +11,7 @@ import io.reactivex.schedulers.Schedulers;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
+import misc.debug.Debug;
 import model.BankAccount;
 import ui.ViewManager;
 import viewmodel.HomeViewModel;
@@ -24,8 +25,11 @@ import java.util.ResourceBundle;
  * @author Pranek
  */
 public class HomeLayoutController implements Initializable, ViewModelUser{
+
     private CompositeDisposable mObservables = new CompositeDisposable();
     private HomeViewModel viewModel;
+    private final String TAG = "HomeLayouttController";
+
     @FXML
     private Label LAccountNumberOutput;
     @FXML
@@ -52,6 +56,7 @@ public class HomeLayoutController implements Initializable, ViewModelUser{
 
     @Override
     public void disposeObservables() {
+        Debug.log(TAG,"Disposing Observables");
         mObservables.clear();
     }
 }
