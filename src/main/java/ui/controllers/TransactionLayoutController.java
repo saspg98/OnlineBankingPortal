@@ -8,6 +8,7 @@ package ui.controllers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.rxjavafx.schedulers.JavaFxScheduler;
 import javafx.collections.FXCollections;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
@@ -86,4 +87,7 @@ public class TransactionLayoutController implements Initializable, ViewModelUser
         mObservables.clear();
     }
 
+    @FXML
+    private void accDropdownClicked(ActionEvent actionEvent) {
+    }
 }

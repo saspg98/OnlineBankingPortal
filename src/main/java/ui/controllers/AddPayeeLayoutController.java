@@ -49,6 +49,8 @@ public class AddPayeeLayoutController implements Initializable,ViewModelUser, Da
     private Button ButtonAddPayee;
     @FXML
     private TextField TfIFSC;
+    @FXML
+    private Label errorLabel;
 
     /**
      * Initializes the controller class.
