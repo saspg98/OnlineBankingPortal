@@ -12,9 +12,6 @@ import javafx.stage.WindowEvent;
 import misc.debug.Debug;
 import org.davidmoten.rx.jdbc.Database;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
-import ui.controllers.DataReceiver;
-import ui.controllers.LoginScreenController;
-import ui.controllers.SignUpScreenController;
 import ui.controllers.ViewModelUser;
 import viewmodel.constant.Constant;
 
@@ -23,18 +20,20 @@ import java.io.IOException;
 public class ViewManager {
     private static ViewManager mInstance;
 
+    private Stage loginStage;
+    private Stage signUpStage;
     private Stage mainStage;
-    private Stage newStage;
     private LoginAuthDataModel loginAuthDataModel;
     private SignupAuthDataModel signupAuthDataModel;
     private UserDataModel userDataModel;
-    private String TAG ="ViewManager";
+    private String TAG = "ViewManager";
 
     private Database db;
     private long UID;
 
-    private FXMLLoader fxmlLoader = null;
-    private FXMLLoader signUpView = null;
+    private FXMLLoader loginViewFxmlLoader = null;
+    private FXMLLoader signUpViewFxmlLoader = null;
+    private FXMLLoader mainViewFxmlLoader = null;
 
     public LoginAuthDataModel getLoginAuthDataModelInstance() {
         if (loginAuthDataModel == null) {
@@ -44,8 +43,8 @@ public class ViewManager {
     }
 
     public UserDataModel getUserDataModel() {
-        if (userDataModel== null) {
-            userDataModel= new LocalUserDataModel(UID);
+        if (userDataModel == null) {
+            userDataModel = new LocalUserDataModel(UID);
         }
         return userDataModel;
     }
@@ -67,19 +66,53 @@ public class ViewManager {
         return mInstance;
     }
 
-    public void setMainStage(Stage mainStage) {
-        this.mainStage = mainStage;
+    public void setLoginStage(Stage loginStage) {
+        this.loginStage = loginStage;
     }
 
-    public void setScene(String FXMLPATH) {
+    public void setLoginScene(String FXMLPATH) {
         Debug.log(TAG, FXMLPATH);
         Parent root = null;
         try {
-            fxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource(FXMLPATH));
-            root = fxmlLoader.load();
+            loginViewFxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource(FXMLPATH));
+            root = loginViewFxmlLoader.load();
         } catch (IOException e) {
-            System.out.println("Could not load scene!");
+            System.err.println("Could not load login scene!");
             e.printStackTrace();
+        }
+
+        Scene scene = new Scene(root);
+        loginStage.setScene(scene);
+        loginStage.centerOnScreen();
+        loginStage.show();
+        loginStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+            @Override
+            public void handle(WindowEvent event) {
+                ((ViewModelUser) loginViewFxmlLoader.getController()).disposeObservables();
+                Debug.log("CLOSING:" + FXMLPATH);
+                System.exit(0);
+            }
+        });
+    }
+
+    public void exitLoginIn() {
+        loginStage.close();
+        loginAuthDataModel = null;
+        setScene(Constant.Path.SIDE_PANE);
+    }
+
+    public void setScene(String FXMLPATH) {
+
+        mainStage = new Stage();
+        Debug.log(TAG, FXMLPATH);
+        Parent root = null;
+        Debug.log(TAG, "Printing Location", FXMLPATH);
+        mainViewFxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource(FXMLPATH));
+        try {
+            root = mainViewFxmlLoader.load();
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.err.println("Could not load main scene!");
         }
 
         Scene scene = new Scene(root);
@@ -89,8 +122,8 @@ public class ViewManager {
         mainStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
             @Override
             public void handle(WindowEvent event) {
-                ((ViewModelUser)fxmlLoader.getController()).disposeObservables();
-                Debug.log("CLOSING:"+ FXMLPATH);
+                ((ViewModelUser) mainViewFxmlLoader.getController()).disposeObservables();
+                Debug.log("CLOSING:" + FXMLPATH);
                 System.exit(0);
             }
         });
@@ -104,34 +137,41 @@ public class ViewManager {
 
     }
 
+    public void exitMainScreen() {
+        mainStage.close();
+        userDataModel = null;
+        setLoginScene(Constant.Path.LOGIN_VIEW);
+    }
+
     public void createSignUp(String FXMLPATH) {
 
-        newStage = new Stage();
+        signUpStage = new Stage();
         Parent signUpForm = null;
         try {
-            signUpView = new FXMLLoader(getClass().getClassLoader().getResource(Constant.Path.SIGNUP_VIEW));
-            signUpForm = signUpView.load();
+            signUpViewFxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource(Constant.Path.SIGNUP_VIEW));
+            signUpForm = signUpViewFxmlLoader.load();
         } catch (IOException e) {
             e.printStackTrace();
             Debug.err("Unable to create alert box for sign up");
         }
 
         Scene scene = new Scene(signUpForm);
-        newStage.initModality(Modality.APPLICATION_MODAL);
-        newStage.setScene(scene);
-        newStage.centerOnScreen();
-        newStage.show();
-        newStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+        signUpStage.initModality(Modality.APPLICATION_MODAL);
+        signUpStage.setScene(scene);
+        signUpStage.centerOnScreen();
+        signUpStage.show();
+        signUpStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
             @Override
             public void handle(WindowEvent event) {
-                ((ViewModelUser)signUpView.getController()).disposeObservables();
-                Debug.err("CLOSING",FXMLPATH);
+                ((ViewModelUser) signUpViewFxmlLoader.getController()).disposeObservables();
+                Debug.err("CLOSING", FXMLPATH);
             }
         });
     }
 
-    public void exitSignUp(){
-        newStage.close();
+    public void exitSignUp() {
+        signupAuthDataModel=null;
+        signUpStage.close();
     }
 
     public void setDatabase(Database db) {
@@ -143,11 +183,12 @@ public class ViewManager {
     }
 
     public void setUid(Observable<Long> uidStream) {
-        uidStream.subscribe((uid)->{
-            this.UID=uid;
-            Debug.log(TAG,"UID is "+UID);
-        },this::onError);
+        uidStream.subscribe((uid) -> {
+            this.UID = uid;
+            Debug.log(TAG, "UID is " + UID);
+        }, this::onError);
     }
+
     private void onError(Throwable throwable) {
         Debug.err(TAG, throwable);
     }

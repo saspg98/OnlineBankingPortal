@@ -4,8 +4,6 @@ import datamodel.UserDataModel;
 import io.reactivex.Observable;
 import io.reactivex.subjects.BehaviorSubject;
 import model.BankAccount;
-import ui.ViewManager;
-import viewmodel.constant.Constant;
 
 import java.util.Map;
 

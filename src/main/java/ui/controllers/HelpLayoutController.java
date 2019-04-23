@@ -10,7 +10,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import misc.debug.Debug;
 import viewmodel.HelpScreenViewModel;
-import viewmodel.constant.Constant;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -20,7 +19,7 @@ import java.util.ResourceBundle;
  *
  * @author Pranek
  */
-public class HelpLayoutController implements Initializable,ViewModelUser {
+public class HelpLayoutController implements Initializable, ViewModelUser {
 
     private final String TAG = "HelpLayoutConstroller";
 
@@ -44,6 +43,6 @@ public class HelpLayoutController implements Initializable,ViewModelUser {
 
     @Override
     public void disposeObservables() {
-        Debug.log(TAG,"Disposing observables");
+        Debug.log(TAG, "Disposing observables");
     }
 }

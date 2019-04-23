@@ -8,14 +8,11 @@ import misc.debug.Debug;
 import ui.ViewManager;
 import viewmodel.constant.Constant;
 
-import javax.swing.text.View;
-
 public class MainScreenViewModel {
 
 
     private BehaviorSubject<StateInformation> statePathStream = BehaviorSubject.create();
     private UserDataModel mUserDataModel;
-    private GridPane mLastGridPane;
     private StateInformation stateInformation;
     private final String TAG = Constant.Path.MAIN_SCREEN_VIEW;
 
@@ -24,7 +21,7 @@ public class MainScreenViewModel {
         stateInformation = new StateInformation(Constant.Path.HOME_SCREEN_VIEW, null);
     }
 
-    public Observable<StateInformation> getStateObservable(){
+    public Observable<StateInformation> getStateObservable() {
         return statePathStream;
     }
 
@@ -33,18 +30,17 @@ public class MainScreenViewModel {
         statePathStream.onNext(stateInformation);
     }
 
-    public void setGridPane(GridPane mLastGridPane){
+    public void setGridPane(GridPane mLastGridPane) {
         stateInformation.setCurrentState(mLastGridPane);
     }
 
     public void onLogout() {
 
-        Debug.log(TAG,"Loging out");
-        mUserDataModel.onLogout();
-        ViewManager.getInstance().setScene(Constant.Path.LOGIN_VIEW);
+        Debug.log(TAG, "Logging out!", "Exiting Main Screen!");
+        ViewManager.getInstance().exitMainScreen();
     }
 
-    public static class StateInformation{
+    public static class StateInformation {
         String nextStatePath;
         GridPane currentState;
 

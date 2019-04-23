@@ -27,9 +27,9 @@ public class TransactionHistoryViewModel {
         Debug.err(TAG, throwable);
     }
 
-    public void getTransactionData(BankAccount account){
+    public void getTransactionData(BankAccount account) {
         userDataModel.getUserTransactions(account)
-                .subscribe((listData)->mTransactionListStream.onNext(listData), this::onError);
+                .subscribe((listData) -> mTransactionListStream.onNext(listData), this::onError);
     }
 
     public Observable<List<Transaction>> getTransactionStream() {

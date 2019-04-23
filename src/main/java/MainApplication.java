@@ -18,8 +18,8 @@ public class MainApplication extends Application {
 
         setupDatabase();
         ViewManager viewManager = ViewManager.getInstance();
-        viewManager.setMainStage(stage);
-        viewManager.setScene(Constant.Path.LOGIN_VIEW);
+        viewManager.setLoginStage(stage);
+        viewManager.setLoginScene(Constant.Path.LOGIN_VIEW);
     }
 
     public static void main(String... args) {

@@ -2,19 +2,24 @@ package model;
 
 import org.davidmoten.rx.jdbc.annotations.Column;
 
-import java.time.Instant;
+import java.math.BigDecimal;
+import java.math.BigInteger;
+import java.util.Date;
 
 public interface Transaction {
-    @Column
-    String ID();
+    @Column("ID")
+    Long getID();
 
-    @Column
-    String Sender();
+    @Column("Sender")
+    BigInteger getSender();
 
-    @Column
-    String Receiver();
+    @Column("Receiver")
+    BigInteger getReceiver();
 
-    @Column
-    Instant Time();
+    @Column("Time")
+    Date getTime();
+
+    @Column("Amount")
+    BigDecimal getAmount();
 
 }

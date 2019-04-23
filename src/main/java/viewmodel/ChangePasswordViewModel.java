@@ -8,11 +8,11 @@ public class ChangePasswordViewModel {
 
     private UserDataModel mDataModel;
 
-    public ChangePasswordViewModel(UserDataModel userDataModel){
+    public ChangePasswordViewModel(UserDataModel userDataModel) {
         mDataModel = userDataModel;
     }
 
     public Observable<Boolean> setPassword(String oldPass, String newPass) {
-        return mDataModel.updatePassword(oldPass,newPass);
+        return mDataModel.updatePassword(oldPass, newPass);
     }
 }

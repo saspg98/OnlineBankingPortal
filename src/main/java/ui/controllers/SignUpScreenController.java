@@ -23,7 +23,7 @@ public class SignUpScreenController implements Initializable, ViewModelUser {
     private static final String TAG = "SignUpScreenController";
     SignupViewModel viewModel = null;
     CompositeDisposable mObservables = new CompositeDisposable();
-    
+
     @FXML
     public Label LError;
     @FXML
@@ -50,7 +50,7 @@ public class SignUpScreenController implements Initializable, ViewModelUser {
     @FXML
     public void onSignUpClicked(ActionEvent actionEvent) {
 
-        Debug.err("SIGNUP","Sign up button clicked");
+        Debug.err("SIGNUP", "Sign up button clicked");
         try {
             viewModel.setAdhaar(Long.parseLong(TfAadhaarCard.getText().trim()));
             viewModel.setAccountNumber(Long.parseLong(TfAccountNo.getText().trim()));
@@ -63,9 +63,9 @@ public class SignUpScreenController implements Initializable, ViewModelUser {
             viewModel.setEmail(TfEmail.getText().trim());
             viewModel.setBCode(Long.parseLong(BCode.getText()));
             viewModel.onSignUp();
-        }catch (NumberFormatException e){
+        } catch (NumberFormatException e) {
             showErrorLabel(true);
-        }catch (ParseException e){
+        } catch (ParseException e) {
             showErrorLabel(true);
         }
     }
@@ -79,7 +79,7 @@ public class SignUpScreenController implements Initializable, ViewModelUser {
         setTfEmpty();
     }
 
-    public void createObservables(){
+    public void createObservables() {
 
         mObservables.add(viewModel.getValidationStream()
                 .observeOn(JavaFxScheduler.platform())
@@ -119,11 +119,11 @@ public class SignUpScreenController implements Initializable, ViewModelUser {
             System.err.println("Account already exists");
             LError.setText("Account already exists!");
             LError.setVisible(true);
-           setTfEmpty();
+            setTfEmpty();
         }
     }
 
-    private void setTfEmpty(){
+    private void setTfEmpty() {
         TfAadhaarCard.setText("");
         TfAccountNo.setText("");
         TfAddressLine.setText("");
@@ -135,10 +135,11 @@ public class SignUpScreenController implements Initializable, ViewModelUser {
         TfEmail.setText("");
     }
 
-    public void disposeObservables(){
+    public void disposeObservables() {
 
-        Debug.log(TAG,"Disposing Observables");
+        Debug.log(TAG, "Disposing its Observables and View Model");
         mObservables.clear();
+        viewModel = null;
     }
 
     @FXML

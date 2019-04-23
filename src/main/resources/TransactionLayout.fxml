@@ -12,8 +12,8 @@
 
 <GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.controllers.TransactionLayoutController">
   <columnConstraints>
-      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+      <ColumnConstraints hgrow="SOMETIMES" maxWidth="94.0" minWidth="10.0" prefWidth="21.0" />
+    <ColumnConstraints hgrow="SOMETIMES" maxWidth="759.0" minWidth="10.0" prefWidth="759.0" />
       <ColumnConstraints />
   </columnConstraints>
   <rowConstraints>
@@ -26,18 +26,17 @@
     <RowConstraints maxHeight="59.0" minHeight="0.0" prefHeight="0.0" vgrow="SOMETIMES" />
   </rowConstraints>
    <children>
-      <TableView fx:id="transactionTableView" prefHeight="349.0" prefWidth="780.0" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="5">
+      <TableView fx:id="transactionTableView" prefHeight="418.0" prefWidth="754.0" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="5">
         <columns>
-          <TableColumn fx:id="CDate" prefWidth="85.00001525878906" text="Date" />
-
-          <TableColumn fx:id="CTid" prefWidth="152.0" text="Transaction Id" />
-            <TableColumn fx:id="CAccNo" prefWidth="165.0" text="Account Number" />
-            <TableColumn fx:id="CDebitCredit" prefWidth="140.0" text="Debit/Credit" />
-            <TableColumn fx:id="CAmount" prefWidth="137.0" text="Amount" />
+          <TableColumn fx:id="CDate" prefWidth="113.00001525878906" text="Date" />
+            <TableColumn fx:id="CTid" prefWidth="175.0" text="Transaction Id" />
+            <TableColumn fx:id="CSender" prefWidth="157.0" text="Sender" />
+            <TableColumn fx:id="CReceiver" prefWidth="163.0" text="Receiver" />
+            <TableColumn fx:id="CAmount" prefWidth="148.0" text="Amount" />
         </columns>
       </TableView>
       <ComboBox fx:id="accountNumberDrop" onAction="#accDropdownClicked" prefHeight="58.0" prefWidth="285.0" promptText="Account Number" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-      <Label fx:id="LAccountTypeOutput" prefHeight="66.0" prefWidth="780.0" text="Account Type" GridPane.columnIndex="1" GridPane.rowIndex="3">
+      <Label prefHeight="51.0" prefWidth="173.0" text="Account Type :" GridPane.columnIndex="1" GridPane.rowIndex="3">
          <font>
             <Font size="24.0" />
          </font>
@@ -48,6 +47,11 @@
       <Label fx:id="LTransactions" alignment="CENTER" contentDisplay="CENTER" prefHeight="53.0" prefWidth="793.0" text="Transactions" GridPane.columnIndex="1" GridPane.rowIndex="1">
          <font>
             <Font name="GoodPro-WideMedium" size="36.0" />
+         </font>
+      </Label>
+      <Label fx:id="accType" alignment="CENTER_RIGHT" contentDisplay="CENTER" prefHeight="28.0" prefWidth="257.0" text="Select an account" GridPane.columnIndex="1" GridPane.rowIndex="3">
+         <font>
+            <Font name="GoodPro-WideMedium" size="24.0" />
          </font>
       </Label>
    </children>

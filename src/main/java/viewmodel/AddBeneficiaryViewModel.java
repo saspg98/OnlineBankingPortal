@@ -7,7 +7,6 @@ import misc.debug.Debug;
 import misc.validator.InputValidator;
 
 import java.math.BigInteger;
-import java.util.Iterator;
 
 public class AddBeneficiaryViewModel {
     private UserDataModel mUserDataModel;
@@ -23,9 +22,11 @@ public class AddBeneficiaryViewModel {
     }
 
     public Observable<Boolean> getValidationStream() {
-        return validationStream.doOnNext((valid)->{
+        return validationStream.doOnNext((valid) -> {
             Debug.log("AddBenVM", "valid value:", valid);
-            if(valid){addBeneficiary();}
+            if (valid) {
+                addBeneficiary();
+            }
         });
     }
 
@@ -38,8 +39,9 @@ public class AddBeneficiaryViewModel {
         try {
             acc = Long.parseLong(accNo);
             if (validateAccNo(acc)) {
-                validationStream.onNext(true);
                 mBeneficiaryAccountNumber = acc;
+                validationStream.onNext(true);
+
             }
         } catch (Exception e) {
             validationStream.onNext(false);

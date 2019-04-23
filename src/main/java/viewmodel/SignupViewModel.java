@@ -32,10 +32,10 @@ public class SignupViewModel {
 
     private boolean validateFields(SignupCredentials signupCredentials) {
         return InputValidator.validateUsername(signupCredentials.getEmail()) &&
-                InputValidator.validatePassword(signupCredentials.getPassword(),signupCredentials.getCPassword()) &&
+                InputValidator.validatePassword(signupCredentials.getPassword(), signupCredentials.getCPassword()) &&
                 InputValidator.validateAccountNumber(signupCredentials.getAccountNumber()) &&
                 InputValidator.validateAdhaar(signupCredentials.getAdhaar()) &&
-                InputValidator.validateBCode(signupCredentials.getBCode())&&
+                InputValidator.validateBCode(signupCredentials.getBCode()) &&
                 InputValidator.validateEmail(signupCredentials.getEmail());
     }
 
@@ -89,7 +89,7 @@ public class SignupViewModel {
     }
 
     public void onSuccessfullSignUp() {
-        Debug.log(TAG,"Sign up successful");
+        Debug.log(TAG, "Sign up successful");
         try {
             Debug.err("Application paused");
             TimeUnit.SECONDS.sleep(10);

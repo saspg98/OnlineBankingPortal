@@ -26,7 +26,7 @@ import java.util.ResourceBundle;
  *
  * @author Pranek
  */
-public class AddPayeeLayoutController implements Initializable,ViewModelUser, DataReceiver {
+public class AddPayeeLayoutController implements Initializable, ViewModelUser, DataReceiver {
 
     private final String TAG = "AddPayeeLayoutController";
     private AddBeneficiaryViewModel viewModel;
@@ -66,7 +66,7 @@ public class AddPayeeLayoutController implements Initializable,ViewModelUser, Da
     @Override
     public <T> void receiveData(T... data) {
         BigInteger accno = (BigInteger) data[0];
-        viewModel = new AddBeneficiaryViewModel(ViewManager.getInstance().getUserDataModel(),accno);
+        viewModel = new AddBeneficiaryViewModel(ViewManager.getInstance().getUserDataModel(), accno);
         createObservables();
     }
 
@@ -78,8 +78,8 @@ public class AddPayeeLayoutController implements Initializable,ViewModelUser, Da
     @Override
     public void createObservables() {
         mObservables.add(viewModel.getValidationStream()
-                        .observeOn(JavaFxScheduler.platform())
-                        .subscribe(this::isValid, this::onError));
+                .observeOn(JavaFxScheduler.platform())
+                .subscribe(this::isValid, this::onError));
         mObservables.add(viewModel.getSuccessListenerStream()
                 .observeOn(JavaFxScheduler.platform())
                 .subscribe(this::isSuccessful, this::onError));
@@ -87,22 +87,22 @@ public class AddPayeeLayoutController implements Initializable,ViewModelUser, Da
     }
 
     private void isValid(boolean isValid) {
-        if(!isValid){
-            Debug.log(TAG,"Error Message coz is not valid");
+        if (!isValid) {
+            Debug.log(TAG, "Error Message coz is not valid");
             //TODO: Show error message, acc no is not 11 digit long etc
         }
     }
 
     private void isSuccessful(boolean isSuccessful) {
-        if(!isSuccessful){
-            Debug.log(TAG,"Error Message coz is not successful");
+        if (!isSuccessful) {
+            Debug.log(TAG, "Error Message coz is not successful");
             //TODO: Show other error message, acc doesn't exist etc
         }
     }
 
     @Override
     public void disposeObservables() {
-        Debug.log(TAG,"Disposing Observables");
+        Debug.log(TAG, "Disposing Observables");
     }
 
 

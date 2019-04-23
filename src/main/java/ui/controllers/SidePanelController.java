@@ -31,11 +31,10 @@ public class SidePanelController implements Initializable, ViewModelUser {
     private CompositeDisposable mObservables = new CompositeDisposable();
     private MainScreenViewModel viewModel;
     private FXMLLoader fxmlLoader = null;
-    private final String TAG = "SidePanelConstroller";
+    private final String TAG = "SidePanelController";
 
     @FXML
     private GridPane gridPane;
-
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -44,12 +43,12 @@ public class SidePanelController implements Initializable, ViewModelUser {
         viewModel.setState(Constant.Path.HOME_SCREEN_VIEW);
     }
 
-    void setState(MainScreenViewModel.StateInformation stateInformation){
+    void setState(MainScreenViewModel.StateInformation stateInformation) {
         GridPane newStatePane = null;
         String path = stateInformation.getNextStatePath();
 
-        if(fxmlLoader != null)
-            ((ViewModelUser)fxmlLoader.getController()).disposeObservables();
+        if (fxmlLoader != null)
+            ((ViewModelUser) fxmlLoader.getController()).disposeObservables();
 
         try {
             Debug.log(path);
@@ -59,21 +58,24 @@ public class SidePanelController implements Initializable, ViewModelUser {
             e.printStackTrace();
         }
         gridPane.getChildren().removeAll(stateInformation.getCurrentState());
-        gridPane.add(newStatePane,1,0,2,11);
+        gridPane.add(newStatePane, 1, 0, 2, 11);
         viewModel.setGridPane(newStatePane);
     }
 
     @Override
     public void createObservables() {
         mObservables.add(viewModel.getStateObservable()
-        .observeOn(JavaFxScheduler.platform())
-        .subscribe(this::setState, this::onError));
+                .observeOn(JavaFxScheduler.platform())
+                .subscribe(this::setState, this::onError));
     }
 
     @Override
     public void disposeObservables() {
-        Debug.log(TAG,"Disposing Observables");
+        Debug.log(TAG, "Disposing its Observables and View Models");
         mObservables.clear();
+        viewModel = null;
+        fxmlLoader = null;
+        gridPane = null;
     }
 
     @FXML

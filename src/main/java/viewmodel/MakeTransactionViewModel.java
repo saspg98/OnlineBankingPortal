@@ -21,15 +21,13 @@ import viewmodel.constant.Constant;
 
 import java.io.IOException;
 import java.math.BigDecimal;
-import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
 
 public class MakeTransactionViewModel {
     private FXMLLoader fxmlLoader;
     private UserDataModel mDataModel;
     private BehaviorSubject<Beneficiary> mSelectedBeneficiary = BehaviorSubject.create();
-    private BehaviorSubject<BankAccount>  mSelectedBankAccount = BehaviorSubject.create();
+    private BehaviorSubject<BankAccount> mSelectedBankAccount = BehaviorSubject.create();
     private Map<String, BankAccount> mBankAccountData;
     private Map<String, Beneficiary> mBeneficiaryData;
     private BankAccount lastSelectedAccount;
@@ -54,11 +52,11 @@ public class MakeTransactionViewModel {
     }
 
 
-    public Observable<User> getUserData(){
+    public Observable<User> getUserData() {
         return mDataModel.getUserDetails();
     }
 
-    public  Observable<User> getPayeeDetails(String accountString){
+    public Observable<User> getPayeeDetails(String accountString) {
         return mDataModel.getPayeeDetails(mBeneficiaryData.get(accountString));
     }
 
@@ -71,7 +69,7 @@ public class MakeTransactionViewModel {
 
     }
 
-    public Observable<Map<String, BankAccount>> getBankAccounts(){
+    public Observable<Map<String, BankAccount>> getBankAccounts() {
         return mDataModel.getUserAccounts()
                 .flatMap((oldList) -> Observable.fromIterable(oldList)
                         .toMap(mDataModel::getFormattedAccountDetails)
@@ -92,11 +90,11 @@ public class MakeTransactionViewModel {
     }
 
     public void setAmount(String amount) {
-        BigDecimal d ;
+        BigDecimal d;
         try {
             d = new BigDecimal(amount);
         } catch (NumberFormatException e) {
-            Debug.log(TAG,"NumberFormatException");
+            Debug.log(TAG, "NumberFormatException");
             mAmountValidityStream.onNext(false);
             return;
         }
@@ -117,7 +115,7 @@ public class MakeTransactionViewModel {
 
     }
 
-    public void accountSelected(String formattedString){
+    public void accountSelected(String formattedString) {
         lastSelectedAccount = mBankAccountData.get(formattedString);
         mSelectedBankAccount.onNext(lastSelectedAccount);
     }
@@ -132,13 +130,13 @@ public class MakeTransactionViewModel {
     }
 
     private void makeTransaction() {
-        if (lastSelectedBeneficiary!=null)
+        if (lastSelectedBeneficiary != null)
             mDataModel.makeTransaction(lastSelectedAccount, mAmount, lastSelectedBeneficiary);
         else
             Debug.err(TAG, "This should not have happened");
     }
 
-    public void onOpenAddPayee(String accName){
+    public void onOpenAddPayee(String accName) {
 
         Stage newStage = new Stage();
         Parent addPayee = null;
@@ -150,7 +148,7 @@ public class MakeTransactionViewModel {
             Debug.err("Unable to create alert box for sign up");
         }
 
-        ((DataReceiver)fxmlLoader.getController()).receiveData(mBankAccountData.get(accName).accNo());
+        ((DataReceiver) fxmlLoader.getController()).receiveData(mBankAccountData.get(accName).accNo());
         Scene scene = new Scene(addPayee);
         newStage.initModality(Modality.APPLICATION_MODAL);
         newStage.setScene(scene);
@@ -159,8 +157,8 @@ public class MakeTransactionViewModel {
         newStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
             @Override
             public void handle(WindowEvent event) {
-                ((ViewModelUser)fxmlLoader.getController()).disposeObservables();
-                Debug.log("CLOSING","Add payee pop up!");
+                ((ViewModelUser) fxmlLoader.getController()).disposeObservables();
+                Debug.log("CLOSING", "Add payee pop up!");
             }
         });
 

@@ -1,8 +1,7 @@
 package misc.validator;
 
-import misc.debug.Debug;
-import org.apache.commons.validator.routines.EmailValidator;
-import org.apache.commons.validator.routines.RegexValidator;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class InputValidator {
 
@@ -16,7 +15,7 @@ public class InputValidator {
 ////            Debug.err("Username", "Invalid");
 ////            return false;
 ////        }
-        return true;
+        return username != null && (!username.equals(""));
     }
 
     public static boolean validatePassword(String password, String cPassword) {
@@ -38,7 +37,7 @@ public class InputValidator {
 ////            Debug.log("Password", "Invalid");
 ////            return false;
 ////        }
-        return true;
+        return !password.equals("") && password != null;
     }
 
     public static boolean validateBCode(Long BCode) {
@@ -62,10 +61,10 @@ public class InputValidator {
     }
 
     public static boolean validateEmail(String email) {
-//        if(!EmailValidator.getInstance().isValid(email)){
-//            Debug.err("Invalid Email");
-//            return false;
-//        }
-        return true;
+
+        final Pattern VALID_EMAIL_ADDRESS_REGEX =
+                Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
+        Matcher matcher = VALID_EMAIL_ADDRESS_REGEX.matcher(email);
+        return matcher.find();
     }
 }

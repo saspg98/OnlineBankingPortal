@@ -7,7 +7,6 @@ package ui.controllers;
 
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.rxjavafx.schedulers.JavaFxScheduler;
-import io.reactivex.schedulers.Schedulers;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -18,9 +17,7 @@ import misc.debug.Debug;
 import model.BankAccount;
 import ui.ViewManager;
 import viewmodel.AccountChooserViewModel;
-import viewmodel.HomeViewModel;
 
-import java.math.BigInteger;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -32,12 +29,13 @@ import java.util.ResourceBundle;
  *
  * @author Pranek
  */
-public class HomeLayoutController implements Initializable, ViewModelUser{
+public class HomeLayoutController implements Initializable, ViewModelUser {
 
     private CompositeDisposable mObservables = new CompositeDisposable();
     private AccountChooserViewModel viewModel;
     private final String TAG = "HomeLayoutController";
-    private HashMap<String,String> accType = new HashMap<>();
+    private HashMap<String, String> accType = new HashMap<>();
+
 
     @FXML
     private Label LAccountTypeOutput;
@@ -45,25 +43,25 @@ public class HomeLayoutController implements Initializable, ViewModelUser{
     private Label LCurrentBalanceOutput;
     @FXML
     private ComboBox<String> accountNumberDrop;
+    @FXML
+    private Label LBranchCode;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         viewModel = new AccountChooserViewModel(ViewManager.getInstance().getUserDataModel());
         createObservables();
-        accType.put("S","Saving");
-        accType.put("C","Current");
-
+        accType.put("S", "Saving");
+        accType.put("C", "Current");
     }
 
     @Override
     public void createObservables() {
         mObservables.add(viewModel.getSelectedAccount()
-        .observeOn(JavaFxScheduler.platform())
-        .subscribe(this::setView, this::onError));
+                .observeOn(JavaFxScheduler.platform())
+                .subscribe(this::setView, this::onError));
         mObservables.add(viewModel.getBankAccountDetails()
-        .observeOn(JavaFxScheduler.platform())
-        .subscribe(this::setAccountDetails, this::onError));
-
+                .observeOn(JavaFxScheduler.platform())
+                .subscribe(this::setAccountDetails, this::onError));
     }
 
     private void setAccountDetails(Map<String, BankAccount> stringBankAccountMap) {
@@ -73,15 +71,17 @@ public class HomeLayoutController implements Initializable, ViewModelUser{
     }
 
     private void setView(BankAccount bankAccount) {
-
         LAccountTypeOutput.setText(accType.get(bankAccount.Acctype()));
         LCurrentBalanceOutput.setText(bankAccount.balance().toString());
+        LBranchCode.setText(bankAccount.bcode() + "");
     }
 
     @Override
     public void disposeObservables() {
-        Debug.log(TAG,"Disposing Observables");
+        Debug.log(TAG, "Disposing its Observables and View Models!");
         mObservables.clear();
+        viewModel=null;
+        accType =  null;
     }
 
     @FXML

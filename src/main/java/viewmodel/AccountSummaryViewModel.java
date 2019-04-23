@@ -6,7 +6,6 @@ import io.reactivex.subjects.BehaviorSubject;
 import model.BankAccount;
 import model.User;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Map;
 
@@ -45,6 +44,6 @@ public class AccountSummaryViewModel {
     public Observable<String> getName() {
         return mDataModel.fetchUserDetails()
                 .flatMapIterable(userListMap -> Arrays.asList(userListMap.keySet().toArray()))
-                .map(user-> ((User) user).name());
+                .map(user -> ((User) user).name());
     }
 }

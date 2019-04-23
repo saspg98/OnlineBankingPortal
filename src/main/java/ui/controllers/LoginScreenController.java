@@ -46,7 +46,7 @@ public class LoginScreenController implements Initializable, ViewModelUser {
     @FXML
     private void onLoginClicked(ActionEvent actionEvent) {
 
-        Debug.err("LOGIN","Sign Up button clicked");
+        Debug.err("LOGIN", "Sign Up button clicked");
 
         viewModel.setUsername(TfUsername.getText().trim());
         viewModel.setPassword(TfPassword.getText().trim());
@@ -60,10 +60,9 @@ public class LoginScreenController implements Initializable, ViewModelUser {
         viewModel = new LoginViewModel(ViewManager.getInstance().getLoginAuthDataModelInstance());
         setTfEmpty();
         createObservables();
-
     }
 
-     public void createObservables(){
+    public void createObservables() {
 
         mObservables.add(viewModel.getValidationStream()
                 .observeOn(JavaFxScheduler.platform())
@@ -77,7 +76,7 @@ public class LoginScreenController implements Initializable, ViewModelUser {
 
     private void onLoginError(Throwable throwable) {
         //Debug.printThread(TAG);
-        Debug.log(TAG, "onLoginError!! printing throwable", throwable);
+        Debug.err(TAG, throwable);
         errorLabel.setText("Error in Logging!");
         errorLabel.setVisible(true);
         setTfEmpty();
@@ -88,9 +87,7 @@ public class LoginScreenController implements Initializable, ViewModelUser {
         if (b) {
             viewModel.onSuccessfullLogin();
         } else {
-            Debug.err(TAG,"Wrong Username or Password");
-            errorLabel.setText("Invalid Username or Password!");
-            errorLabel.setVisible(true);
+            Debug.err(TAG, "Wrong Username or Password");
             setTfEmpty();
         }
     }
@@ -106,11 +103,12 @@ public class LoginScreenController implements Initializable, ViewModelUser {
     }
 
     public void disposeObservables() {
-        Debug.log(TAG,"disposing observables");
+        Debug.log(TAG, "Disposing its Observables and View Models!");
         mObservables.clear();
+        viewModel = null;
     }
 
-    private void setTfEmpty(){
+    private void setTfEmpty() {
         TfPassword.setText("");
         TfUsername.setText("");
     }

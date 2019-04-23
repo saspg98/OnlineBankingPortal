@@ -25,12 +25,11 @@ public class Debug {
 
     public static void err(String tag, Object... vals) {
         System.err.println("TAG:" + tag);
-        if(vals[0] instanceof Exception){
-            ((Exception)vals[0]).printStackTrace();
-        } else if(vals[0] instanceof Throwable){
-            ((Exception)vals[0]).printStackTrace();
-        }
-        else{
+        if (vals[0] instanceof Exception) {
+            ((Exception) vals[0]).printStackTrace();
+        } else if (vals[0] instanceof Throwable) {
+            ((Exception) vals[0]).printStackTrace();
+        } else {
 
             for (Object val : vals) {
                 System.err.print(val.toString() + "\n");

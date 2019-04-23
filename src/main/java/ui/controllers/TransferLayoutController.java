@@ -9,27 +9,19 @@ import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.rxjavafx.schedulers.JavaFxScheduler;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
-import javafx.stage.WindowEvent;
+import javafx.scene.input.KeyEvent;
 import misc.debug.Debug;
 import model.BankAccount;
 import model.Beneficiary;
 import model.User;
 import ui.ViewManager;
 import viewmodel.MakeTransactionViewModel;
-import viewmodel.constant.Constant;
 
-import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Map;
@@ -43,14 +35,9 @@ import java.util.ResourceBundle;
 public class TransferLayoutController implements Initializable, ViewModelUser {
 
     private final String TAG = "TransferLayoutController";
-    private FXMLLoader fxmlLoader;
     private MakeTransactionViewModel viewModel;
     private CompositeDisposable mObservables = new CompositeDisposable();
 
-    @FXML
-    private Label accountType;
-    @FXML
-    private Label accountNumber;
     @FXML
     private Label name;
     @FXML
@@ -65,39 +52,40 @@ public class TransferLayoutController implements Initializable, ViewModelUser {
     private ComboBox<String> viewPayee;
     @FXML
     private ComboBox<String> accountNumberDrop;
+    @FXML
+    private Label errorLabel;
 
-    /**
-     * Initializes the controller class.
-     */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         viewModel = new MakeTransactionViewModel(ViewManager.getInstance().getUserDataModel());
         createObservables();
+        errorLabel.setText("*Not sufficient amount in the account!");
+        errorLabel.setVisible(false);
     }
 
     @Override
     public void createObservables() {
         mObservables.add(viewModel.getAmountValidityStream()
-        .observeOn(JavaFxScheduler.platform())
-        .subscribe(this::onAmountValid, this::onError));
+                .observeOn(JavaFxScheduler.platform())
+                .subscribe(this::onAmountValid, this::onError));
         mObservables.add(viewModel.getBeneficiaries()
-        .observeOn(JavaFxScheduler.platform())
-        .subscribe(this::onDetailsReceived, this::onError));
+                .observeOn(JavaFxScheduler.platform())
+                .subscribe(this::onDetailsReceived, this::onError));
         mObservables.add(viewModel.getSelectedBeneficiaryStream()
-        .observeOn(JavaFxScheduler.platform())
-        .subscribe(this::onBeneficiarySelected, this::onError));
+                .observeOn(JavaFxScheduler.platform())
+                .subscribe(this::onBeneficiarySelected, this::onError));
         mObservables.add(viewModel.getTransactionSuccessStream()
-        .observeOn(JavaFxScheduler.platform())
-        .subscribe(this::onTransactionSuccess, this::onError));
+                .observeOn(JavaFxScheduler.platform())
+                .subscribe(this::onTransactionSuccess, this::onError));
         mObservables.add(viewModel.getSelectedAccountStream()
-        .observeOn(JavaFxScheduler.platform())
-        .subscribe(this::onAccountSelected, this::onError));
+                .observeOn(JavaFxScheduler.platform())
+                .subscribe(this::onAccountSelected, this::onError));
         mObservables.add(viewModel.getBankAccounts()
-        .observeOn(JavaFxScheduler.platform())
-        .subscribe(this::onAccountDetailsReceived, this::onError));
+                .observeOn(JavaFxScheduler.platform())
+                .subscribe(this::onAccountDetailsReceived, this::onError));
         mObservables.add(viewModel.getUserData()
-        .observeOn(JavaFxScheduler.platform())
-        .subscribe(this::onUserDataReceived, this::onError));
+                .observeOn(JavaFxScheduler.platform())
+                .subscribe(this::onUserDataReceived, this::onError));
     }
 
     private void onUserDataReceived(User user) {
@@ -111,16 +99,17 @@ public class TransferLayoutController implements Initializable, ViewModelUser {
     }
 
     private void onAccountSelected(BankAccount bankAccount) {
-        accountType.setText(bankAccount.Acctype());
-
+        //To show account type if necessary
     }
 
     private void onTransactionSuccess(boolean isTransactionSuccessful) {
         //TODO: Implementation
-        if(isTransactionSuccessful)
+        if (isTransactionSuccessful) {
             Debug.log(TAG, "Transaction Successfully Processed!");
-        else
-            Debug.log(TAG,"Transaction could not be processed at this time");
+            errorLabel.setVisible(true);
+        } else
+            Debug.log(TAG, "Transaction could not be processed at this time");
+
     }
 
     private void onBeneficiarySelected(Beneficiary beneficiary) {
@@ -138,22 +127,32 @@ public class TransferLayoutController implements Initializable, ViewModelUser {
     }
 
     private void onAmountValid(boolean isValid) {
-        //Handle the case when the amount the user entered is invalid
-        if(!isValid){
-            Debug.log(TAG,"INVALID AMOUNT");
+
+        if (!isValid) {
+            Debug.log(TAG, "INVALID AMOUNT");
+            errorLabel.setText("*Invalid amount entered!");
+            errorLabel.setVisible(true);
+            amount.setText("");
         }
     }
 
     @Override
     public void disposeObservables() {
-        Debug.log(TAG,"Disposing Observables");
+        Debug.log(TAG, "Disposing Observables");
         mObservables.clear();
+        viewModel = null;
     }
 
     @FXML
     private void onConfirmPaymentClicked(ActionEvent actionEvent) {
-        Debug.log(TAG,"Confirm Button Clicked");
-        viewModel.setAmount(amount.getText().trim());
+        Debug.log(TAG, "Confirm Button Clicked");
+        String amt = amount.getText().trim();
+        try {
+            Long.parseLong(amt);
+        }catch (Exception e){
+            onAmountValid(false);
+        }
+        viewModel.setAmount(amt);
     }
 
     @FXML
@@ -167,6 +166,7 @@ public class TransferLayoutController implements Initializable, ViewModelUser {
         viewModel.getPayeeDetails(viewPayee.getValue())
                 .observeOn(JavaFxScheduler.platform())
                 .subscribe(this::setPayeeDetails, this::onError);
+        errorLabel.setVisible(false);
 
     }
 
@@ -178,5 +178,12 @@ public class TransferLayoutController implements Initializable, ViewModelUser {
     @FXML
     private void onAccountDropDownSelected(ActionEvent actionEvent) {
         viewModel.accountSelected(accountNumberDrop.getValue());
+        errorLabel.setVisible(false);
+    }
+
+    @FXML
+    private void onTextEntered(KeyEvent keyEvent) {
+        errorLabel.setText("*Not sufficient amount in the account!");
+        errorLabel.setVisible(false);
     }
 }

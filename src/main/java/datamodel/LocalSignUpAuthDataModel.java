@@ -38,18 +38,18 @@ public class LocalSignUpAuthDataModel implements SignupAuthDataModel {
 //                    isPresent = bool;
 //                    Debug.err("Query1",isPresent);
 //                })
-                .flatMap((event)->{
-                    if(!event)
-                    return db.select("select Username from Users where UID= ?")
-                            .parameter(credentials.getAdhaar())
-                            .getAsOptional(Instant.class)
+                .flatMap((event) -> {
+                    if (!event)
+                        return db.select("select Username from LoginCreds where UID= ?")
+                                .parameter(credentials.getAdhaar())
+                                .getAsOptional(Instant.class)
 //                            .doOnNext((value) ->
 //                            {
 //                                //Debug.printThread(TAG);
 //                                System.out.println("Printing " + value + " on thread " + Thread.currentThread().getName());
 //                            })
-                            .isEmpty()
-                            .toFlowable();
+                                .isEmpty()
+                                .toFlowable();
 //                            .doOnNext((bool) -> {
 //                                isPresent = bool;
 //                                Debug.err("Query2",isPresent);
@@ -58,13 +58,13 @@ public class LocalSignUpAuthDataModel implements SignupAuthDataModel {
                     else
                         return Flowable.just(true);
                 })
-                .flatMap((event)->{
-                    if(event)
-                    return db.select("select UID from Users where username=?")
-                            .parameter(credentials.getUsername())
-                            .getAsOptional(Instant.class)
-                            .isEmpty()
-                            .toFlowable();
+                .flatMap((event) -> {
+                    if (event)
+                        return db.select("select UID from LoginCreds where username=?")
+                                .parameter(credentials.getUsername())
+                                .getAsOptional(Instant.class)
+                                .isEmpty()
+                                .toFlowable();
 //                            .doOnNext((bool) -> {
 //                                isPresent = bool;
 //                                Debug.err("Query3",isPresent);
@@ -72,23 +72,23 @@ public class LocalSignUpAuthDataModel implements SignupAuthDataModel {
                     else
                         return Flowable.just(true);
                 })
-                .flatMap((event)->{
+                .flatMap((event) -> {
 
-                    if(event)
-                    return db.update("update Users set Username=? , Password=? where UID=?")
-                            .parameters(credentials.getUsername(), credentials.getPassword(),credentials.getAdhaar())
-                            .counts();
+                    if (event)
+                        return db.update("insert into LoginCreds values( ?, ? ,? )")
+                                .parameters(credentials.getAdhaar(), credentials.getUsername(), credentials.getPassword())
+                                .counts();
                     else
                         return Flowable.just(-1);
 
                 })
                 .subscribe((value) -> {
-                    Debug.err("Value:",value.toString());
-                    if(value == 1)
+                    Debug.err("Value:", value.toString());
+                    if (value == 1)
                         mConfirmSignUp.onNext(true);
                     else
                         mConfirmSignUp.onNext(false);
-                }, (error)->{
+                }, (error) -> {
                     Debug.err(TAG, error);
                 });
     }

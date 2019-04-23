@@ -26,7 +26,7 @@ import java.util.ResourceBundle;
  *
  * @author Pranek
  */
-public class ChangePasswordLayoutController implements Initializable,ViewModelUser {
+public class ChangePasswordLayoutController implements Initializable, ViewModelUser {
 
     private final String TAG = "ChangePasswordLayoutController";
     private ChangePasswordViewModel viewModel;
@@ -50,7 +50,7 @@ public class ChangePasswordLayoutController implements Initializable,ViewModelUs
         passChangeLabel.setVisible(false);
     }
 
-    private void setTfEmpty(){
+    private void setTfEmpty() {
         oldPass.setText("");
         newPass.setText("");
         confirmPass.setText("");
@@ -60,24 +60,24 @@ public class ChangePasswordLayoutController implements Initializable,ViewModelUs
     private void confirmButtonClicked(ActionEvent actionEvent) {
         oldPwd = oldPass.getText().trim();
         newPwd = newPass.getText().trim();
-        if(validateInput(oldPwd,newPwd,confirmPass.getText().trim())) {
+        if (validateInput(oldPwd, newPwd, confirmPass.getText().trim())) {
             mObservables.add(viewModel.setPassword(oldPwd, newPwd)
                     .observeOn(JavaFxScheduler.platform())
                     .subscribe(this::successfulPasswordChange, this::showError));
-        }else{
+        } else {
             setTfEmpty();
         }
     }
 
     private boolean validateInput(String newPwd, String oldPwd, String confirmPwd) {
 
-        if(!(InputValidator.validatePassword(newPwd)&&InputValidator.validatePassword(oldPwd))) {
+        if (!(InputValidator.validatePassword(newPwd) && InputValidator.validatePassword(oldPwd))) {
             passChangeLabel.setText("Password is weak!");
             passChangeLabel.setVisible(true);
             return false;
         }
 
-        if(!(InputValidator.validatePassword(newPwd,confirmPwd))){
+        if (!(InputValidator.validatePassword(newPwd, confirmPwd))) {
             passChangeLabel.setText("Password do not match");
             passChangeLabel.setVisible(true);
             return false;
@@ -87,15 +87,15 @@ public class ChangePasswordLayoutController implements Initializable,ViewModelUs
 
     @Override
     public void createObservables() {
-      Debug.log(TAG,"Not Implemented createObservables");
+        Debug.log(TAG, "Not Implemented createObservables");
     }
 
     private void showError(Throwable throwable) {
-        Debug.err(TAG,(Object[]) throwable.getStackTrace());
+        Debug.err(TAG, (Object[]) throwable.getStackTrace());
     }
 
     private void successfulPasswordChange(boolean isSuccessful) {
-        if(isSuccessful)
+        if (isSuccessful)
             passChangeLabel.setText("Password change successful!");
         else
             passChangeLabel.setText("Wrong old password!");
@@ -105,7 +105,7 @@ public class ChangePasswordLayoutController implements Initializable,ViewModelUs
 
     @Override
     public void disposeObservables() {
-        Debug.log(TAG,"Disposing Observables");
+        Debug.log(TAG, "Disposing Observables");
         mObservables.clear();
     }
 
