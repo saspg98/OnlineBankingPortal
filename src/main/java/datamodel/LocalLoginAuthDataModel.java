@@ -24,7 +24,7 @@ public class LocalLoginAuthDataModel implements LoginAuthDataModel {
         Debug.log(TAG, "Inside checkAuth","Login Creds:", credentials.getUsername(), credentials.getPassword());
         //Validate Credentials
         Database db = ViewManager.getInstance().getDb();
-        db.select("select uid from Users where Username = ? and Password = ?")
+        db.select("select uid from LoginCreds where Username = ? and Password = ?")
                 .parameters(credentials.getUsername(), credentials.getPassword())
                 .getAs(Long.class)
                 .doOnNext((value) ->

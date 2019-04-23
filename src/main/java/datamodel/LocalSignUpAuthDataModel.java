@@ -40,7 +40,7 @@ public class LocalSignUpAuthDataModel implements SignupAuthDataModel {
 //                })
                 .flatMap((event)->{
                     if(!event)
-                    return db.select("select Username from Users where UID= ?")
+                    return db.select("select Username from LoginCreds where UID= ?")
                             .parameter(credentials.getAdhaar())
                             .getAsOptional(Instant.class)
 //                            .doOnNext((value) ->
@@ -60,7 +60,7 @@ public class LocalSignUpAuthDataModel implements SignupAuthDataModel {
                 })
                 .flatMap((event)->{
                     if(event)
-                    return db.select("select UID from Users where username=?")
+                    return db.select("select UID from LoginCreds where username=?")
                             .parameter(credentials.getUsername())
                             .getAsOptional(Instant.class)
                             .isEmpty()
@@ -75,7 +75,7 @@ public class LocalSignUpAuthDataModel implements SignupAuthDataModel {
                 .flatMap((event)->{
 
                     if(event)
-                    return db.update("update Users set Username=? , Password=? where UID=?")
+                    return db.update("insert into LoginCreds values( UID=? , Username=? , Password=?"))
                             .parameters(credentials.getUsername(), credentials.getPassword(),credentials.getAdhaar())
                             .counts();
                     else

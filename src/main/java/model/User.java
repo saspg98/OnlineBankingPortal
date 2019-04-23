@@ -20,12 +20,12 @@ public interface User {
 
     @Column
     String Sex();
-
-    @Column
-    String Username();
-
-    @Column
-    String Password();
+    //
+    // @Column
+    // String Username();
+    //
+    // @Column
+    // String Password();
 
     @Column
     String Email();

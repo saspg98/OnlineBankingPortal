@@ -59,7 +59,7 @@ public final class LocalUserDataModel implements UserDataModel {
     public Observable<Boolean> updatePassword(String oldPass, String newPass) {
 
         return ViewManager.getInstance().getDb()
-                .update("update users " +
+                .update("update LoginCreds " +
                         "set password = ? " +
                         "where uid = ? and password =?")
                 .parameters(newPass,UID,oldPass)
