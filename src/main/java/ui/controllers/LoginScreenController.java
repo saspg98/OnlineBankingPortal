@@ -39,7 +39,7 @@ public class LoginScreenController implements Initializable, ViewModelUser {
     @FXML
     private void onSignUp(ActionEvent actionEvent) {
 
-        disposeObservables();
+//        disposeObservables();
         viewModel.onSignUp(Constant.Path.SIGNUP_VIEW);
     }
 

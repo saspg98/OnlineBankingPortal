@@ -96,7 +96,11 @@ public class AddPayeeLayoutController implements Initializable, ViewModelUser, D
     private void isSuccessful(boolean isSuccessful) {
         if (!isSuccessful) {
             Debug.log(TAG, "Error Message coz is not successful");
-            //TODO: Show other error message, acc doesn't exist etc
+            errorLabel.setText("Account does not exist!");
+            errorLabel.setVisible(true);
+        }else{
+            errorLabel.setText("Beneficiary added!");
+            errorLabel.setVisible(true);
         }
     }
 
