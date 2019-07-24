@@ -1,7 +1,5 @@
 # OnlineBankingPortal
 
-Jaldi kaam karo boiis, 20th submission hai
-
 ## Using the changeapi package
 
 The changeapi package included in the model package is used to create Observables from the classes in the model class.
